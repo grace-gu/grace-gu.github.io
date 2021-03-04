@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html >
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, maximum-scale=5, viewport-fit=cover">
+    <title>Hexo</title>
+    <meta name="description" content="[leetcode]279. Perfect Squares[TOC] 题目Perfect Squares 知识点Python list求和很简单，但是没接触过 1sum(list)  range从1开始也很简单，这是个函数，别老想成list的切片 1range(start, stop[, step])  浮点数取整 int()，效果：浮点数取整，如int(3.5)就返回3；数字的字符形式转换成数">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/2020/02/04/algrothm/[leetcode]279.%20Perfect%20Squares/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="[leetcode]279. Perfect Squares[TOC] 题目Perfect Squares 知识点Python list求和很简单，但是没接触过 1sum(list)  range从1开始也很简单，这是个函数，别老想成list的切片 1range(start, stop[, step])  浮点数取整 int()，效果：浮点数取整，如int(3.5)就返回3；数字的字符形式转换成数">
+<meta property="og:locale">
+<meta property="article:published_time" content="2020-02-04T05:26:23.000Z">
+<meta property="article:modified_time" content="2020-02-04T05:26:23.000Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+
+    
+    <link rel="icon" href="https://i.loli.net/2021/03/04/Y8OtTdUnM4isHxh.jpg" type="image/x-icon">
+
+    
+<link rel="stylesheet" href="/css/common.min.css">
+
+
+
+    
+    
+    
+    
+        <link href="//cdn.jsdelivr.net/npm/lightgallery.js@1.1.3/dist/css/lightgallery.min.css" rel="stylesheet">
+    
+    
+    
+<link rel="stylesheet" href="/css/iconfont.min.css">
+
+    
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+    <body>
+        <header class="header header-fixture">
+    <div class="profile-search-wrap flex sm:block">
+        
+        
+        <div class="profile sm:text-center md:px-1 lg:px-3 sm:pb-4 sm:pt-6">
+            <a id="avatar" role="link" href="https://github.com/grace-gu" class="inline-block lg:w-16 lg:h-16 w-8 h-8 m-2" target="_blank" rel="noopener" rel="noreferrer" >
+                <img src="https://i.loli.net/2021/03/04/Y8OtTdUnM4isHxh.jpg" class="rounded-full" alt="avatar">
+            </a>
+            <h2 id="name" class="hidden lg:block">Grace</h2>
+            <h3 id="title" class="hidden xl:block">coder</h3>
+            
+            <small id="location" class="hidden lg:block">
+                <i class="iconfont icon-map-icon"></i>
+                Beijing, China
+            </small>
+            
+        </div>
+        
+        
+<div class="search flex-1 flex lg:inline-block sm:hidden lg:px-4 lg:mt-2 lg:mb-4 lg:w-full">
+    <form id="search-form" class="my-auto flex-1 lg:border lg:border-solid lg:border-gray-200">
+        <div class="input-group table bg-gray-100 lg:bg-white w-full">
+            <input id="search-input" type="text" placeholder="Search" class="inline-block w-full bg-gray-100 lg:bg-white">
+            <span class="table-cell">
+                <button name="search tigger button" disabled>
+                    <i class="iconfont icon-search m-2"></i>
+                </button>
+            </span>
+        </div>
+    </form>
+        
+<script id="search-teamplate" type="text/html" data-path="/content.json">
+    <div>
+        <div class="search-header bg-gray-400">
+            <input id="actual-search-input" model="keyword" ref="input" class="inline-block w-full h-10 px-2 py-1" placeholder="Search" type="text">
+        </div>
+        <div class="search-result bg-gray-200">
+            {{#each searchPosts}}
+            <a href="/{{ path }}" class="result-item block px-2 pb-3 mb-1 pt-1 hover:bg-indigo-100">
+                <i class="iconfont icon-file"></i>
+                <h1 class="result-title inline font-medium text-lg">{{ title }}</h1>
+                <p class="result-content text-gray-600 text-sm">{{{ text }}}</p>
+            </a>
+            {{/each}}
+        </div>
+    </div>
+</script>
+
+</div>
+
+
+        <button name="menu toogle button" id="menu-toggle-btn" class="block sm:hidden p-3" role="button" aria-expanded="false">
+            <i class="iconfont icon-hamburger"></i>
+        </button>
+    </div>
+    <nav id="menu-nav" class="hidden sm:flex flex-col">
+        
+        
+            <div class="menu-item menu-home" role="menuitem">
+                <a href="/.">
+                    <i class="iconfont icon-home" aria-hidden="true"></i>
+                    <span class="menu-title">Home</span>
+                </a>
+            </div>
+        
+        
+            <div class="menu-item menu-archives" role="menuitem">
+                <a href="/archives">
+                    <i class="iconfont icon-archive" aria-hidden="true"></i>
+                    <span class="menu-title">Archives</span>
+                </a>
+            </div>
+        
+        
+            <div class="menu-item menu-categories" role="menuitem">
+                <a href="/categories">
+                    <i class="iconfont icon-folder" aria-hidden="true"></i>
+                    <span class="menu-title">Categories</span>
+                </a>
+            </div>
+        
+        
+            <div class="menu-item menu-tags" role="menuitem">
+                <a href="/tags">
+                    <i class="iconfont icon-tag" aria-hidden="true"></i>
+                    <span class="menu-title">Tags</span>
+                </a>
+            </div>
+        
+        
+            <div class="menu-item menu-repository" role="menuitem">
+                <a href="/repository">
+                    <i class="iconfont icon-project" aria-hidden="true"></i>
+                    <span class="menu-title">Repository</span>
+                </a>
+            </div>
+        
+        
+            <div class="menu-item menu-links" role="menuitem">
+                <a href="/links">
+                    <i class="iconfont icon-friend" aria-hidden="true"></i>
+                    <span class="menu-title">Links</span>
+                </a>
+            </div>
+        
+        
+            <div class="menu-item menu-about" role="menuitem">
+                <a href="/about">
+                    <i class="iconfont icon-cup" aria-hidden="true"></i>
+                    <span class="menu-title">About</span>
+                </a>
+            </div>
+        
+        
+<div class="social-links flex sm:flex-col lg:hidden mt-5">
+    
+        <span class="social-item text-center">
+            <a target="_blank" rel="noopener" href="https://github.com/grac-gu">
+                <i class="iconfont social-icon icon-github"></i>
+                <span class="menu-title hidden lg:inline">menu.github</span>
+            </a>
+        </span>
+    
+        <span class="social-item text-center">
+            <a href="/None">
+                <i class="iconfont social-icon icon-telegram"></i>
+                <span class="menu-title hidden lg:inline">menu.telegram</span>
+            </a>
+        </span>
+    
+        <span class="social-item text-center">
+            <a href="/None">
+                <i class="iconfont social-icon icon-twitter"></i>
+                <span class="menu-title hidden lg:inline">menu.twitter</span>
+            </a>
+        </span>
+    
+        <span class="social-item text-center">
+            <a href="/atom.xml">
+                <i class="iconfont social-icon icon-rss"></i>
+                <span class="menu-title hidden lg:inline">menu.rss</span>
+            </a>
+        </span>
+    
+</div>
+
+
+    </nav>
+</header>
+
+        <section class="main-section">
+            
+    <main class="flex-1 px-4 py-12 md:px-5 lg:px-8 lg:py-4 relative min-h-screen">
+    
+
+    <article class="content article article-archives article-type-list" itemscope="">
+        <header class="article-header">
+            
+
+
+            <p class="article-meta mb-3 text-xs">
+                <span class="article-date">
+    <i class="iconfont icon-calendar-check"></i>
+	<a href="/2020/02/04/algrothm/%5Bleetcode%5D279.%20Perfect%20Squares/" class="article-date">
+	  <time datetime="2020-02-04T05:26:23.000Z" itemprop="datePublished">Feb 4</time>
+	</a>
+</span>
+
+                
+
+                
+
+                <span class="_partial/post-comment"><i class="icon icon-comment"></i>
+                    <a href="/2020/02/04/algrothm/%5Bleetcode%5D279.%20Perfect%20Squares/#comments" class="article-comment-link">
+                        Comments
+                    </a>
+                </span>
+                
+
+            </p>
+        </header>
+        <div class="marked-body article-body">
+            <h1 id="leetcode-279-Perfect-Squares"><a href="#leetcode-279-Perfect-Squares" class="headerlink" title="[leetcode]279. Perfect Squares"></a>[leetcode]279. Perfect Squares</h1><p>[TOC]</p>
+<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p><a target="_blank" rel="noopener" href="https://leetcode.com/problems/perfect-squares/description/">Perfect Squares</a></p>
+<h2 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h2><h3 id="Python-list求和"><a href="#Python-list求和" class="headerlink" title="Python list求和"></a>Python list求和</h3><p>很简单，但是没接触过</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sum</span>(<span class="built_in">list</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="range从1开始"><a href="#range从1开始" class="headerlink" title="range从1开始"></a>range从1开始</h3><p>也很简单，这是个函数，别老想成list的切片</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">range</span>(start, stop[, step])</span><br></pre></td></tr></table></figure>
+
+<h3 id="浮点数取整"><a href="#浮点数取整" class="headerlink" title="浮点数取整"></a>浮点数取整</h3><ul>
+<li>int()，效果：浮点数取整，如int(3.5)就返回3；数字的字符形式转换成数字，如int(“35”)就返回35</li>
+<li>round(),四舍五入，第二个参数是保留小数点后多少位，默认是0，如round(3.5)返回4.0，round(3.5,1)就返回3.5，不能自己变成int</li>
+<li>floor(),取小于等于的整数,如floor(3.5)返回3.0,floor(-1.5)返回-2.0，不能自己变成int。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> math</span><br><span class="line"></span><br><span class="line">math.floor( x )</span><br></pre></td></tr></table></figure>
+
+<h2 id="解题"><a href="#解题" class="headerlink" title="解题"></a>解题</h2><p>这题可以考查的</p>
+<h3 id="动态规划-Dynamic-Programming"><a href="#动态规划-Dynamic-Programming" class="headerlink" title="动态规划 Dynamic Programming"></a>动态规划 Dynamic Programming</h3><p>如果一个数x可以表示为一个任意数a加上一个平方数b∗b，也就是x=a+b∗b，那么能组成这个数x最少的平方数个数，就是能组成a最少的平方数个数加上1（因为b∗b已经是平方数了）</p>
+<p>思想还算简单，有点暴力的意思在。但是有个问题呢，C++代码可以，python不行。放一下代码吧。</p>
+<p><strong>C++</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">numSquares</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">dp</span><span class="params">(n + <span class="number">1</span>, INT_MAX)</span></span>;</span><br><span class="line">        dp[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= n; i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; i + j * j &lt;= n; j++) &#123;</span><br><span class="line">                dp[i + j * j] = min(dp[i + j * j], dp[i] + <span class="number">1</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[n];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><strong>Python</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">numSquares</span>(<span class="params">self, n: <span class="built_in">int</span></span>) -&gt; int:</span></span><br><span class="line">        num = [<span class="built_in">float</span>(<span class="string">&quot;inf&quot;</span>)] * (n+<span class="number">1</span>)</span><br><span class="line">        </span><br><span class="line">        i = <span class="number">1</span></span><br><span class="line">        <span class="keyword">while</span> i**<span class="number">2</span> &lt;= n:</span><br><span class="line">            num[i**<span class="number">2</span>] = <span class="number">1</span></span><br><span class="line">            i += <span class="number">1</span></span><br><span class="line">        </span><br><span class="line">        i = <span class="number">0</span></span><br><span class="line">        <span class="keyword">while</span> i &lt;= n:</span><br><span class="line">            j = <span class="number">1</span></span><br><span class="line">            <span class="keyword">while</span> i+j*j &lt;= n:</span><br><span class="line">                num[i+j*j] = <span class="built_in">min</span>(num[i]+<span class="number">1</span>, num[i+j*j])</span><br><span class="line">                j+=<span class="number">1</span></span><br><span class="line">            i+=<span class="number">1</span></span><br><span class="line">            </span><br><span class="line">        <span class="keyword">return</span> num[n]</span><br></pre></td></tr></table></figure>
+
+<h3 id="DFS"><a href="#DFS" class="headerlink" title="DFS"></a>DFS</h3><p>我暂时不能把这个解法和图的遍历联系起来，我看了<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/2925f4d7511b">一位童鞋</a>的说法，它说递归和缓存就是DFS。emmm我就先相信一下。</p>
+<p>他的思路是这样：<br>找n的次数minNum<br>本质上就是找<code>n-i*i</code>的minNum</p>
+<h3 id="BFS"><a href="#BFS" class="headerlink" title="BFS"></a>BFS</h3><p>拿队列做了一下，纠结了很久如何计算相加数字的个数。总算做出来了，可惜的是也超时了，放一下代码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">numSquares</span>(<span class="params">self, n: <span class="built_in">int</span></span>) -&gt; int:</span></span><br><span class="line">        <span class="keyword">import</span> math</span><br><span class="line">        count = [<span class="number">0</span>]*<span class="number">5</span> <span class="comment"># num of numbers each epoch  </span></span><br><span class="line">        queue = []</span><br><span class="line">        result = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">findNum</span>(<span class="params">x, epoch</span>):</span></span><br><span class="line">            <span class="keyword">nonlocal</span> result</span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="built_in">int</span>(math.floor(math.sqrt(x)+<span class="number">1</span>))):</span><br><span class="line">                <span class="keyword">if</span>(x-i*i) &lt; <span class="number">0</span>:</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">                <span class="keyword">if</span> (x-i*i) == <span class="number">0</span>:</span><br><span class="line">                    result = epoch+<span class="number">1</span></span><br><span class="line">                    <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    count[epoch] += <span class="number">1</span></span><br><span class="line">                    queue.append(x-i*i)</span><br><span class="line">                i+=<span class="number">1</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">while</span> queue: </span><br><span class="line">                <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(count)):</span><br><span class="line">                    <span class="keyword">if</span> count[i] != <span class="number">0</span>:</span><br><span class="line">                        count[i] -= <span class="number">1</span></span><br><span class="line">                        tmp = i+<span class="number">1</span></span><br><span class="line">                        <span class="keyword">break</span></span><br><span class="line">                flag= findNum(queue.pop(<span class="number">0</span>), tmp)</span><br><span class="line">                <span class="keyword">if</span> flag:</span><br><span class="line">                    <span class="keyword">return</span> <span class="number">1</span> </span><br><span class="line">            <span class="keyword">return</span> -<span class="number">1</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        findNum(n, <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">return</span> result</span><br></pre></td></tr></table></figure>
+
+<p>后来看到<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_36428318/article/details/85916639">leetcode:Perfect Squares —–BFS</a>，思路差不多，别人的是C++代码，我改写成Python代码了，这次终于通过了！</p>
+<p>用来理解的图：<br>![a24afbaca68ef8171b034b46815ccf6a.png]([leetcode]279. Perfect Squares.assets/Image.png)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">numSquares</span>(<span class="params">self, n: <span class="built_in">int</span></span>) -&gt; int:</span></span><br><span class="line">        <span class="keyword">import</span> math</span><br><span class="line">        state = [<span class="number">0</span>] * (n+<span class="number">1</span>)  <span class="comment"># record sum times of each number</span></span><br><span class="line">        square = [i*i <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="built_in">int</span>(math.floor(math.sqrt(n)+<span class="number">1</span>)))] <span class="comment"># square numbers</span></span><br><span class="line">        queue = [] <span class="comment"># queue</span></span><br><span class="line"></span><br><span class="line">        queue.append(<span class="number">0</span>)</span><br><span class="line">        <span class="keyword">while</span> queue:</span><br><span class="line">            cur = queue.pop(<span class="number">0</span>)</span><br><span class="line">            <span class="keyword">for</span> x <span class="keyword">in</span> square:</span><br><span class="line">                <span class="keyword">if</span> cur+x &lt;= n <span class="keyword">and</span> state[cur+x] == <span class="number">0</span>:</span><br><span class="line">                    queue.append(cur+x)</span><br><span class="line">                    state[cur+x] = state[cur] + <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> state[n]</span><br></pre></td></tr></table></figure>
+
+<p>来分析一下我自己写的，和别人写的有什么区别。<br>我写的是不断地求<code>n-i*i</code>的可能性，要穷举。而别人的代码，是BFS+动态规划。这样做的好处：层次遍历找到那个最满足条件的即可，时间复杂度是：o(nlogn)。我的BFS时间复杂度：o(n^2)。动态规划的时间复杂度：o(n^2)</p>
+<p>所以说，姜还是老的辣，下次让我用BFS做还是不一定做得出来。</p>
+
+        </div>
+        
+<blockquote class="copyright">
+    <p><strong>Link to this article : </strong><a class="permalink" href="http://yoursite.com/2020/02/04/algrothm/[leetcode]279.%20Perfect%20Squares/">http://yoursite.com/2020/02/04/algrothm/[leetcode]279. Perfect Squares/</a></p>
+    <p><strong>This article is available under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)</a> License</strong></p>
+</blockquote>
+
+
+    </article>
+    
+    <section id="comments">
+        
+    </section>
+
+
+    
+
+</main>
+
+
+<aside style="" id="sidebar" class="aside aside-fixture">
+    <div class="toc-sidebar">
+        <nav id="toc" class="article-toc">
+            <h3 class="toc-title">Catalogue</h3>
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#leetcode-279-Perfect-Squares"><span class="toc-number">1.</span> <span class="toc-text">[leetcode]279. Perfect Squares</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE"><span class="toc-number">1.1.</span> <span class="toc-text">题目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9F%A5%E8%AF%86%E7%82%B9"><span class="toc-number">1.2.</span> <span class="toc-text">知识点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Python-list%E6%B1%82%E5%92%8C"><span class="toc-number">1.2.1.</span> <span class="toc-text">Python list求和</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#range%E4%BB%8E1%E5%BC%80%E5%A7%8B"><span class="toc-number">1.2.2.</span> <span class="toc-text">range从1开始</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%AE%E7%82%B9%E6%95%B0%E5%8F%96%E6%95%B4"><span class="toc-number">1.2.3.</span> <span class="toc-text">浮点数取整</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A3%E9%A2%98"><span class="toc-number">1.3.</span> <span class="toc-text">解题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92-Dynamic-Programming"><span class="toc-number">1.3.1.</span> <span class="toc-text">动态规划 Dynamic Programming</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DFS"><span class="toc-number">1.3.2.</span> <span class="toc-text">DFS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#BFS"><span class="toc-number">1.3.3.</span> <span class="toc-text">BFS</span></a></li></ol></li></ol></li></ol>
+        </nav>
+    </div>
+</aside>
+
+
+
+
+
+        </section>
+        <footer class="hidden lg:block fixed bottom-0 left-0 sm:w-1/12 lg:w-1/6 bg-gray-100 z-40">
+    
+    <div class="footer-social-links">
+        
+            <a target="_blank" rel="noopener" href="https://github.com/grac-gu">
+                <i class="iconfont icon-github"></i>
+            </a>
+        
+            <a href="/None">
+                <i class="iconfont icon-telegram"></i>
+            </a>
+        
+            <a href="/None">
+                <i class="iconfont icon-twitter"></i>
+            </a>
+        
+            <a href="/atom.xml">
+                <i class="iconfont icon-rss"></i>
+            </a>
+        
+    </div>
+    
+    
+</footer>
+
+        <div id="mask" class="hidden mask fixed inset-0 bg-gray-900 opacity-75 z-40"></div>
+        <div id="search-view-container" class="hidden shadow-xl"></div>
+        
+<script src="/js/dom-event.min.js"></script>
+
+<script src="//cdn.jsdelivr.net/npm/yox@1.0.0-alpha.121/dist/standard/prod/yox.min.js"></script>
+
+
+<script src="/js/search.min.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/lightgallery.js@1.1.3/dist/js/lightgallery.min.js"></script>
+    
+<script src="/js/light-gallery.min.js"></script>
+
+
+
+
+
+    </body>
+</html>

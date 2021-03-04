@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html >
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, maximum-scale=5, viewport-fit=cover">
+    <title>Hexo</title>
+    <meta name="description" content="PCB_RPP_reID分析[TOC] 论文和思路理解行人重识别（Person Re-ID）【四】：论文笔记——Beyond Part Models: Person Retrieval with Refined Part Pooling 这篇写的很棒 简单地梳理一下主要思想 PCB（Part-based Convolutional Baseline) 这是个基础baseline，backbone使">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/2020/02/04/deep_learning/PCB_RPP/PCB_RPP_reID%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="PCB_RPP_reID分析[TOC] 论文和思路理解行人重识别（Person Re-ID）【四】：论文笔记——Beyond Part Models: Person Retrieval with Refined Part Pooling 这篇写的很棒 简单地梳理一下主要思想 PCB（Part-based Convolutional Baseline) 这是个基础baseline，backbone使">
+<meta property="og:locale">
+<meta property="og:image" content="http://yoursite.com/2020/02/04/deep_learning/PCB_RPP/PCB_RPP_reID%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90/PCB_RPP_reID%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90.assets/20181025114743390.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/04/deep_learning/PCB_RPP/PCB_RPP_reID%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90/PCB_RPP_reID%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90.assets/20181025172237514.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/04/deep_learning/PCB_RPP/PCB_RPP_reID%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90/PCB_RPP_reID%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90.assets/1519901480_743999.png">
+<meta property="article:published_time" content="2020-02-04T05:26:23.000Z">
+<meta property="article:modified_time" content="2020-02-04T05:26:23.000Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2020/02/04/deep_learning/PCB_RPP/PCB_RPP_reID%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90/PCB_RPP_reID%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90.assets/20181025114743390.png">
+
+    
+    <link rel="icon" href="https://i.loli.net/2021/03/04/Y8OtTdUnM4isHxh.jpg" type="image/x-icon">
+
+    
+<link rel="stylesheet" href="/css/common.min.css">
+
+
+
+    
+    
+    
+    
+        <link href="//cdn.jsdelivr.net/npm/lightgallery.js@1.1.3/dist/css/lightgallery.min.css" rel="stylesheet">
+    
+    
+    
+<link rel="stylesheet" href="/css/iconfont.min.css">
+
+    
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+    <body>
+        <header class="header header-fixture">
+    <div class="profile-search-wrap flex sm:block">
+        
+        
+        <div class="profile sm:text-center md:px-1 lg:px-3 sm:pb-4 sm:pt-6">
+            <a id="avatar" role="link" href="https://github.com/grace-gu" class="inline-block lg:w-16 lg:h-16 w-8 h-8 m-2" target="_blank" rel="noopener" rel="noreferrer" >
+                <img src="https://i.loli.net/2021/03/04/Y8OtTdUnM4isHxh.jpg" class="rounded-full" alt="avatar">
+            </a>
+            <h2 id="name" class="hidden lg:block">Grace</h2>
+            <h3 id="title" class="hidden xl:block">coder</h3>
+            
+            <small id="location" class="hidden lg:block">
+                <i class="iconfont icon-map-icon"></i>
+                Beijing, China
+            </small>
+            
+        </div>
+        
+        
+<div class="search flex-1 flex lg:inline-block sm:hidden lg:px-4 lg:mt-2 lg:mb-4 lg:w-full">
+    <form id="search-form" class="my-auto flex-1 lg:border lg:border-solid lg:border-gray-200">
+        <div class="input-group table bg-gray-100 lg:bg-white w-full">
+            <input id="search-input" type="text" placeholder="Search" class="inline-block w-full bg-gray-100 lg:bg-white">
+            <span class="table-cell">
+                <button name="search tigger button" disabled>
+                    <i class="iconfont icon-search m-2"></i>
+                </button>
+            </span>
+        </div>
+    </form>
+        
+<script id="search-teamplate" type="text/html" data-path="/content.json">
+    <div>
+        <div class="search-header bg-gray-400">
+            <input id="actual-search-input" model="keyword" ref="input" class="inline-block w-full h-10 px-2 py-1" placeholder="Search" type="text">
+        </div>
+        <div class="search-result bg-gray-200">
+            {{#each searchPosts}}
+            <a href="/{{ path }}" class="result-item block px-2 pb-3 mb-1 pt-1 hover:bg-indigo-100">
+                <i class="iconfont icon-file"></i>
+                <h1 class="result-title inline font-medium text-lg">{{ title }}</h1>
+                <p class="result-content text-gray-600 text-sm">{{{ text }}}</p>
+            </a>
+            {{/each}}
+        </div>
+    </div>
+</script>
+
+</div>
+
+
+        <button name="menu toogle button" id="menu-toggle-btn" class="block sm:hidden p-3" role="button" aria-expanded="false">
+            <i class="iconfont icon-hamburger"></i>
+        </button>
+    </div>
+    <nav id="menu-nav" class="hidden sm:flex flex-col">
+        
+        
+            <div class="menu-item menu-home" role="menuitem">
+                <a href="/.">
+                    <i class="iconfont icon-home" aria-hidden="true"></i>
+                    <span class="menu-title">Home</span>
+                </a>
+            </div>
+        
+        
+            <div class="menu-item menu-archives" role="menuitem">
+                <a href="/archives">
+                    <i class="iconfont icon-archive" aria-hidden="true"></i>
+                    <span class="menu-title">Archives</span>
+                </a>
+            </div>
+        
+        
+            <div class="menu-item menu-categories" role="menuitem">
+                <a href="/categories">
+                    <i class="iconfont icon-folder" aria-hidden="true"></i>
+                    <span class="menu-title">Categories</span>
+                </a>
+            </div>
+        
+        
+            <div class="menu-item menu-tags" role="menuitem">
+                <a href="/tags">
+                    <i class="iconfont icon-tag" aria-hidden="true"></i>
+                    <span class="menu-title">Tags</span>
+                </a>
+            </div>
+        
+        
+            <div class="menu-item menu-repository" role="menuitem">
+                <a href="/repository">
+                    <i class="iconfont icon-project" aria-hidden="true"></i>
+                    <span class="menu-title">Repository</span>
+                </a>
+            </div>
+        
+        
+            <div class="menu-item menu-links" role="menuitem">
+                <a href="/links">
+                    <i class="iconfont icon-friend" aria-hidden="true"></i>
+                    <span class="menu-title">Links</span>
+                </a>
+            </div>
+        
+        
+            <div class="menu-item menu-about" role="menuitem">
+                <a href="/about">
+                    <i class="iconfont icon-cup" aria-hidden="true"></i>
+                    <span class="menu-title">About</span>
+                </a>
+            </div>
+        
+        
+<div class="social-links flex sm:flex-col lg:hidden mt-5">
+    
+        <span class="social-item text-center">
+            <a target="_blank" rel="noopener" href="https://github.com/grac-gu">
+                <i class="iconfont social-icon icon-github"></i>
+                <span class="menu-title hidden lg:inline">menu.github</span>
+            </a>
+        </span>
+    
+        <span class="social-item text-center">
+            <a href="/None">
+                <i class="iconfont social-icon icon-telegram"></i>
+                <span class="menu-title hidden lg:inline">menu.telegram</span>
+            </a>
+        </span>
+    
+        <span class="social-item text-center">
+            <a href="/None">
+                <i class="iconfont social-icon icon-twitter"></i>
+                <span class="menu-title hidden lg:inline">menu.twitter</span>
+            </a>
+        </span>
+    
+        <span class="social-item text-center">
+            <a href="/atom.xml">
+                <i class="iconfont social-icon icon-rss"></i>
+                <span class="menu-title hidden lg:inline">menu.rss</span>
+            </a>
+        </span>
+    
+</div>
+
+
+    </nav>
+</header>
+
+        <section class="main-section">
+            
+    <main class="flex-1 px-4 py-12 md:px-5 lg:px-8 lg:py-4 relative min-h-screen">
+    
+
+    <article class="content article article-archives article-type-list" itemscope="">
+        <header class="article-header">
+            
+
+
+            <p class="article-meta mb-3 text-xs">
+                <span class="article-date">
+    <i class="iconfont icon-calendar-check"></i>
+	<a href="/2020/02/04/deep_learning/PCB_RPP/PCB_RPP_reID%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90/" class="article-date">
+	  <time datetime="2020-02-04T05:26:23.000Z" itemprop="datePublished">Feb 4</time>
+	</a>
+</span>
+
+                
+
+                
+
+                <span class="_partial/post-comment"><i class="icon icon-comment"></i>
+                    <a href="/2020/02/04/deep_learning/PCB_RPP/PCB_RPP_reID%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90/#comments" class="article-comment-link">
+                        Comments
+                    </a>
+                </span>
+                
+
+            </p>
+        </header>
+        <div class="marked-body article-body">
+            <h1 id="PCB-RPP-reID分析"><a href="#PCB-RPP-reID分析" class="headerlink" title="PCB_RPP_reID分析"></a>PCB_RPP_reID分析</h1><p>[TOC]</p>
+<h2 id="论文和思路理解"><a href="#论文和思路理解" class="headerlink" title="论文和思路理解"></a>论文和思路理解</h2><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_38451119/article/details/83344378">行人重识别（Person Re-ID）【四】：论文笔记——Beyond Part Models: Person Retrieval with Refined Part Pooling</a> 这篇写的很棒</p>
+<p>简单地梳理一下主要思想</p>
+<h3 id="PCB（Part-based-Convolutional-Baseline"><a href="#PCB（Part-based-Convolutional-Baseline" class="headerlink" title="PCB（Part-based Convolutional Baseline)"></a>PCB（Part-based Convolutional Baseline)</h3><p><img src="PCB_RPP_reID%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90.assets/20181025114743390.png"></p>
+<p>这是个基础baseline，backbone使用的是resnet50， 到global average pooling之前完全一样。</p>
+<ol>
+<li>假定输入是H，经过backbone之后得到三维的Tensor T</li>
+<li>定义T中每个channel axis为column vectors, 即f</li>
+<li>将T分成P个horizontal stripes(水平块)，对p个horizontal stripes做Average pooling得到p个局部特征g</li>
+<li>用1*1 conv降低g的维度到256维，为新的局部特征h</li>
+<li>每个h经过一个全+分类器进行训练（分类器实质上是p个n分类的softmax, n为训练集的ID数目）</li>
+</ol>
+<p>特点：减少降采样</p>
+<p>训练：loss为交叉熵损失函数的sum(p个分类器，p个loss)</p>
+<p>测试：串联向量g和h作为特征表示</p>
+<h3 id="Part内部信息不一致"><a href="#Part内部信息不一致" class="headerlink" title="Part内部信息不一致"></a>Part内部信息不一致</h3><p>这部分类似triplet loss或者像cornernet中的embedding</p>
+<p>同一个part中的f应相似，不同part间应有差异</p>
+<p>因此我们需要训练PCB到收敛后，测量f和g的相似程度（余弦距离），找到离每一个f最近的part，根据f的距离情况进一步改进</p>
+<p><img src="PCB_RPP_reID%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90.assets/20181025172237514.png"></p>
+<h3 id="RPP-Rifined-Part-Pooling"><a href="#RPP-Rifined-Part-Pooling" class="headerlink" title="RPP(Rifined Part Pooling)"></a>RPP(Rifined Part Pooling)</h3><p>目标：解决上一模块说的要改进的东西，通过f和与其最相似的part来对齐所有f，让f回到自己属于的part去</p>
+<p>具体做法：</p>
+<ol>
+<li><p>测量f与每一个part的相似程度：$ S(f \leftrightarrow P_i) $</p>
+</li>
+<li><p>f根据S重采样到最相似的part上</p>
+</li>
+<li><p>重复1、2直到收敛</p>
+</li>
+<li><p>用p个classifier去预测 $ S(f \leftrightarrow P_i) $的值，预测公式为<br>$$<br>S(f \leftrightarrow P_i) = softmax(w_i^Tf) = \frac{exp(w_i^Tf)}{\sum_{j=1}^{n}exp(w_j^Tf)}<br>$$</p>
+</li>
+</ol>
+<p>PCB部分的第三步即可用上述RPP取代，即RPP后，得到每个part对应的attention map权值（我认为这儿应该就是$ S(f \leftrightarrow P_i) $尺寸离开到tensor T中，得到局部特征g，后续的降采样等步骤一致。</p>
+<h3 id="如何训练RPP中calssifier的权重"><a href="#如何训练RPP中calssifier的权重" class="headerlink" title="如何训练RPP中calssifier的权重"></a>如何训练RPP中calssifier的权重</h3><p>这个权重就是上一部分第4步中的$w$</p>
+<ol>
+<li>将图像等分，训练PCB至收敛</li>
+<li>将T后面的Average pooling替换为一个p分类的part classifier</li>
+<li>固定PCB其它层的参数，只训练part classifier至收敛</li>
+<li>放开全部参数，fine tune</li>
+</ol>
+<h2 id="代码阅读"><a href="#代码阅读" class="headerlink" title="代码阅读"></a>代码阅读</h2><p>看了好几份代码，在最后检测部分都有点含糊。找到一份好像有点写清楚了，打算分析一下。</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/youkosan/ReID_PCB/blob/master/test.py">test.py</a></p>
+<h3 id="代码逻辑"><a href="#代码逻辑" class="headerlink" title="代码逻辑"></a>代码逻辑</h3><ul>
+<li><p>输入</p>
+<ul>
+<li><p>gallery_XXs：候选行人的图像库</p>
+</li>
+<li><p>query_XXs：待查询输入</p>
+</li>
+</ul>
+</li>
+<li><p>输出</p>
+<ul>
+<li>mAP</li>
+<li>CMC</li>
+</ul>
+</li>
+<li><p>步骤</p>
+<p>针对每一个query：</p>
+<ul>
+<li>去gallery_labels中找同label的索引</li>
+<li>去gallery_cams中找同cam的索引</li>
+<li>postive_index: 找到不同cams下同一label的索引，即为正样本的索引（标注信息）</li>
+<li>junk_index: 找到label==-1及同一cam下同一label的索引，即为无效的索引</li>
+<li>sufficient_index: 找到所有有效的索引（所有index-junk_index)</li>
+<li>y_true: 得到sufficient_index中的每一个图像是否是正样本（标注信息）</li>
+<li>y_score: 预测得到的sufficient_index中的每一个的分值（预测信息）</li>
+</ul>
+<p>由此得到mAP和CMC</p>
+</li>
+</ul>
+<h3 id="代码知识"><a href="#代码知识" class="headerlink" title="代码知识"></a>代码知识</h3><ul>
+<li><p><code>setdiff1d(ar1, ar2, assume_unique=False)</code></p>
+<p>1.功能：找到2个数组中集合元素的差异。</p>
+<p>2.返回值：在ar1中但不在ar2中的已排序的唯一值。</p>
+<p>3.参数：</p>
+<ul>
+<li><p>ar1：array_like 输入数组。</p>
+</li>
+<li><p>ar2：array_like 输入比较数组。</p>
+</li>
+<li><p>assume_unique：bool。如果为True，则假定输入数组是唯一的，即可以加快计算速度。 默认值为False。</p>
+</li>
+</ul>
+</li>
+<li><p><code>numpy.intersect1d</code></p>
+<p>返回两个数组的交集，已排序的唯一值</p>
+</li>
+<li><p><code>numpy.append(arr,values,axis=None)</code></p>
+<p>就是往numpy数组中加数元素。和list.append()的区别在于：list.append()只能添加一个元素，而numpy.append()可以添加多个元素，Append values to the end of an array.</p>
+</li>
+<li><p><code>numpy.in1d(ar1, ar2, assume_unique=False, invert=False)</code></p>
+<p>Test whether each element of a 1-D array is also present in a second array.</p>
+<p>Returns a boolean array the same length as <em>ar1</em> that is True where an element of <em>ar1</em> is in <em>ar2</em> and False otherwise.</p>
+</li>
+<li><p><code>sklearn.metrics.average_precision_score(y_true, y_score, average=’macro’, pos_label=1, sample_weight=None)</code> <a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/generated/sklearn.metrics.average_precision_score.html#sklearn.metrics.average_precision_score">sorce</a></p>
+<p>Compute average precision (AP) from prediction scores.</p>
+<p>AP summarizes a precision-recall curve as the weighted mean of precisions achieved at each threshold, with the increase in recall from the previous threshold used as the weight: $ \text{AP} = \sum_n (R_n - R_{n-1}) P_n $</p>
+<p>where $P_n$ and $R_n$ are the precision and recall at the nth threshold.</p>
+<p><strong>Retures</strong>: average_precision(float)</p>
+</li>
+<li><p>CMC曲线</p>
+<p>假如我们训练好了一个3分类的模型，分别为类别<code>c1，c2，c3</code>。每个样本输入模型后会得到对应的3个匹配分数，匹配分数最高的那个类别即是预测的类别数。</p>
+<p><img src="PCB_RPP_reID%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90.assets/1519901480_743999.png"></p>
+<h3 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h3></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ---------------------- Evaluation ----------------------</span></span><br><span class="line"><span class="comment"># query:待查询输入，gallery：候选行人框</span></span><br><span class="line"><span class="comment"># query和gallery的features, labels, cams均为已知信息，features是通过网络提取到的特征</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">evaluate</span>(<span class="params">query_features, query_labels, query_cams, gallery_features, gallery_labels, gallery_cams</span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;Evaluate the CMC and mAP</span></span><br><span class="line"><span class="string">    Arguments:</span></span><br><span class="line"><span class="string">        query_features &#123;np.ndarray of size NxC&#125; -- Features of probe images</span></span><br><span class="line"><span class="string">        query_labels &#123;np.ndarray of query size N&#125; -- Labels of probe images</span></span><br><span class="line"><span class="string">        query_cams &#123;np.ndarray of query size N&#125; -- Cameras of probe images</span></span><br><span class="line"><span class="string">        gallery_features &#123;np.ndarray of size N&#x27;xC&#125; -- Features of gallery images</span></span><br><span class="line"><span class="string">        gallery_labels &#123;np.ndarray of gallery size N&#x27;&#125; -- Lables of gallery images</span></span><br><span class="line"><span class="string">        gallery_cams &#123;np.ndarray of gallery size N&#x27;&#125; -- Cameras of gallery images</span></span><br><span class="line"><span class="string">    Returns:</span></span><br><span class="line"><span class="string">        (torch.IntTensor, float) -- CMC list, mAP</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    CMC = torch.IntTensor(<span class="built_in">len</span>(gallery_labels)).zero_()</span><br><span class="line">    AP = <span class="number">0</span></span><br><span class="line">    sorted_index_list, sorted_y_true_list, junk_index_list = [], [], []</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(query_labels)):</span><br><span class="line">        <span class="comment"># 对每一个要查询的图像，获取一下信息</span></span><br><span class="line">        query_feature = query_features[i]</span><br><span class="line">        query_label = query_labels[i]</span><br><span class="line">        query_cam = query_cams[i]</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Prediction score</span></span><br><span class="line">        <span class="comment"># 对要查询的图像获取一个score，但这个score为什么能这么获取没搞明白</span></span><br><span class="line">        score = np.dot(gallery_features, query_feature)</span><br><span class="line">		</span><br><span class="line">        <span class="comment"># 去gallery_labels里找和query_label相对应的数据索引（即找到这些数据在哪儿）</span></span><br><span class="line">        match_query_index = np.argwhere(gallery_labels == query_label)</span><br><span class="line">        <span class="comment"># 去gallery_cams里找和query_cam相对应的数据索引（即找到这些数据在哪儿）</span></span><br><span class="line">        same_camera_index = np.argwhere(gallery_cams == query_cam)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Positive index is the matched indexs at different camera i.e. the desired result</span></span><br><span class="line">        <span class="comment"># 在match_query_index中但不在same_camera_index中的已排序的唯一值</span></span><br><span class="line">        positive_index = np.setdiff1d(</span><br><span class="line">            match_query_index, same_camera_index, assume_unique=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Junk index is the indexs at the same camera or the unlabeled image</span></span><br><span class="line">        <span class="comment"># Junk index是同一camera下同一label的照片或未标注的图像，不要的索引</span></span><br><span class="line">        junk_index = np.append(</span><br><span class="line">            np.argwhere(gallery_labels == -<span class="number">1</span>),</span><br><span class="line">            np.intersect1d(match_query_index, same_camera_index))  <span class="comment"># .flatten()</span></span><br><span class="line"></span><br><span class="line">        index = np.arange(<span class="built_in">len</span>(gallery_labels))</span><br><span class="line">        <span class="comment"># Remove all the junk indexs</span></span><br><span class="line">        <span class="comment"># 从gallery中去掉junk index的元素</span></span><br><span class="line">        sufficient_index = np.setdiff1d(index, junk_index)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># compute AP</span></span><br><span class="line">        <span class="comment"># y_true返回一个结果，判断sufficient_index中的每一个元素是否在positive_index中</span></span><br><span class="line">        y_true = np.in1d(sufficient_index, positive_index)</span><br><span class="line">        <span class="comment"># y_score是根据特征算到的结果</span></span><br><span class="line">        y_score = score[sufficient_index]</span><br><span class="line">        <span class="comment"># 用库函数算AP</span></span><br><span class="line">        AP += average_precision_score(y_true, y_score)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Compute CMC</span></span><br><span class="line">        <span class="comment"># Sort the sufficient index by their scores, from large to small</span></span><br><span class="line">        <span class="comment"># sorted_index: y_score从大到小排序后得到的索引</span></span><br><span class="line">        sorted_index = np.argsort(y_score)[::-<span class="number">1</span>]</span><br><span class="line">        <span class="comment"># 与sorted_index排序一致的正负样本真实情况 </span></span><br><span class="line">        sorted_y_true = y_true[sorted_index]</span><br><span class="line">        <span class="comment"># 得知sorted_y_true中哪些是正样本</span></span><br><span class="line">        match_index = np.argwhere(sorted_y_true == <span class="literal">True</span>)</span><br><span class="line">		</span><br><span class="line">        <span class="comment"># 累计CMC的值</span></span><br><span class="line">        <span class="keyword">if</span> match_index.size &gt; <span class="number">0</span>:</span><br><span class="line">            first_match_index = match_index.flatten()[<span class="number">0</span>]</span><br><span class="line">            CMC[first_match_index:] += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># keep with junk index, for using the index to show the img from dataloader</span></span><br><span class="line">        all_sorted_index = np.argsort(score)[::-<span class="number">1</span>]</span><br><span class="line">        all_y_true = np.in1d(index, match_query_index)</span><br><span class="line">        all_sorted_y_true = all_y_true[all_sorted_index]</span><br><span class="line"></span><br><span class="line">        sorted_index_list.append(all_sorted_index)</span><br><span class="line">        sorted_y_true_list.append(all_sorted_y_true)</span><br><span class="line">        junk_index_list.append(junk_index)</span><br><span class="line"></span><br><span class="line">    CMC = CMC.<span class="built_in">float</span>()</span><br><span class="line">    CMC = CMC / <span class="built_in">len</span>(query_labels) * <span class="number">100</span>  <span class="comment"># average CMC</span></span><br><span class="line">    mAP = AP / <span class="built_in">len</span>(query_labels) * <span class="number">100</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> CMC, mAP, (sorted_index_list, sorted_y_true_list, junk_index_list)</span><br></pre></td></tr></table></figure>
+
+
+        </div>
+        
+<blockquote class="copyright">
+    <p><strong>Link to this article : </strong><a class="permalink" href="http://yoursite.com/2020/02/04/deep_learning/PCB_RPP/PCB_RPP_reID%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90/">http://yoursite.com/2020/02/04/deep_learning/PCB_RPP/PCB_RPP_reID代码分析/</a></p>
+    <p><strong>This article is available under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)</a> License</strong></p>
+</blockquote>
+
+
+    </article>
+    
+    <section id="comments">
+        
+    </section>
+
+
+    
+
+</main>
+
+
+<aside style="" id="sidebar" class="aside aside-fixture">
+    <div class="toc-sidebar">
+        <nav id="toc" class="article-toc">
+            <h3 class="toc-title">Catalogue</h3>
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#PCB-RPP-reID%E5%88%86%E6%9E%90"><span class="toc-number">1.</span> <span class="toc-text">PCB_RPP_reID分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%BA%E6%96%87%E5%92%8C%E6%80%9D%E8%B7%AF%E7%90%86%E8%A7%A3"><span class="toc-number">1.1.</span> <span class="toc-text">论文和思路理解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#PCB%EF%BC%88Part-based-Convolutional-Baseline"><span class="toc-number">1.1.1.</span> <span class="toc-text">PCB（Part-based Convolutional Baseline)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Part%E5%86%85%E9%83%A8%E4%BF%A1%E6%81%AF%E4%B8%8D%E4%B8%80%E8%87%B4"><span class="toc-number">1.1.2.</span> <span class="toc-text">Part内部信息不一致</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RPP-Rifined-Part-Pooling"><span class="toc-number">1.1.3.</span> <span class="toc-text">RPP(Rifined Part Pooling)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E8%AE%AD%E7%BB%83RPP%E4%B8%ADcalssifier%E7%9A%84%E6%9D%83%E9%87%8D"><span class="toc-number">1.1.4.</span> <span class="toc-text">如何训练RPP中calssifier的权重</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E9%98%85%E8%AF%BB"><span class="toc-number">1.2.</span> <span class="toc-text">代码阅读</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E9%80%BB%E8%BE%91"><span class="toc-number">1.2.1.</span> <span class="toc-text">代码逻辑</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E7%9F%A5%E8%AF%86"><span class="toc-number">1.2.2.</span> <span class="toc-text">代码知识</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90"><span class="toc-number">1.2.3.</span> <span class="toc-text">源码分析</span></a></li></ol></li></ol></li></ol>
+        </nav>
+    </div>
+</aside>
+
+
+
+
+
+        </section>
+        <footer class="hidden lg:block fixed bottom-0 left-0 sm:w-1/12 lg:w-1/6 bg-gray-100 z-40">
+    
+    <div class="footer-social-links">
+        
+            <a target="_blank" rel="noopener" href="https://github.com/grac-gu">
+                <i class="iconfont icon-github"></i>
+            </a>
+        
+            <a href="/None">
+                <i class="iconfont icon-telegram"></i>
+            </a>
+        
+            <a href="/None">
+                <i class="iconfont icon-twitter"></i>
+            </a>
+        
+            <a href="/atom.xml">
+                <i class="iconfont icon-rss"></i>
+            </a>
+        
+    </div>
+    
+    
+</footer>
+
+        <div id="mask" class="hidden mask fixed inset-0 bg-gray-900 opacity-75 z-40"></div>
+        <div id="search-view-container" class="hidden shadow-xl"></div>
+        
+<script src="/js/dom-event.min.js"></script>
+
+<script src="//cdn.jsdelivr.net/npm/yox@1.0.0-alpha.121/dist/standard/prod/yox.min.js"></script>
+
+
+<script src="/js/search.min.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/lightgallery.js@1.1.3/dist/js/lightgallery.min.js"></script>
+    
+<script src="/js/light-gallery.min.js"></script>
+
+
+
+
+
+    </body>
+</html>

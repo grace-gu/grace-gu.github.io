@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html >
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, maximum-scale=5, viewport-fit=cover">
+    <title>Hexo</title>
+    <meta name="description" content="MobileNetV2-SSDLite代码分析-6 VOC Dataset[TOC] voc_dataset 1class VOCDataset:  初始化主要是确定了一下各个文件的目录，确定了class_names 123456789101112131415161718192021222324252627282930313233343536373839404142434445def __init">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/2020/02/04/deep_learning/SSD/MobileNetV2-SSDLite%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90-6%20VOC%20Dataset/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="MobileNetV2-SSDLite代码分析-6 VOC Dataset[TOC] voc_dataset 1class VOCDataset:  初始化主要是确定了一下各个文件的目录，确定了class_names 123456789101112131415161718192021222324252627282930313233343536373839404142434445def __init">
+<meta property="og:locale">
+<meta property="article:published_time" content="2020-02-04T05:26:23.000Z">
+<meta property="article:modified_time" content="2020-02-04T05:26:23.000Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+
+    
+    <link rel="icon" href="https://i.loli.net/2021/03/04/Y8OtTdUnM4isHxh.jpg" type="image/x-icon">
+
+    
+<link rel="stylesheet" href="/css/common.min.css">
+
+
+
+    
+    
+    
+    
+        <link href="//cdn.jsdelivr.net/npm/lightgallery.js@1.1.3/dist/css/lightgallery.min.css" rel="stylesheet">
+    
+    
+    
+<link rel="stylesheet" href="/css/iconfont.min.css">
+
+    
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+    <body>
+        <header class="header header-fixture">
+    <div class="profile-search-wrap flex sm:block">
+        
+        
+        <div class="profile sm:text-center md:px-1 lg:px-3 sm:pb-4 sm:pt-6">
+            <a id="avatar" role="link" href="https://github.com/grace-gu" class="inline-block lg:w-16 lg:h-16 w-8 h-8 m-2" target="_blank" rel="noopener" rel="noreferrer" >
+                <img src="https://i.loli.net/2021/03/04/Y8OtTdUnM4isHxh.jpg" class="rounded-full" alt="avatar">
+            </a>
+            <h2 id="name" class="hidden lg:block">Grace</h2>
+            <h3 id="title" class="hidden xl:block">coder</h3>
+            
+            <small id="location" class="hidden lg:block">
+                <i class="iconfont icon-map-icon"></i>
+                Beijing, China
+            </small>
+            
+        </div>
+        
+        
+<div class="search flex-1 flex lg:inline-block sm:hidden lg:px-4 lg:mt-2 lg:mb-4 lg:w-full">
+    <form id="search-form" class="my-auto flex-1 lg:border lg:border-solid lg:border-gray-200">
+        <div class="input-group table bg-gray-100 lg:bg-white w-full">
+            <input id="search-input" type="text" placeholder="Search" class="inline-block w-full bg-gray-100 lg:bg-white">
+            <span class="table-cell">
+                <button name="search tigger button" disabled>
+                    <i class="iconfont icon-search m-2"></i>
+                </button>
+            </span>
+        </div>
+    </form>
+        
+<script id="search-teamplate" type="text/html" data-path="/content.json">
+    <div>
+        <div class="search-header bg-gray-400">
+            <input id="actual-search-input" model="keyword" ref="input" class="inline-block w-full h-10 px-2 py-1" placeholder="Search" type="text">
+        </div>
+        <div class="search-result bg-gray-200">
+            {{#each searchPosts}}
+            <a href="/{{ path }}" class="result-item block px-2 pb-3 mb-1 pt-1 hover:bg-indigo-100">
+                <i class="iconfont icon-file"></i>
+                <h1 class="result-title inline font-medium text-lg">{{ title }}</h1>
+                <p class="result-content text-gray-600 text-sm">{{{ text }}}</p>
+            </a>
+            {{/each}}
+        </div>
+    </div>
+</script>
+
+</div>
+
+
+        <button name="menu toogle button" id="menu-toggle-btn" class="block sm:hidden p-3" role="button" aria-expanded="false">
+            <i class="iconfont icon-hamburger"></i>
+        </button>
+    </div>
+    <nav id="menu-nav" class="hidden sm:flex flex-col">
+        
+        
+            <div class="menu-item menu-home" role="menuitem">
+                <a href="/.">
+                    <i class="iconfont icon-home" aria-hidden="true"></i>
+                    <span class="menu-title">Home</span>
+                </a>
+            </div>
+        
+        
+            <div class="menu-item menu-archives" role="menuitem">
+                <a href="/archives">
+                    <i class="iconfont icon-archive" aria-hidden="true"></i>
+                    <span class="menu-title">Archives</span>
+                </a>
+            </div>
+        
+        
+            <div class="menu-item menu-categories" role="menuitem">
+                <a href="/categories">
+                    <i class="iconfont icon-folder" aria-hidden="true"></i>
+                    <span class="menu-title">Categories</span>
+                </a>
+            </div>
+        
+        
+            <div class="menu-item menu-tags" role="menuitem">
+                <a href="/tags">
+                    <i class="iconfont icon-tag" aria-hidden="true"></i>
+                    <span class="menu-title">Tags</span>
+                </a>
+            </div>
+        
+        
+            <div class="menu-item menu-repository" role="menuitem">
+                <a href="/repository">
+                    <i class="iconfont icon-project" aria-hidden="true"></i>
+                    <span class="menu-title">Repository</span>
+                </a>
+            </div>
+        
+        
+            <div class="menu-item menu-links" role="menuitem">
+                <a href="/links">
+                    <i class="iconfont icon-friend" aria-hidden="true"></i>
+                    <span class="menu-title">Links</span>
+                </a>
+            </div>
+        
+        
+            <div class="menu-item menu-about" role="menuitem">
+                <a href="/about">
+                    <i class="iconfont icon-cup" aria-hidden="true"></i>
+                    <span class="menu-title">About</span>
+                </a>
+            </div>
+        
+        
+<div class="social-links flex sm:flex-col lg:hidden mt-5">
+    
+        <span class="social-item text-center">
+            <a target="_blank" rel="noopener" href="https://github.com/grac-gu">
+                <i class="iconfont social-icon icon-github"></i>
+                <span class="menu-title hidden lg:inline">menu.github</span>
+            </a>
+        </span>
+    
+        <span class="social-item text-center">
+            <a href="/None">
+                <i class="iconfont social-icon icon-telegram"></i>
+                <span class="menu-title hidden lg:inline">menu.telegram</span>
+            </a>
+        </span>
+    
+        <span class="social-item text-center">
+            <a href="/None">
+                <i class="iconfont social-icon icon-twitter"></i>
+                <span class="menu-title hidden lg:inline">menu.twitter</span>
+            </a>
+        </span>
+    
+        <span class="social-item text-center">
+            <a href="/atom.xml">
+                <i class="iconfont social-icon icon-rss"></i>
+                <span class="menu-title hidden lg:inline">menu.rss</span>
+            </a>
+        </span>
+    
+</div>
+
+
+    </nav>
+</header>
+
+        <section class="main-section">
+            
+    <main class="flex-1 px-4 py-12 md:px-5 lg:px-8 lg:py-4 relative min-h-screen">
+    
+
+    <article class="content article article-archives article-type-list" itemscope="">
+        <header class="article-header">
+            
+
+
+            <p class="article-meta mb-3 text-xs">
+                <span class="article-date">
+    <i class="iconfont icon-calendar-check"></i>
+	<a href="/2020/02/04/deep_learning/SSD/MobileNetV2-SSDLite%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90-6%20VOC%20Dataset/" class="article-date">
+	  <time datetime="2020-02-04T05:26:23.000Z" itemprop="datePublished">Feb 4</time>
+	</a>
+</span>
+
+                
+
+                
+
+                <span class="_partial/post-comment"><i class="icon icon-comment"></i>
+                    <a href="/2020/02/04/deep_learning/SSD/MobileNetV2-SSDLite%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90-6%20VOC%20Dataset/#comments" class="article-comment-link">
+                        Comments
+                    </a>
+                </span>
+                
+
+            </p>
+        </header>
+        <div class="marked-body article-body">
+            <h1 id="MobileNetV2-SSDLite代码分析-6-VOC-Dataset"><a href="#MobileNetV2-SSDLite代码分析-6-VOC-Dataset" class="headerlink" title="MobileNetV2-SSDLite代码分析-6 VOC Dataset"></a>MobileNetV2-SSDLite代码分析-6 VOC Dataset</h1><p>[TOC]</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/qfgaohao/pytorch-ssd/blob/master/vision/datasets/voc_dataset.py">voc_dataset</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">VOCDataset</span>:</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h2><p>主要是确定了一下各个文件的目录，确定了class_names</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, root, transform=<span class="literal">None</span>, target_transform=<span class="literal">None</span>, is_test=<span class="literal">False</span>, keep_difficult=<span class="literal">False</span>, label_file=<span class="literal">None</span></span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;Dataset for VOC data.</span></span><br><span class="line"><span class="string">    Args:</span></span><br><span class="line"><span class="string">        root: the root of the VOC2007 or VOC2012 dataset, the directory contains the following sub-directories:</span></span><br><span class="line"><span class="string">            Annotations, ImageSets, JPEGImages, SegmentationClass, SegmentationObject.</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    self.root = pathlib.Path(root)</span><br><span class="line">    self.transform = transform</span><br><span class="line">    self.target_transform = target_transform</span><br><span class="line">    <span class="keyword">if</span> is_test:</span><br><span class="line">        image_sets_file = self.root / <span class="string">&quot;ImageSets/Main/test.txt&quot;</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        image_sets_file = self.root / <span class="string">&quot;ImageSets/Main/trainval.txt&quot;</span></span><br><span class="line">    self.ids = VOCDataset._read_image_ids(image_sets_file) <span class="comment"># 得到各个图的编号</span></span><br><span class="line">    self.keep_difficult = keep_difficult</span><br><span class="line"></span><br><span class="line">    <span class="comment"># if the labels file exists, read in the class names</span></span><br><span class="line">    label_file_name = self.root / <span class="string">&quot;labels.txt&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> os.path.isfile(label_file_name):</span><br><span class="line">        class_string = <span class="string">&quot;&quot;</span></span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(label_file_name, <span class="string">&#x27;r&#x27;</span>) <span class="keyword">as</span> infile:</span><br><span class="line">            <span class="keyword">for</span> line <span class="keyword">in</span> infile:</span><br><span class="line">                class_string += line.rstrip()</span><br><span class="line"></span><br><span class="line">        <span class="comment"># classes should be a comma separated list</span></span><br><span class="line">        </span><br><span class="line">        classes = class_string.split(<span class="string">&#x27;,&#x27;</span>)</span><br><span class="line">        <span class="comment"># prepend BACKGROUND as first class</span></span><br><span class="line">        classes.insert(<span class="number">0</span>, <span class="string">&#x27;BACKGROUND&#x27;</span>)</span><br><span class="line">        classes  = [ elem.replace(<span class="string">&quot; &quot;</span>, <span class="string">&quot;&quot;</span>) <span class="keyword">for</span> elem <span class="keyword">in</span> classes]</span><br><span class="line">        self.class_names = <span class="built_in">tuple</span>(classes)</span><br><span class="line">        logging.info(<span class="string">&quot;VOC Labels read from file: &quot;</span> + <span class="built_in">str</span>(self.class_names))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        logging.info(<span class="string">&quot;No labels file, using default VOC classes.&quot;</span>)</span><br><span class="line">        self.class_names = (<span class="string">&#x27;BACKGROUND&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;aeroplane&#x27;</span>, <span class="string">&#x27;bicycle&#x27;</span>, <span class="string">&#x27;bird&#x27;</span>, <span class="string">&#x27;boat&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;bottle&#x27;</span>, <span class="string">&#x27;bus&#x27;</span>, <span class="string">&#x27;car&#x27;</span>, <span class="string">&#x27;cat&#x27;</span>, <span class="string">&#x27;chair&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;cow&#x27;</span>, <span class="string">&#x27;diningtable&#x27;</span>, <span class="string">&#x27;dog&#x27;</span>, <span class="string">&#x27;horse&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;motorbike&#x27;</span>, <span class="string">&#x27;person&#x27;</span>, <span class="string">&#x27;pottedplant&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;sheep&#x27;</span>, <span class="string">&#x27;sofa&#x27;</span>, <span class="string">&#x27;train&#x27;</span>, <span class="string">&#x27;tvmonitor&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    self.class_dict = &#123;class_name: i <span class="keyword">for</span> i, class_name <span class="keyword">in</span> <span class="built_in">enumerate</span>(self.class_names)&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="getitem"><a href="#getitem" class="headerlink" title="getitem"></a>getitem</h2><p>image_id获得第index图像的图像名称</p>
+<p>从而得到boxes, labels和image的数据</p>
+<p>相应的做转换</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">__getitem__</span>(<span class="params">self, index</span>):</span></span><br><span class="line">    image_id = self.ids[index]</span><br><span class="line">    <span class="comment"># boxes:(num_of_objects_per_image, 4), labels:(num_of_objects_per_image, 1)</span></span><br><span class="line">    boxes, labels, is_difficult = self._get_annotation(image_id)</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> self.keep_difficult:</span><br><span class="line">        boxes = boxes[is_difficult == <span class="number">0</span>]</span><br><span class="line">        labels = labels[is_difficult == <span class="number">0</span>]</span><br><span class="line">    <span class="comment"># image: 第index张图的cv2数据</span></span><br><span class="line">    image = self._read_image(image_id)</span><br><span class="line">    <span class="comment"># 此时， labels:(num_of_objects_per_image, 1)</span></span><br><span class="line">    <span class="keyword">if</span> self.transform:</span><br><span class="line">        image, boxes, labels = self.transform(image, boxes, labels)</span><br><span class="line">        <span class="comment"># 此时，labels:(num_of_objects_per_image, 1)，维度不变</span></span><br><span class="line">    <span class="keyword">if</span> self.target_transform:</span><br><span class="line">        boxes, labels = self.target_transform(boxes, labels)</span><br><span class="line">        <span class="comment"># 此时，labels:torch.Size([3000])， 维度得到了统一，因此target_transform是关键</span></span><br><span class="line">    <span class="keyword">return</span> image, boxes, labels</span><br></pre></td></tr></table></figure>
+
+<h3 id="获得ID信息"><a href="#获得ID信息" class="headerlink" title="获得ID信息"></a>获得ID信息</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 输入是test.txt文件的地址，将文件名放到ids中去</span></span><br><span class="line"><span class="meta">@staticmethod</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_read_image_ids</span>(<span class="params">image_sets_file</span>):</span></span><br><span class="line">    ids = []</span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(image_sets_file) <span class="keyword">as</span> f:</span><br><span class="line">        <span class="keyword">for</span> line <span class="keyword">in</span> f:</span><br><span class="line">            ids.append(line.rstrip())</span><br><span class="line">    <span class="keyword">return</span> ids</span><br></pre></td></tr></table></figure>
+
+<h3 id="获得标注信息"><a href="#获得标注信息" class="headerlink" title="获得标注信息"></a>获得标注信息</h3><p>根据image_id确定annotation_file的位置，对XML文件做解析，得到bndbox</p>
+<p>（假设这张图上一共有num_of_objects_per_image）</p>
+<p>最后返回结果是</p>
+<ul>
+<li><p>boxes（框的位置）(num_of_objects_per_image, 4)</p>
+</li>
+<li><p>labels（第几类物体）(num_of_objects_per_image, 1)</p>
+</li>
+<li><p>is_difficult（这个目前的情况是一般为空，所以具体什么含义不是很清楚）(num_of_objects_per_image, 4)</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_get_annotation</span>(<span class="params">self, image_id</span>):</span></span><br><span class="line">    annotation_file = self.root / <span class="string">f&quot;Annotations/<span class="subst">&#123;image_id&#125;</span>.xml&quot;</span></span><br><span class="line">    objects = ET.parse(annotation_file).findall(<span class="string">&quot;object&quot;</span>)</span><br><span class="line">    boxes = []</span><br><span class="line">    labels = []</span><br><span class="line">    is_difficult = []</span><br><span class="line">    <span class="keyword">for</span> <span class="built_in">object</span> <span class="keyword">in</span> objects:</span><br><span class="line">        class_name = <span class="built_in">object</span>.find(<span class="string">&#x27;name&#x27;</span>).text.lower().strip()</span><br><span class="line">        <span class="comment"># we&#x27;re only concerned with clases in our list</span></span><br><span class="line">        <span class="keyword">if</span> class_name <span class="keyword">in</span> self.class_dict:</span><br><span class="line">            bbox = <span class="built_in">object</span>.find(<span class="string">&#x27;bndbox&#x27;</span>)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># VOC dataset format follows Matlab, in which indexes start from 0</span></span><br><span class="line">            x1 = <span class="built_in">float</span>(bbox.find(<span class="string">&#x27;xmin&#x27;</span>).text) - <span class="number">1</span></span><br><span class="line">            y1 = <span class="built_in">float</span>(bbox.find(<span class="string">&#x27;ymin&#x27;</span>).text) - <span class="number">1</span></span><br><span class="line">            x2 = <span class="built_in">float</span>(bbox.find(<span class="string">&#x27;xmax&#x27;</span>).text) - <span class="number">1</span></span><br><span class="line">            y2 = <span class="built_in">float</span>(bbox.find(<span class="string">&#x27;ymax&#x27;</span>).text) - <span class="number">1</span></span><br><span class="line">            boxes.append([x1, y1, x2, y2])</span><br><span class="line"></span><br><span class="line">            labels.append(self.class_dict[class_name])</span><br><span class="line">            is_difficult_str = <span class="built_in">object</span>.find(<span class="string">&#x27;difficult&#x27;</span>).text</span><br><span class="line">            is_difficult.append(<span class="built_in">int</span>(is_difficult_str) <span class="keyword">if</span> is_difficult_str <span class="keyword">else</span> <span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> (np.array(boxes, dtype=np.float32),</span><br><span class="line">            np.array(labels, dtype=np.int64),</span><br><span class="line">            np.array(is_difficult, dtype=np.uint8))</span><br></pre></td></tr></table></figure>
+
+<h3 id="获得图像数据"><a href="#获得图像数据" class="headerlink" title="获得图像数据"></a>获得图像数据</h3><p>根据image_id确定图像的位置，读取图像，做颜色转换</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_read_image</span>(<span class="params">self, image_id</span>):</span></span><br><span class="line">    image_file = self.root / <span class="string">f&quot;JPEGImages/<span class="subst">&#123;image_id&#125;</span>.jpg&quot;</span></span><br><span class="line">    image = cv2.imread(<span class="built_in">str</span>(image_file))</span><br><span class="line">    image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)</span><br><span class="line">    <span class="keyword">return</span> image</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="labels和bbox的处理"><a href="#labels和bbox的处理" class="headerlink" title="labels和bbox的处理"></a>labels和bbox的处理</h2><p>可以发现，在上面两个处理，一个transform，一个target_transform：</p>
+ <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> self.transform:</span><br><span class="line">    image, boxes, labels = self.transform(image, boxes, labels)</span><br><span class="line"><span class="keyword">if</span> self.target_transform:</span><br><span class="line">    boxes, labels = self.target_transform(boxes, labels)</span><br></pre></td></tr></table></figure>
+
+<h3 id="train-transform-TrainAugmentation"><a href="#train-transform-TrainAugmentation" class="headerlink" title="train_transform: TrainAugmentation"></a>train_transform: TrainAugmentation</h3><p>先分析transform，其定义如下。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">train_transform = TrainAugmentation(config.image_size, config.image_mean, config.image_std)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> self.transform:</span><br><span class="line">    image, boxes, labels = self.transform(image, boxes, labels)</span><br></pre></td></tr></table></figure>
+
+<p>TrainAugmentation的定义如下。这个写法有点意思。这里augment中的所有集合，输入均为self, img, boxes, labels，输出均为img, boxes, labels</p>
+<p>输入维度</p>
+<ul>
+<li>boxes (num_of_objects_per_image, 4)</li>
+<li>labels (num_of_objects_per_image, 1)</li>
+</ul>
+<p>输出维度保持不变</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TrainAugmentation</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, size, mean=<span class="number">0</span>, std=<span class="number">1.0</span></span>):</span></span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        Args:</span></span><br><span class="line"><span class="string">            size: the size the of final image.</span></span><br><span class="line"><span class="string">            mean: mean pixel value per channel.</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        self.mean = mean</span><br><span class="line">        self.size = size</span><br><span class="line">        self.augment = Compose([</span><br><span class="line">            ConvertFromInts(), <span class="comment"># img图像转np.float32</span></span><br><span class="line">            PhotometricDistort(), <span class="comment"># 光谱失真处理</span></span><br><span class="line">            Expand(self.mean),</span><br><span class="line">            RandomSampleCrop(),</span><br><span class="line">            RandomMirror(),</span><br><span class="line">            ToPercentCoords(),</span><br><span class="line">            Resize(self.size),</span><br><span class="line">            SubtractMeans(self.mean),</span><br><span class="line">            <span class="keyword">lambda</span> img, boxes=<span class="literal">None</span>, labels=<span class="literal">None</span>: (img / std, boxes, labels),</span><br><span class="line">            ToTensor(),</span><br><span class="line">        ])</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__call__</span>(<span class="params">self, img, boxes, labels</span>):</span></span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        Args:</span></span><br><span class="line"><span class="string">            img: the output of cv.imread in RGB layout.</span></span><br><span class="line"><span class="string">            boxes: boundding boxes in the form of (x1, y1, x2, y2).</span></span><br><span class="line"><span class="string">            labels: labels of boxes.</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">return</span> self.augment(img, boxes, labels)</span><br></pre></td></tr></table></figure>
+
+<h3 id="target-transform-MatchPrior"><a href="#target-transform-MatchPrior" class="headerlink" title="target_transform: MatchPrior"></a>target_transform: MatchPrior</h3><p>这儿的target_transform定义如下。它的作用就是将标注的数据转换成我们需要的用于anchor回归的数据。</p>
+<p>config.priors：(num_priors, 4)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">target_transform = MatchPrior(config.priors, config.center_variance,</span><br><span class="line">                                  config.size_variance, <span class="number">0.5</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<p>MatchPrior具体代码见下（ssd.py）</p>
+<p><code>__init__</code>用来初始化一些参数</p>
+<p><code>__call__</code>的写法可以学一下。之后再调用就是走的这条线，把boxes变成我们需要的locations</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MatchPrior</span>(<span class="params"><span class="built_in">object</span></span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, center_form_priors, center_variance, size_variance, iou_threshold</span>):</span></span><br><span class="line">        self.center_form_priors = center_form_priors</span><br><span class="line">        self.corner_form_priors = box_utils.center_form_to_corner_form(center_form_priors)</span><br><span class="line">        self.center_variance = center_variance</span><br><span class="line">        self.size_variance = size_variance</span><br><span class="line">        self.iou_threshold = iou_threshold</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__call__</span>(<span class="params">self, gt_boxes, gt_labels</span>):</span></span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">type</span>(gt_boxes) <span class="keyword">is</span> np.ndarray:</span><br><span class="line">            gt_boxes = torch.from_numpy(gt_boxes)</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">type</span>(gt_labels) <span class="keyword">is</span> np.ndarray:</span><br><span class="line">            gt_labels = torch.from_numpy(gt_labels)</span><br><span class="line">        boxes, labels = box_utils.assign_priors(gt_boxes, gt_labels,</span><br><span class="line">                                                self.corner_form_priors, self.iou_threshold) <span class="comment"># 这一步操作</span></span><br><span class="line">        boxes = box_utils.corner_form_to_center_form(boxes)</span><br><span class="line">        locations = box_utils.convert_boxes_to_locations(boxes, self.center_form_priors, self.center_variance, self.size_variance)</span><br><span class="line">        <span class="keyword">return</span> locations, labels</span><br></pre></td></tr></table></figure>
+
+<p>看到这儿我有个疑问是这样的：</p>
+<p>每张图可能有多个boxes和labels，现在作者虽然都取出来了，但维度应该是[batch_size, boxes_size, labels_size]， 这个放到一个Batch里长度不统一，不知道作者是如何实现的。——20190924补充：target_transform: MatchPrior里实现了长度的统一</p>
+<p>目前作者写VOC dataset时并没有继续torch中的dataset</p>
+<p>assign_priors的代码如下。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">assign_priors</span>(<span class="params">gt_boxes, gt_labels, corner_form_priors,</span></span></span><br><span class="line"><span class="function"><span class="params">                  iou_threshold</span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;Assign ground truth boxes and targets to priors.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    Args:</span></span><br><span class="line"><span class="string">        gt_boxes (num_targets, 4): ground truth boxes.</span></span><br><span class="line"><span class="string">        gt_labels (num_targets): labels of targets.</span></span><br><span class="line"><span class="string">        priors (num_priors, 4): corner form priors</span></span><br><span class="line"><span class="string">    Returns:</span></span><br><span class="line"><span class="string">        boxes (num_priors, 4): real values for priors.</span></span><br><span class="line"><span class="string">        labels (num_priros): labels for priors.</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="comment"># size: num_priors x num_targets iou_of作者定义的算重叠的函数</span></span><br><span class="line">    ious = iou_of(gt_boxes.unsqueeze(<span class="number">0</span>), corner_form_priors.unsqueeze(<span class="number">1</span>))</span><br><span class="line">    <span class="comment"># size: num_priors</span></span><br><span class="line">    best_target_per_prior, best_target_per_prior_index = ious.<span class="built_in">max</span>(<span class="number">1</span>)</span><br><span class="line">    <span class="comment"># size: num_targets</span></span><br><span class="line">    best_prior_per_target, best_prior_per_target_index = ious.<span class="built_in">max</span>(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> target_index, prior_index <span class="keyword">in</span> <span class="built_in">enumerate</span>(best_prior_per_target_index):</span><br><span class="line">        best_target_per_prior_index[prior_index] = target_index</span><br><span class="line">    <span class="comment"># 2.0 is used to make sure every target has a prior assigned</span></span><br><span class="line">    best_target_per_prior.index_fill_(<span class="number">0</span>, best_prior_per_target_index, <span class="number">2</span>)</span><br><span class="line">    <span class="comment"># size: num_priors</span></span><br><span class="line">    labels = gt_labels[best_target_per_prior_index]</span><br><span class="line">    labels[best_target_per_prior &lt; iou_threshold] = <span class="number">0</span>  <span class="comment"># the backgournd id</span></span><br><span class="line">    boxes = gt_boxes[best_target_per_prior_index]</span><br><span class="line">    <span class="keyword">return</span> boxes, labels</span><br></pre></td></tr></table></figure>
+
+
+        </div>
+        
+<blockquote class="copyright">
+    <p><strong>Link to this article : </strong><a class="permalink" href="http://yoursite.com/2020/02/04/deep_learning/SSD/MobileNetV2-SSDLite%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90-6%20VOC%20Dataset/">http://yoursite.com/2020/02/04/deep_learning/SSD/MobileNetV2-SSDLite代码分析-6 VOC Dataset/</a></p>
+    <p><strong>This article is available under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)</a> License</strong></p>
+</blockquote>
+
+
+    </article>
+    
+    <section id="comments">
+        
+    </section>
+
+
+    
+
+</main>
+
+
+<aside style="" id="sidebar" class="aside aside-fixture">
+    <div class="toc-sidebar">
+        <nav id="toc" class="article-toc">
+            <h3 class="toc-title">Catalogue</h3>
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#MobileNetV2-SSDLite%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90-6-VOC-Dataset"><span class="toc-number">1.</span> <span class="toc-text">MobileNetV2-SSDLite代码分析-6 VOC Dataset</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-number">1.1.</span> <span class="toc-text">初始化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#getitem"><span class="toc-number">1.2.</span> <span class="toc-text">getitem</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%BE%97ID%E4%BF%A1%E6%81%AF"><span class="toc-number">1.2.1.</span> <span class="toc-text">获得ID信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%BE%97%E6%A0%87%E6%B3%A8%E4%BF%A1%E6%81%AF"><span class="toc-number">1.2.2.</span> <span class="toc-text">获得标注信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%BE%97%E5%9B%BE%E5%83%8F%E6%95%B0%E6%8D%AE"><span class="toc-number">1.2.3.</span> <span class="toc-text">获得图像数据</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#labels%E5%92%8Cbbox%E7%9A%84%E5%A4%84%E7%90%86"><span class="toc-number">1.3.</span> <span class="toc-text">labels和bbox的处理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#train-transform-TrainAugmentation"><span class="toc-number">1.3.1.</span> <span class="toc-text">train_transform: TrainAugmentation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#target-transform-MatchPrior"><span class="toc-number">1.3.2.</span> <span class="toc-text">target_transform: MatchPrior</span></a></li></ol></li></ol></li></ol>
+        </nav>
+    </div>
+</aside>
+
+
+
+
+
+        </section>
+        <footer class="hidden lg:block fixed bottom-0 left-0 sm:w-1/12 lg:w-1/6 bg-gray-100 z-40">
+    
+    <div class="footer-social-links">
+        
+            <a target="_blank" rel="noopener" href="https://github.com/grac-gu">
+                <i class="iconfont icon-github"></i>
+            </a>
+        
+            <a href="/None">
+                <i class="iconfont icon-telegram"></i>
+            </a>
+        
+            <a href="/None">
+                <i class="iconfont icon-twitter"></i>
+            </a>
+        
+            <a href="/atom.xml">
+                <i class="iconfont icon-rss"></i>
+            </a>
+        
+    </div>
+    
+    
+</footer>
+
+        <div id="mask" class="hidden mask fixed inset-0 bg-gray-900 opacity-75 z-40"></div>
+        <div id="search-view-container" class="hidden shadow-xl"></div>
+        
+<script src="/js/dom-event.min.js"></script>
+
+<script src="//cdn.jsdelivr.net/npm/yox@1.0.0-alpha.121/dist/standard/prod/yox.min.js"></script>
+
+
+<script src="/js/search.min.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/lightgallery.js@1.1.3/dist/js/lightgallery.min.js"></script>
+    
+<script src="/js/light-gallery.min.js"></script>
+
+
+
+
+
+    </body>
+</html>

@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html >
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, maximum-scale=5, viewport-fit=cover">
+    <title>Hexo</title>
+    <meta name="description" content="MobileNetV2-SSDLite代码分析-4 ssdGithub-pytorch-ssdvision&#x2F;ssdssd.py 123456789import torch.nn as nnimport torchimport numpy as npfrom typing import List, Tupleimport torch.nn.functional as Ffrom ..utils im">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/2020/02/04/deep_learning/SSD/MobileNetV2-SSDLite%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90-4%20ssd/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="MobileNetV2-SSDLite代码分析-4 ssdGithub-pytorch-ssdvision&#x2F;ssdssd.py 123456789import torch.nn as nnimport torchimport numpy as npfrom typing import List, Tupleimport torch.nn.functional as Ffrom ..utils im">
+<meta property="og:locale">
+<meta property="article:published_time" content="2020-02-04T05:26:23.000Z">
+<meta property="article:modified_time" content="2020-02-04T05:26:23.000Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+
+    
+    <link rel="icon" href="https://i.loli.net/2021/03/04/Y8OtTdUnM4isHxh.jpg" type="image/x-icon">
+
+    
+<link rel="stylesheet" href="/css/common.min.css">
+
+
+
+    
+    
+    
+    
+        <link href="//cdn.jsdelivr.net/npm/lightgallery.js@1.1.3/dist/css/lightgallery.min.css" rel="stylesheet">
+    
+    
+    
+<link rel="stylesheet" href="/css/iconfont.min.css">
+
+    
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+    <body>
+        <header class="header header-fixture">
+    <div class="profile-search-wrap flex sm:block">
+        
+        
+        <div class="profile sm:text-center md:px-1 lg:px-3 sm:pb-4 sm:pt-6">
+            <a id="avatar" role="link" href="https://github.com/grace-gu" class="inline-block lg:w-16 lg:h-16 w-8 h-8 m-2" target="_blank" rel="noopener" rel="noreferrer" >
+                <img src="https://i.loli.net/2021/03/04/Y8OtTdUnM4isHxh.jpg" class="rounded-full" alt="avatar">
+            </a>
+            <h2 id="name" class="hidden lg:block">Grace</h2>
+            <h3 id="title" class="hidden xl:block">coder</h3>
+            
+            <small id="location" class="hidden lg:block">
+                <i class="iconfont icon-map-icon"></i>
+                Beijing, China
+            </small>
+            
+        </div>
+        
+        
+<div class="search flex-1 flex lg:inline-block sm:hidden lg:px-4 lg:mt-2 lg:mb-4 lg:w-full">
+    <form id="search-form" class="my-auto flex-1 lg:border lg:border-solid lg:border-gray-200">
+        <div class="input-group table bg-gray-100 lg:bg-white w-full">
+            <input id="search-input" type="text" placeholder="Search" class="inline-block w-full bg-gray-100 lg:bg-white">
+            <span class="table-cell">
+                <button name="search tigger button" disabled>
+                    <i class="iconfont icon-search m-2"></i>
+                </button>
+            </span>
+        </div>
+    </form>
+        
+<script id="search-teamplate" type="text/html" data-path="/content.json">
+    <div>
+        <div class="search-header bg-gray-400">
+            <input id="actual-search-input" model="keyword" ref="input" class="inline-block w-full h-10 px-2 py-1" placeholder="Search" type="text">
+        </div>
+        <div class="search-result bg-gray-200">
+            {{#each searchPosts}}
+            <a href="/{{ path }}" class="result-item block px-2 pb-3 mb-1 pt-1 hover:bg-indigo-100">
+                <i class="iconfont icon-file"></i>
+                <h1 class="result-title inline font-medium text-lg">{{ title }}</h1>
+                <p class="result-content text-gray-600 text-sm">{{{ text }}}</p>
+            </a>
+            {{/each}}
+        </div>
+    </div>
+</script>
+
+</div>
+
+
+        <button name="menu toogle button" id="menu-toggle-btn" class="block sm:hidden p-3" role="button" aria-expanded="false">
+            <i class="iconfont icon-hamburger"></i>
+        </button>
+    </div>
+    <nav id="menu-nav" class="hidden sm:flex flex-col">
+        
+        
+            <div class="menu-item menu-home" role="menuitem">
+                <a href="/.">
+                    <i class="iconfont icon-home" aria-hidden="true"></i>
+                    <span class="menu-title">Home</span>
+                </a>
+            </div>
+        
+        
+            <div class="menu-item menu-archives" role="menuitem">
+                <a href="/archives">
+                    <i class="iconfont icon-archive" aria-hidden="true"></i>
+                    <span class="menu-title">Archives</span>
+                </a>
+            </div>
+        
+        
+            <div class="menu-item menu-categories" role="menuitem">
+                <a href="/categories">
+                    <i class="iconfont icon-folder" aria-hidden="true"></i>
+                    <span class="menu-title">Categories</span>
+                </a>
+            </div>
+        
+        
+            <div class="menu-item menu-tags" role="menuitem">
+                <a href="/tags">
+                    <i class="iconfont icon-tag" aria-hidden="true"></i>
+                    <span class="menu-title">Tags</span>
+                </a>
+            </div>
+        
+        
+            <div class="menu-item menu-repository" role="menuitem">
+                <a href="/repository">
+                    <i class="iconfont icon-project" aria-hidden="true"></i>
+                    <span class="menu-title">Repository</span>
+                </a>
+            </div>
+        
+        
+            <div class="menu-item menu-links" role="menuitem">
+                <a href="/links">
+                    <i class="iconfont icon-friend" aria-hidden="true"></i>
+                    <span class="menu-title">Links</span>
+                </a>
+            </div>
+        
+        
+            <div class="menu-item menu-about" role="menuitem">
+                <a href="/about">
+                    <i class="iconfont icon-cup" aria-hidden="true"></i>
+                    <span class="menu-title">About</span>
+                </a>
+            </div>
+        
+        
+<div class="social-links flex sm:flex-col lg:hidden mt-5">
+    
+        <span class="social-item text-center">
+            <a target="_blank" rel="noopener" href="https://github.com/grac-gu">
+                <i class="iconfont social-icon icon-github"></i>
+                <span class="menu-title hidden lg:inline">menu.github</span>
+            </a>
+        </span>
+    
+        <span class="social-item text-center">
+            <a href="/None">
+                <i class="iconfont social-icon icon-telegram"></i>
+                <span class="menu-title hidden lg:inline">menu.telegram</span>
+            </a>
+        </span>
+    
+        <span class="social-item text-center">
+            <a href="/None">
+                <i class="iconfont social-icon icon-twitter"></i>
+                <span class="menu-title hidden lg:inline">menu.twitter</span>
+            </a>
+        </span>
+    
+        <span class="social-item text-center">
+            <a href="/atom.xml">
+                <i class="iconfont social-icon icon-rss"></i>
+                <span class="menu-title hidden lg:inline">menu.rss</span>
+            </a>
+        </span>
+    
+</div>
+
+
+    </nav>
+</header>
+
+        <section class="main-section">
+            
+    <main class="flex-1 px-4 py-12 md:px-5 lg:px-8 lg:py-4 relative min-h-screen">
+    
+
+    <article class="content article article-archives article-type-list" itemscope="">
+        <header class="article-header">
+            
+
+
+            <p class="article-meta mb-3 text-xs">
+                <span class="article-date">
+    <i class="iconfont icon-calendar-check"></i>
+	<a href="/2020/02/04/deep_learning/SSD/MobileNetV2-SSDLite%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90-4%20ssd/" class="article-date">
+	  <time datetime="2020-02-04T05:26:23.000Z" itemprop="datePublished">Feb 4</time>
+	</a>
+</span>
+
+                
+
+                
+
+                <span class="_partial/post-comment"><i class="icon icon-comment"></i>
+                    <a href="/2020/02/04/deep_learning/SSD/MobileNetV2-SSDLite%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90-4%20ssd/#comments" class="article-comment-link">
+                        Comments
+                    </a>
+                </span>
+                
+
+            </p>
+        </header>
+        <div class="marked-body article-body">
+            <h1 id="MobileNetV2-SSDLite代码分析-4-ssd"><a href="#MobileNetV2-SSDLite代码分析-4-ssd" class="headerlink" title="MobileNetV2-SSDLite代码分析-4 ssd"></a>MobileNetV2-SSDLite代码分析-4 ssd</h1><p><a target="_blank" rel="noopener" href="https://github.com/qfgaohao/pytorch-ssd#single-shot-multibox-detector-implementation-in-pytorch">Github-pytorch-ssd</a><br><a target="_blank" rel="noopener" href="https://github.com/qfgaohao/pytorch-ssd/tree/master/vision/ssd">vision/ssd</a><br><a target="_blank" rel="noopener" href="https://github.com/qfgaohao/pytorch-ssd/blob/master/vision/ssd/ssd.py">ssd.py</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch.nn <span class="keyword">as</span> nn</span><br><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> typing <span class="keyword">import</span> List, Tuple</span><br><span class="line"><span class="keyword">import</span> torch.nn.functional <span class="keyword">as</span> F</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> ..utils <span class="keyword">import</span> box_utils</span><br><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> namedtuple</span><br><span class="line">GraphPath = namedtuple(<span class="string">&quot;GraphPath&quot;</span>, [<span class="string">&#x27;s0&#x27;</span>, <span class="string">&#x27;name&#x27;</span>, <span class="string">&#x27;s1&#x27;</span>]) </span><br></pre></td></tr></table></figure>
+<p>namedtuple: 有字典功能的tuple</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">SeperableConv2d</span>(<span class="params">in_channels, out_channels, kernel_size=<span class="number">1</span>, stride=<span class="number">1</span>, padding=<span class="number">0</span>, onnx_compatible=<span class="literal">False</span></span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;Replace Conv2d with a depthwise Conv2d and Pointwise Conv2d.</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    ReLU = nn.ReLU <span class="keyword">if</span> onnx_compatible <span class="keyword">else</span> nn.ReLU6</span><br><span class="line">    <span class="keyword">return</span> Sequential(</span><br><span class="line">        Conv2d(in_channels=in_channels, out_channels=in_channels, kernel_size=kernel_size,</span><br><span class="line">               groups=in_channels, stride=stride, padding=padding),</span><br><span class="line">        BatchNorm2d(in_channels),</span><br><span class="line">        ReLU(),</span><br><span class="line">        Conv2d(in_channels=in_channels, out_channels=out_channels, kernel_size=<span class="number">1</span>),</span><br><span class="line">    )</span><br></pre></td></tr></table></figure>
+
+<p>SSD_lite的lite就体现在上述这段代码中,它将SSD中的conv用深度可分离卷积来代替了.</p>
+<p>关于SSD的定义，先放一段mobilenetv2_ssd_lite.py中的代码在这里，可以大致了解每个参数的含义</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">create_mobilenetv2_ssd_lite</span>(<span class="params">num_classes, width_mult=<span class="number">1.0</span>, use_batch_norm=<span class="literal">True</span>, onnx_compatible=<span class="literal">False</span>, is_test=<span class="literal">False</span></span>):</span></span><br><span class="line">    base_net = MobileNetV2(width_mult=width_mult, use_batch_norm=use_batch_norm,</span><br><span class="line">                           onnx_compatible=onnx_compatible).features</span><br><span class="line"></span><br><span class="line">    source_layer_indexes = [</span><br><span class="line">        GraphPath(<span class="number">14</span>, <span class="string">&#x27;conv&#x27;</span>, <span class="number">3</span>),</span><br><span class="line">        <span class="number">19</span>,</span><br><span class="line">    ]</span><br><span class="line">    extras = ModuleList([</span><br><span class="line">        InvertedResidual(<span class="number">1280</span>, <span class="number">512</span>, stride=<span class="number">2</span>, expand_ratio=<span class="number">0.2</span>),</span><br><span class="line">        InvertedResidual(<span class="number">512</span>, <span class="number">256</span>, stride=<span class="number">2</span>, expand_ratio=<span class="number">0.25</span>),</span><br><span class="line">        InvertedResidual(<span class="number">256</span>, <span class="number">256</span>, stride=<span class="number">2</span>, expand_ratio=<span class="number">0.5</span>),</span><br><span class="line">        InvertedResidual(<span class="number">256</span>, <span class="number">64</span>, stride=<span class="number">2</span>, expand_ratio=<span class="number">0.25</span>)</span><br><span class="line">    ])</span><br><span class="line"></span><br><span class="line">    regression_headers = ModuleList([</span><br><span class="line">        SeperableConv2d(in_channels=<span class="built_in">round</span>(<span class="number">576</span> * width_mult), out_channels=<span class="number">6</span> * <span class="number">4</span>,</span><br><span class="line">                        kernel_size=<span class="number">3</span>, padding=<span class="number">1</span>, onnx_compatible=<span class="literal">False</span>),</span><br><span class="line">        SeperableConv2d(in_channels=<span class="number">1280</span>, out_channels=<span class="number">6</span> * <span class="number">4</span>, kernel_size=<span class="number">3</span>, padding=<span class="number">1</span>, onnx_compatible=<span class="literal">False</span>),</span><br><span class="line">        SeperableConv2d(in_channels=<span class="number">512</span>, out_channels=<span class="number">6</span> * <span class="number">4</span>, kernel_size=<span class="number">3</span>, padding=<span class="number">1</span>, onnx_compatible=<span class="literal">False</span>),</span><br><span class="line">        SeperableConv2d(in_channels=<span class="number">256</span>, out_channels=<span class="number">6</span> * <span class="number">4</span>, kernel_size=<span class="number">3</span>, padding=<span class="number">1</span>, onnx_compatible=<span class="literal">False</span>),</span><br><span class="line">        SeperableConv2d(in_channels=<span class="number">256</span>, out_channels=<span class="number">6</span> * <span class="number">4</span>, kernel_size=<span class="number">3</span>, padding=<span class="number">1</span>, onnx_compatible=<span class="literal">False</span>),</span><br><span class="line">        Conv2d(in_channels=<span class="number">64</span>, out_channels=<span class="number">6</span> * <span class="number">4</span>, kernel_size=<span class="number">1</span>),</span><br><span class="line">    ])</span><br><span class="line"></span><br><span class="line">    classification_headers = ModuleList([</span><br><span class="line">        SeperableConv2d(in_channels=<span class="built_in">round</span>(<span class="number">576</span> * width_mult), out_channels=<span class="number">6</span> * num_classes, kernel_size=<span class="number">3</span>, padding=<span class="number">1</span>),</span><br><span class="line">        SeperableConv2d(in_channels=<span class="number">1280</span>, out_channels=<span class="number">6</span> * num_classes, kernel_size=<span class="number">3</span>, padding=<span class="number">1</span>),</span><br><span class="line">        SeperableConv2d(in_channels=<span class="number">512</span>, out_channels=<span class="number">6</span> * num_classes, kernel_size=<span class="number">3</span>, padding=<span class="number">1</span>),</span><br><span class="line">        SeperableConv2d(in_channels=<span class="number">256</span>, out_channels=<span class="number">6</span> * num_classes, kernel_size=<span class="number">3</span>, padding=<span class="number">1</span>),</span><br><span class="line">        SeperableConv2d(in_channels=<span class="number">256</span>, out_channels=<span class="number">6</span> * num_classes, kernel_size=<span class="number">3</span>, padding=<span class="number">1</span>),</span><br><span class="line">        Conv2d(in_channels=<span class="number">64</span>, out_channels=<span class="number">6</span> * num_classes, kernel_size=<span class="number">1</span>),</span><br><span class="line">    ])</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> SSD(num_classes, base_net, source_layer_indexes,</span><br><span class="line">               extras, classification_headers, regression_headers, is_test=is_test, config=config)</span><br></pre></td></tr></table></figure>
+
+<p>&nbsp;在上面的代码中, create_mobilenetv2_ssd_lite定义了source_layer_indexes, extras, regression_headers, classification_headers</p>
+<p>最后有个config属性, 这是预先定义好的关于生成anchor的设置, 包括: 图像尺寸、平均值、方差、iou阈值，anchor属性，和生成priors的函数。</p>
+<p>其中anchor属性：’SSDSpec’, [‘feature_map_size’, ‘shrinkage’, ‘box_sizes’, ‘aspect_ratios’]</p>
+<p>来看看上面定义的四个东西具体是怎么在网络中使用的</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SSD</span>(<span class="params">nn.Module</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, num_classes: <span class="built_in">int</span>, base_net: nn.ModuleList, source_layer_indexes: List[<span class="built_in">int</span>],</span></span></span><br><span class="line"><span class="function"><span class="params">                 extras: nn.ModuleList, classification_headers: nn.ModuleList,</span></span></span><br><span class="line"><span class="function"><span class="params">                 regression_headers: nn.ModuleList, is_test=<span class="literal">False</span>, config=<span class="literal">None</span>, device=<span class="literal">None</span></span>):</span></span><br><span class="line">        <span class="string">&quot;&quot;&quot;Compose a SSD model using the given components.</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="built_in">super</span>(SSD, self).__init__()</span><br><span class="line"></span><br><span class="line">        self.num_classes = num_classes</span><br><span class="line">        self.base_net = base_net</span><br><span class="line">        self.source_layer_indexes = source_layer_indexes</span><br><span class="line">        self.extras = extras</span><br><span class="line">        self.classification_headers = classification_headers</span><br><span class="line">        self.regression_headers = regression_headers</span><br><span class="line">        self.is_test = is_test</span><br><span class="line">        self.config = config</span><br><span class="line"></span><br><span class="line">        <span class="comment"># register layers in source_layer_indexes by adding them to a module list</span></span><br><span class="line">        self.source_layer_add_ons = nn.ModuleList([t[<span class="number">1</span>] <span class="keyword">for</span> t <span class="keyword">in</span> source_layer_indexes <span class="keyword">if</span> <span class="built_in">isinstance</span>(t, <span class="built_in">tuple</span>) <span class="keyword">and</span> <span class="keyword">not</span> <span class="built_in">isinstance</span>(t, GraphPath)])</span><br><span class="line">        <span class="keyword">if</span> device:</span><br><span class="line">            self.device = device</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            self.device = torch.device(<span class="string">&quot;cuda:0&quot;</span> <span class="keyword">if</span> torch.cuda.is_available() <span class="keyword">else</span> <span class="string">&quot;cpu&quot;</span>)</span><br><span class="line">        <span class="keyword">if</span> is_test:</span><br><span class="line">            self.config = config</span><br><span class="line">            self.priors = config.priors.to(self.device)</span><br><span class="line">            </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span>(<span class="params">self, x: torch.Tensor</span>) -&gt; Tuple[torch.Tensor, torch.Tensor]:</span></span><br><span class="line">        confidences = []</span><br><span class="line">        locations = []</span><br><span class="line">        start_layer_index = <span class="number">0</span></span><br><span class="line">        header_index = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> end_layer_index <span class="keyword">in</span> self.source_layer_indexes:</span><br><span class="line">            <span class="keyword">if</span> <span class="built_in">isinstance</span>(end_layer_index, GraphPath):</span><br><span class="line">                path = end_layer_index</span><br><span class="line">                end_layer_index = end_layer_index.s0</span><br><span class="line">                added_layer = <span class="literal">None</span></span><br><span class="line">            <span class="keyword">elif</span> <span class="built_in">isinstance</span>(end_layer_index, <span class="built_in">tuple</span>):</span><br><span class="line">                added_layer = end_layer_index[<span class="number">1</span>]</span><br><span class="line">                end_layer_index = end_layer_index[<span class="number">0</span>]</span><br><span class="line">                path = <span class="literal">None</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                added_layer = <span class="literal">None</span></span><br><span class="line">                path = <span class="literal">None</span></span><br><span class="line">            <span class="keyword">for</span> layer <span class="keyword">in</span> self.base_net[start_layer_index: end_layer_index]:</span><br><span class="line">                x = layer(x)</span><br><span class="line">            <span class="keyword">if</span> added_layer:</span><br><span class="line">                y = added_layer(x)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                y = x</span><br><span class="line">            <span class="keyword">if</span> path:</span><br><span class="line">                sub = <span class="built_in">getattr</span>(self.base_net[end_layer_index], path.name)</span><br><span class="line">                <span class="keyword">for</span> layer <span class="keyword">in</span> sub[:path.s1]:</span><br><span class="line">                    x = layer(x)</span><br><span class="line">                y = x</span><br><span class="line">                <span class="keyword">for</span> layer <span class="keyword">in</span> sub[path.s1:]:</span><br><span class="line">                    x = layer(x)</span><br><span class="line">                end_layer_index += <span class="number">1</span></span><br><span class="line">            start_layer_index = end_layer_index</span><br><span class="line">            confidence, location = self.compute_header(header_index, y)</span><br><span class="line">            header_index += <span class="number">1</span></span><br><span class="line">            confidences.append(confidence)</span><br><span class="line">            locations.append(location)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> layer <span class="keyword">in</span> self.base_net[end_layer_index:]:</span><br><span class="line">            x = layer(x)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> layer <span class="keyword">in</span> self.extras:</span><br><span class="line">            x = layer(x)</span><br><span class="line">            confidence, location = self.compute_header(header_index, x)</span><br><span class="line">            header_index += <span class="number">1</span></span><br><span class="line">            confidences.append(confidence)</span><br><span class="line">            locations.append(location)</span><br><span class="line"></span><br><span class="line">        confidences = torch.cat(confidences, <span class="number">1</span>)</span><br><span class="line">        locations = torch.cat(locations, <span class="number">1</span>)</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> self.is_test:</span><br><span class="line">            confidences = F.softmax(confidences, dim=<span class="number">2</span>)</span><br><span class="line">            boxes = box_utils.convert_locations_to_boxes(</span><br><span class="line">                locations, self.priors, self.config.center_variance, self.config.size_variance</span><br><span class="line">            )</span><br><span class="line">            boxes = box_utils.center_form_to_corner_form(boxes)</span><br><span class="line">            <span class="keyword">return</span> confidences, boxes</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> confidences, locations</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">compute_header</span>(<span class="params">self, i, x</span>):</span></span><br><span class="line">        confidence = self.classification_headers[i](x)</span><br><span class="line">        confidence = confidence.permute(<span class="number">0</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">1</span>).contiguous()</span><br><span class="line">        confidence = confidence.view(confidence.size(<span class="number">0</span>), -<span class="number">1</span>, self.num_classes)</span><br><span class="line"></span><br><span class="line">        location = self.regression_headers[i](x)</span><br><span class="line">        location = location.permute(<span class="number">0</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">1</span>).contiguous()</span><br><span class="line">        location = location.view(location.size(<span class="number">0</span>), -<span class="number">1</span>, <span class="number">4</span>)</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><p>source_layer_add_ones</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">GraphPath = namedtuple(<span class="string">&quot;GraphPath&quot;</span>, [<span class="string">&#x27;s0&#x27;</span>, <span class="string">&#x27;name&#x27;</span>, <span class="string">&#x27;s1&#x27;</span>])</span><br><span class="line">source_layer_indexes = [</span><br><span class="line">        GraphPath(<span class="number">14</span>, <span class="string">&#x27;conv&#x27;</span>, <span class="number">3</span>),</span><br><span class="line">        <span class="number">19</span>,</span><br><span class="line">    ]</span><br><span class="line">self.source_layer_add_ons = nn.ModuleList([t[<span class="number">1</span>] <span class="keyword">for</span> t <span class="keyword">in</span> source_layer_indexes <span class="keyword">if</span> <span class="built_in">isinstance</span>(t, <span class="built_in">tuple</span>) <span class="keyword">and</span> <span class="keyword">not</span> <span class="built_in">isinstance</span>(t, GraphPath)])</span><br><span class="line"><span class="comment"># 这里实际sorce_layer_add_ons为空</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>forward过程</p>
+<p>针对source_layer_indexes:</p>
+<ul>
+<li><p>找到start_layer_index和end_layer_index</p>
+<ol>
+<li><p>GraphPath(s0=14, name=’conv’, s1=3)</p>
+<p>path = GraphPath(s0=14, name=’conv’, s1=3)，<strong>对应着我想在basenet的第14层找到名为conv的层的集合， 该集合中的第3层我想用来做分类与回归</strong></p>
+<p>end_layer_index = 14</p>
+</li>
+<li><p>19</p>
+<p>则直接end_layer_index = 19</p>
+</li>
+</ol>
+</li>
+<li><p>针对base_net[start_layer_index, end_layer_index]中的每一个layer</p>
+<ul>
+<li>x = layer(x)</li>
+<li>将最后一层的结果保存成y（y就是拿来做检测和回归的特征）</li>
+<li>if path:<ul>
+<li>sub = mobilenet v2中第14层的conv（nn.module，包含了dwconv, relu, conv, relu等等）</li>
+<li>sub[1: 3]：正常的正向传播</li>
+<li>将sub中的第3层的结果取出，保存为y</li>
+<li>sub[3: ]：正常的正向传播</li>
+<li>end_layer_index += 1</li>
+</ul>
+</li>
+<li>start_layer_index = end_layer_index</li>
+<li>根据y的结果去计算confidence和location， 并保存到结果中</li>
+<li>header_index += 1</li>
+</ul>
+</li>
+</ul>
+<p>将base_net[end_layer_index: ]中的层正常的正向传播</p>
+<p>针对extras:(这个就是相对mobilenet V2 额外添加的四个层用来做检测的)</p>
+<ul>
+<li>x  = layer(x)</li>
+<li>对每一个x计算confidence和location，将它放到结果中去</li>
+<li>header_index += 1</li>
+</ul>
+<p>处理confidences和location，在第1维度做拼接</p>
+<p>如果不是测试阶段，直接返回confidences和location</p>
+<p>如果是测试阶段，还需要多做如下的处理：</p>
+<ul>
+<li>对confidences做softmax操作</li>
+<li>将location转成我们需要的boxes值</li>
+<li>return confidences和boxes</li>
+</ul>
+</li>
+<li><p>compute_header操作</p>
+<p>处理过程是这样的</p>
+<p>针对特征x,</p>
+<p>分别用两个卷积去得到confidence和location</p>
+<p>confidence需要permute(0,2,3,1).contiguous再进行view，使得符合(img, -1, classes)的格式</p>
+<p>location需要permute(0,2,3,1).contiguous再进行view，使得符合(img,-1, 4)的格式</p>
+</li>
+</ol>
+
+        </div>
+        
+<blockquote class="copyright">
+    <p><strong>Link to this article : </strong><a class="permalink" href="http://yoursite.com/2020/02/04/deep_learning/SSD/MobileNetV2-SSDLite%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90-4%20ssd/">http://yoursite.com/2020/02/04/deep_learning/SSD/MobileNetV2-SSDLite代码分析-4 ssd/</a></p>
+    <p><strong>This article is available under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)</a> License</strong></p>
+</blockquote>
+
+
+    </article>
+    
+    <section id="comments">
+        
+    </section>
+
+
+    
+
+</main>
+
+
+<aside style="" id="sidebar" class="aside aside-fixture">
+    <div class="toc-sidebar">
+        <nav id="toc" class="article-toc">
+            <h3 class="toc-title">Catalogue</h3>
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#MobileNetV2-SSDLite%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90-4-ssd"><span class="toc-number">1.</span> <span class="toc-text">MobileNetV2-SSDLite代码分析-4 ssd</span></a></li></ol>
+        </nav>
+    </div>
+</aside>
+
+
+
+
+
+        </section>
+        <footer class="hidden lg:block fixed bottom-0 left-0 sm:w-1/12 lg:w-1/6 bg-gray-100 z-40">
+    
+    <div class="footer-social-links">
+        
+            <a target="_blank" rel="noopener" href="https://github.com/grac-gu">
+                <i class="iconfont icon-github"></i>
+            </a>
+        
+            <a href="/None">
+                <i class="iconfont icon-telegram"></i>
+            </a>
+        
+            <a href="/None">
+                <i class="iconfont icon-twitter"></i>
+            </a>
+        
+            <a href="/atom.xml">
+                <i class="iconfont icon-rss"></i>
+            </a>
+        
+    </div>
+    
+    
+</footer>
+
+        <div id="mask" class="hidden mask fixed inset-0 bg-gray-900 opacity-75 z-40"></div>
+        <div id="search-view-container" class="hidden shadow-xl"></div>
+        
+<script src="/js/dom-event.min.js"></script>
+
+<script src="//cdn.jsdelivr.net/npm/yox@1.0.0-alpha.121/dist/standard/prod/yox.min.js"></script>
+
+
+<script src="/js/search.min.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/lightgallery.js@1.1.3/dist/js/lightgallery.min.js"></script>
+    
+<script src="/js/light-gallery.min.js"></script>
+
+
+
+
+
+    </body>
+</html>

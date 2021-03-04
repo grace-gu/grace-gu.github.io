@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html >
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, maximum-scale=5, viewport-fit=cover">
+    <title>Hexo</title>
+    <meta name="description" content="[排序算法[TOC] github-python实现的靠谱算法 总述  相关概念稳定：如果a原本在b前面，而a&#x3D;b，排序之后a仍然在b的前面。 不稳定：如果a原本在b的前面，而a&#x3D;b，排序之后 a 可能会出现在 b 的后面。 时间复杂度：对排序数据的总的操作次数。反映当n变化时，操作次数呈现什么规律。 空间复杂度：是指算法在计算机内执行时所需存储空间的度量，它也是数据规模n的函数 快速排序快排的基">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/2020/02/04/algrothm/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="[排序算法[TOC] github-python实现的靠谱算法 总述  相关概念稳定：如果a原本在b前面，而a&#x3D;b，排序之后a仍然在b的前面。 不稳定：如果a原本在b的前面，而a&#x3D;b，排序之后 a 可能会出现在 b 的后面。 时间复杂度：对排序数据的总的操作次数。反映当n变化时，操作次数呈现什么规律。 空间复杂度：是指算法在计算机内执行时所需存储空间的度量，它也是数据规模n的函数 快速排序快排的基">
+<meta property="og:locale">
+<meta property="og:image" content="http://yoursite.com/2020/02/04/algrothm/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95.assets/1567445048130.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/04/algrothm/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95.assets/1567445082210.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/04/algrothm/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95.assets/640.gif">
+<meta property="og:image" content="http://yoursite.com/2020/02/04/algrothm/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95.assets/5.gif">
+<meta property="og:image" content="http://yoursite.com/2020/02/04/algrothm/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95.assets/Image.png">
+<meta property="og:image" content="http://yoursite.com/2020/02/04/algrothm/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95.assets/1.gif">
+<meta property="og:image" content="http://yoursite.com/2020/02/04/algrothm/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95.assets/2.gif">
+<meta property="og:image" content="http://yoursite.com/2020/02/04/algrothm/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95.assets/3.gif">
+<meta property="og:image" content="http://yoursite.com/2020/02/04/algrothm/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95.assets/4.gif">
+<meta property="og:image" content="http://yoursite.com/2020/02/04/algrothm/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95.assets/7.gif">
+<meta property="og:image" content="http://yoursite.com/2020/02/04/algrothm/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95.assets/10.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/02/04/algrothm/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95.assets/11.gif">
+<meta property="article:published_time" content="2020-02-04T05:26:23.000Z">
+<meta property="article:modified_time" content="2020-02-04T05:26:23.000Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2020/02/04/algrothm/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95.assets/1567445048130.png">
+
+    
+    <link rel="icon" href="https://i.loli.net/2021/03/04/Y8OtTdUnM4isHxh.jpg" type="image/x-icon">
+
+    
+<link rel="stylesheet" href="/css/common.min.css">
+
+
+
+    
+    
+    
+    
+        <link href="//cdn.jsdelivr.net/npm/lightgallery.js@1.1.3/dist/css/lightgallery.min.css" rel="stylesheet">
+    
+    
+    
+<link rel="stylesheet" href="/css/iconfont.min.css">
+
+    
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+    <body>
+        <header class="header header-fixture">
+    <div class="profile-search-wrap flex sm:block">
+        
+        
+        <div class="profile sm:text-center md:px-1 lg:px-3 sm:pb-4 sm:pt-6">
+            <a id="avatar" role="link" href="https://github.com/grace-gu" class="inline-block lg:w-16 lg:h-16 w-8 h-8 m-2" target="_blank" rel="noopener" rel="noreferrer" >
+                <img src="https://i.loli.net/2021/03/04/Y8OtTdUnM4isHxh.jpg" class="rounded-full" alt="avatar">
+            </a>
+            <h2 id="name" class="hidden lg:block">Grace</h2>
+            <h3 id="title" class="hidden xl:block">coder</h3>
+            
+            <small id="location" class="hidden lg:block">
+                <i class="iconfont icon-map-icon"></i>
+                Beijing, China
+            </small>
+            
+        </div>
+        
+        
+<div class="search flex-1 flex lg:inline-block sm:hidden lg:px-4 lg:mt-2 lg:mb-4 lg:w-full">
+    <form id="search-form" class="my-auto flex-1 lg:border lg:border-solid lg:border-gray-200">
+        <div class="input-group table bg-gray-100 lg:bg-white w-full">
+            <input id="search-input" type="text" placeholder="Search" class="inline-block w-full bg-gray-100 lg:bg-white">
+            <span class="table-cell">
+                <button name="search tigger button" disabled>
+                    <i class="iconfont icon-search m-2"></i>
+                </button>
+            </span>
+        </div>
+    </form>
+        
+<script id="search-teamplate" type="text/html" data-path="/content.json">
+    <div>
+        <div class="search-header bg-gray-400">
+            <input id="actual-search-input" model="keyword" ref="input" class="inline-block w-full h-10 px-2 py-1" placeholder="Search" type="text">
+        </div>
+        <div class="search-result bg-gray-200">
+            {{#each searchPosts}}
+            <a href="/{{ path }}" class="result-item block px-2 pb-3 mb-1 pt-1 hover:bg-indigo-100">
+                <i class="iconfont icon-file"></i>
+                <h1 class="result-title inline font-medium text-lg">{{ title }}</h1>
+                <p class="result-content text-gray-600 text-sm">{{{ text }}}</p>
+            </a>
+            {{/each}}
+        </div>
+    </div>
+</script>
+
+</div>
+
+
+        <button name="menu toogle button" id="menu-toggle-btn" class="block sm:hidden p-3" role="button" aria-expanded="false">
+            <i class="iconfont icon-hamburger"></i>
+        </button>
+    </div>
+    <nav id="menu-nav" class="hidden sm:flex flex-col">
+        
+        
+            <div class="menu-item menu-home" role="menuitem">
+                <a href="/.">
+                    <i class="iconfont icon-home" aria-hidden="true"></i>
+                    <span class="menu-title">Home</span>
+                </a>
+            </div>
+        
+        
+            <div class="menu-item menu-archives" role="menuitem">
+                <a href="/archives">
+                    <i class="iconfont icon-archive" aria-hidden="true"></i>
+                    <span class="menu-title">Archives</span>
+                </a>
+            </div>
+        
+        
+            <div class="menu-item menu-categories" role="menuitem">
+                <a href="/categories">
+                    <i class="iconfont icon-folder" aria-hidden="true"></i>
+                    <span class="menu-title">Categories</span>
+                </a>
+            </div>
+        
+        
+            <div class="menu-item menu-tags" role="menuitem">
+                <a href="/tags">
+                    <i class="iconfont icon-tag" aria-hidden="true"></i>
+                    <span class="menu-title">Tags</span>
+                </a>
+            </div>
+        
+        
+            <div class="menu-item menu-repository" role="menuitem">
+                <a href="/repository">
+                    <i class="iconfont icon-project" aria-hidden="true"></i>
+                    <span class="menu-title">Repository</span>
+                </a>
+            </div>
+        
+        
+            <div class="menu-item menu-links" role="menuitem">
+                <a href="/links">
+                    <i class="iconfont icon-friend" aria-hidden="true"></i>
+                    <span class="menu-title">Links</span>
+                </a>
+            </div>
+        
+        
+            <div class="menu-item menu-about" role="menuitem">
+                <a href="/about">
+                    <i class="iconfont icon-cup" aria-hidden="true"></i>
+                    <span class="menu-title">About</span>
+                </a>
+            </div>
+        
+        
+<div class="social-links flex sm:flex-col lg:hidden mt-5">
+    
+        <span class="social-item text-center">
+            <a target="_blank" rel="noopener" href="https://github.com/grac-gu">
+                <i class="iconfont social-icon icon-github"></i>
+                <span class="menu-title hidden lg:inline">menu.github</span>
+            </a>
+        </span>
+    
+        <span class="social-item text-center">
+            <a href="/None">
+                <i class="iconfont social-icon icon-telegram"></i>
+                <span class="menu-title hidden lg:inline">menu.telegram</span>
+            </a>
+        </span>
+    
+        <span class="social-item text-center">
+            <a href="/None">
+                <i class="iconfont social-icon icon-twitter"></i>
+                <span class="menu-title hidden lg:inline">menu.twitter</span>
+            </a>
+        </span>
+    
+        <span class="social-item text-center">
+            <a href="/atom.xml">
+                <i class="iconfont social-icon icon-rss"></i>
+                <span class="menu-title hidden lg:inline">menu.rss</span>
+            </a>
+        </span>
+    
+</div>
+
+
+    </nav>
+</header>
+
+        <section class="main-section">
+            
+    <main class="flex-1 px-4 py-12 md:px-5 lg:px-8 lg:py-4 relative min-h-screen">
+    
+
+    <article class="content article article-archives article-type-list" itemscope="">
+        <header class="article-header">
+            
+
+
+            <p class="article-meta mb-3 text-xs">
+                <span class="article-date">
+    <i class="iconfont icon-calendar-check"></i>
+	<a href="/2020/02/04/algrothm/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/" class="article-date">
+	  <time datetime="2020-02-04T05:26:23.000Z" itemprop="datePublished">Feb 4</time>
+	</a>
+</span>
+
+                
+
+                
+
+                <span class="_partial/post-comment"><i class="icon icon-comment"></i>
+                    <a href="/2020/02/04/algrothm/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/#comments" class="article-comment-link">
+                        Comments
+                    </a>
+                </span>
+                
+
+            </p>
+        </header>
+        <div class="marked-body article-body">
+            <h1 id="排序算法"><a href="#排序算法" class="headerlink" title="[排序算法"></a>[排序算法</h1><p>[TOC]</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/TheAlgorithms/Python">github-python实现的靠谱算法</a></p>
+<h2 id="总述"><a href="#总述" class="headerlink" title="总述"></a>总述</h2><p><img src="%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95.assets/1567445048130.png" alt="1567445048130"></p>
+<p><img src="%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95.assets/1567445082210.png" alt="1567445082210"></p>
+<h3 id="相关概念"><a href="#相关概念" class="headerlink" title="相关概念"></a>相关概念</h3><p><strong>稳定</strong>：如果a原本在b前面，而a=b，排序之后a仍然在b的前面。</p>
+<p><strong>不稳定</strong>：如果a原本在b的前面，而a=b，排序之后 a 可能会出现在 b 的后面。</p>
+<p><strong>时间复杂度</strong>：对排序数据的总的操作次数。反映当n变化时，操作次数呈现什么规律。</p>
+<p><strong>空间复杂度：</strong>是指算法在计算机内执行时所需存储空间的度量，它也是数据规模n的函数</p>
+<h2 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h2><p>快排的基本思想： </p>
+<ul>
+<li>1．先从数列中取出一个数作为基准数。 </li>
+<li>2．分区过程，将比这个数大的数全放到它的右边，小于或等于它的数全放到它的左边。 </li>
+<li>3．再对左右区间重复第二步，直到各区间只有一个数。</li>
+</ul>
+<p>从算法图解上看到一个写起来非常快的python实现的版本，时间和空间占用都比正常的双指针方式略高，但代码量非常小，逻辑也清楚，很适合用于刷算法题中。</p>
+<p>（这个有图，但这个图会对写最简洁的代码造成一定的理解障碍，因此不放在此处）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">quicksort</span>(<span class="params">array</span>):</span></span><br><span class="line">    length = <span class="built_in">len</span>(array)</span><br><span class="line">    <span class="keyword">if</span> length &lt;= <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">return</span> array</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="comment"># Use the last element as the first pivot</span></span><br><span class="line">        pivot = array.pop()</span><br><span class="line">        <span class="comment"># Put elements greater than pivot in greater list</span></span><br><span class="line">        <span class="comment"># Put elements lesser than pivot in lesser list</span></span><br><span class="line">        greater, lesser = [], []</span><br><span class="line">        <span class="keyword">for</span> element <span class="keyword">in</span> array:</span><br><span class="line">            <span class="keyword">if</span> element &gt; pivot:</span><br><span class="line">                greater.append(element)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                lesser.append(element)</span><br><span class="line">        <span class="keyword">return</span> quick_sort(lesser) + [pivot] + quick_sort(greater)</span><br></pre></td></tr></table></figure>
+
+
+
+<p>用C++的partition有两个版本。第一个是我自己用的，第二个是凡姐提供的，也很好。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">partition</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;numbers, <span class="keyword">int</span> left, <span class="keyword">int</span> right)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (left&gt;=right) <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">int</span> low = left+<span class="number">1</span>; <span class="comment">// low左边的都比基准小</span></span><br><span class="line">    <span class="keyword">int</span> high = right; <span class="comment">//right左边的都比基准大</span></span><br><span class="line">    <span class="keyword">int</span> pivot = numbers[left];</span><br><span class="line">    <span class="keyword">while</span> (low &lt;= high)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (numbers[low]&gt;pivot)</span><br><span class="line">        &#123;</span><br><span class="line">            swap(numbers[low], numbers[high]);</span><br><span class="line">            high--;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> low++;</span><br><span class="line">    &#125;</span><br><span class="line">    swap(numbers[high], numbers[left]);</span><br><span class="line">    <span class="keyword">return</span> high; <span class="comment">//选high是因为在全都排好序的情况下，low还要再++，而high就保持不动了（high)的右边全比它大</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">quickSort</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; numbers)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> index = partition(numbers, <span class="number">0</span>, numbers.size()<span class="number">-1</span>);</span><br><span class="line">    <span class="keyword">if</span> (index != <span class="number">-1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        quicksort(numbers, <span class="number">0</span>, index<span class="number">-1</span>);</span><br><span class="line">    	quicksort(numbers, index+<span class="number">1</span>, numbers.size()<span class="number">-1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>或者两边都往中间推进(但这种边界条件真的很难理解啊)</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">quickSort</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;num, <span class="keyword">int</span> l, <span class="keyword">int</span> r)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (l &gt;= r)     <span class="comment">//先检查左右条件</span></span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">int</span> i = l, j = r, x = num[l];</span><br><span class="line">    <span class="keyword">while</span> (i &lt; j) &#123;</span><br><span class="line">        <span class="keyword">while</span> (i &lt; j &amp;&amp; num[j] &gt;= x)<span class="comment">//从右向左找到第一个小于x的</span></span><br><span class="line">            j--;</span><br><span class="line">        <span class="keyword">if</span> (i &lt; j)</span><br><span class="line">            num[i++] = num[j];<span class="comment">//填坑之后i++</span></span><br><span class="line">        <span class="keyword">while</span> (i &lt; j &amp;&amp; num[i] &lt;= x)<span class="comment">//从左向右找第一个大于x的数</span></span><br><span class="line">            i++;</span><br><span class="line">        <span class="keyword">if</span> (i &lt; j)</span><br><span class="line">            num[j--] = num[i];</span><br><span class="line">    &#125;</span><br><span class="line">    num[i] = x;     <span class="comment">//把最开始取出来的x放到i处</span></span><br><span class="line">    quickSort(num, l, i - <span class="number">1</span>);<span class="comment">//以i为中间值，分左右两部分递归调用</span></span><br><span class="line">    quickSort(num, i + <span class="number">1</span>, r);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>用了荷兰国旗的快排写法</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">quick_sort_3partition</span>(<span class="params">sorting, left, right</span>):</span></span><br><span class="line">    <span class="keyword">if</span> right &lt;= left:</span><br><span class="line">        <span class="keyword">return</span> <span class="comment"># 基础条件</span></span><br><span class="line">    a = i = left <span class="comment"># a左指针，该指针左边的都比基准小, i是第三个指针，用了荷兰国旗思想</span></span><br><span class="line">    b = right <span class="comment"># b右指针，该指针右边的都比基准大</span></span><br><span class="line">    pivot = sorting[left] <span class="comment"># 基准</span></span><br><span class="line">    <span class="keyword">while</span> i &lt;= b:</span><br><span class="line">        <span class="keyword">if</span> sorting[i] &lt; pivot:</span><br><span class="line">            sorting[a], sorting[i] = sorting[i], sorting[a]</span><br><span class="line">            a += <span class="number">1</span></span><br><span class="line">            i += <span class="number">1</span></span><br><span class="line">        <span class="keyword">elif</span> sorting[i] &gt; pivot:</span><br><span class="line">            sorting[b], sorting[i] = sorting[i], sorting[b]</span><br><span class="line">            b -= <span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            i += <span class="number">1</span></span><br><span class="line">    quick_sort_3partition(sorting, left, a - <span class="number">1</span>)</span><br><span class="line">    quick_sort_3partition(sorting, b + <span class="number">1</span>, right)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="堆排序"><a href="#堆排序" class="headerlink" title="堆排序"></a>堆排序</h2><p><img src="%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95.assets/640.gif"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">def <span class="title">heapify</span><span class="params">(unsorted, index, heap_size)</span>:</span></span><br><span class="line"><span class="function">    largest </span>= index</span><br><span class="line">    left_index = <span class="number">2</span> * index + <span class="number">1</span></span><br><span class="line">    right_index = <span class="number">2</span> * index + <span class="number">2</span></span><br><span class="line">    <span class="keyword">if</span> left_index &lt; heap_size and unsorted[left_index] &gt; unsorted[largest]:</span><br><span class="line">        largest = left_index</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> right_index &lt; heap_size and unsorted[right_index] &gt; unsorted[largest]:</span><br><span class="line">        largest = right_index</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> largest != index:</span><br><span class="line">        unsorted[largest], unsorted[index] = unsorted[index], unsorted[largest]</span><br><span class="line">        heapify(unsorted, largest, heap_size)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function">def <span class="title">heap_sort</span><span class="params">(unsorted)</span>:</span></span><br><span class="line"><span class="function">    n </span>= len(unsorted)</span><br><span class="line">    <span class="function"><span class="keyword">for</span> i in <span class="title">range</span><span class="params">(n // <span class="number">2</span> - <span class="number">1</span>, -<span class="number">1</span>, -<span class="number">1</span>)</span>:</span></span><br><span class="line"><span class="function">        <span class="title">heapify</span><span class="params">(unsorted, i, n)</span></span></span><br><span class="line"><span class="function">    <span class="keyword">for</span> i in <span class="title">range</span><span class="params">(n - <span class="number">1</span>, <span class="number">0</span>, -<span class="number">1</span>)</span>:</span></span><br><span class="line"><span class="function">        unsorted[0], unsorted[i] </span>= unsorted[i], unsorted[<span class="number">0</span>]</span><br><span class="line">        heapify(unsorted, <span class="number">0</span>, i)</span><br><span class="line">    <span class="keyword">return</span> unsorted</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="归并排序"><a href="#归并排序" class="headerlink" title="归并排序"></a>归并排序</h2><p><img src="%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95.assets/5.gif"></p>
+<p><img src="%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95.assets/Image.png"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">merge_sort</span>(<span class="params">collection</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">merge</span>(<span class="params">left, right</span>):</span></span><br><span class="line">        result = []</span><br><span class="line">        <span class="keyword">while</span> left <span class="keyword">and</span> right:</span><br><span class="line">            result.append((left <span class="keyword">if</span> left[<span class="number">0</span>] &lt;= right[<span class="number">0</span>] <span class="keyword">else</span> right).pop(<span class="number">0</span>))</span><br><span class="line">        <span class="keyword">return</span> result + left + right</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(collection) &lt;= <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">return</span> collection</span><br><span class="line">    mid = <span class="built_in">len</span>(collection) // <span class="number">2</span></span><br><span class="line">    <span class="keyword">return</span> merge(merge_sort(collection[:mid]), merge_sort(collection[mid:]))</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h2><p><img src="%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95.assets/1.gif"></p>
+<h2 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h2><p><img src="%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95.assets/2.gif"></p>
+<h2 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a>插入排序</h2><p><img src="%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95.assets/3.gif"></p>
+<h2 id="希尔排序"><a href="#希尔排序" class="headerlink" title="希尔排序"></a>希尔排序</h2><p>1959年Shell发明，第一个突破O(n2)的排序算法，是简单插入排序的改进版。它与插入排序的不同之处在于，它会优先比较距离较远的元素。希尔排序又叫<strong>缩小增量排序</strong>。</p>
+<p>先将整个待排序的记录序列分割成为若干子序列分别进行直接插入排序，具体算法描述：</p>
+<ul>
+<li>选择一个增量序列t1，t2，…，tk，其中ti&gt;tj，tk=1；</li>
+<li>按增量序列个数k，对序列进行k 趟排序；</li>
+<li>每趟排序，根据对应的增量ti，将待排序列分割成若干长度为m 的子序列，分别对各子表进行直接插入排序。仅增量因子为1 时，整个序列作为一个表来处理，表长度即为整个序列的长度。</li>
+</ul>
+<p><img src="%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95.assets/4.gif"></p>
+<h2 id="计数排序"><a href="#计数排序" class="headerlink" title="计数排序"></a>计数排序</h2><p>作为一种线性时间复杂度的排序，计数排序要求输入的数据必须是有确定范围的整数。</p>
+<ul>
+<li>找出待排序的数组中最大和最小的元素；</li>
+<li>统计数组中每个值为i的元素出现的次数，存入数组C的第i项</li>
+<li>对所有的计数累加（从C中的第一个元素开始，每一项和前一项相加）</li>
+<li>反向填充目标数组：将每个元素i放在新数组的第C(i)项，每放一个元素就将C(i)减去1。</li>
+</ul>
+<p><img src="%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95.assets/7.gif"></p>
+<h2 id="桶排序"><a href="#桶排序" class="headerlink" title="桶排序"></a>桶排序</h2><ul>
+<li>设置一个定量的数组当作空桶；</li>
+<li>遍历输入数据，并且把数据一个一个放到对应的桶里去；</li>
+<li>对每个不是空的桶进行排序；</li>
+<li>从不是空的桶里把排好序的数据拼接起来。</li>
+</ul>
+<p><img src="%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95.assets/10.jpg"></p>
+<h2 id="基数排序"><a href="#基数排序" class="headerlink" title="基数排序"></a>基数排序</h2><p>基数排序是按照低位先排序，然后收集；再按照高位排序，然后再收集；依次类推，直到最高位。有时候有些属性是有优先级顺序的，先按低优先级排序，再按高优先级排序。最后的次序就是高优先级高的在前，高优先级相同的低优先级高的在前。</p>
+<ul>
+<li>取得数组中的最大数，并取得位数；</li>
+<li>arr为原始数组，从最低位开始取每个位组成radix数组；</li>
+<li>对radix进行计数排序（利用计数排序适用于小范围数的特点）；</li>
+</ul>
+<p><img src="%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95.assets/11.gif"></p>
+
+        </div>
+        
+<blockquote class="copyright">
+    <p><strong>Link to this article : </strong><a class="permalink" href="http://yoursite.com/2020/02/04/algrothm/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/">http://yoursite.com/2020/02/04/algrothm/排序算法/</a></p>
+    <p><strong>This article is available under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)</a> License</strong></p>
+</blockquote>
+
+
+    </article>
+    
+    <section id="comments">
+        
+    </section>
+
+
+    
+
+</main>
+
+
+<aside style="" id="sidebar" class="aside aside-fixture">
+    <div class="toc-sidebar">
+        <nav id="toc" class="article-toc">
+            <h3 class="toc-title">Catalogue</h3>
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">[排序算法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E8%BF%B0"><span class="toc-number">1.1.</span> <span class="toc-text">总述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5"><span class="toc-number">1.1.1.</span> <span class="toc-text">相关概念</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F"><span class="toc-number">1.2.</span> <span class="toc-text">快速排序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A0%86%E6%8E%92%E5%BA%8F"><span class="toc-number">1.3.</span> <span class="toc-text">堆排序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F"><span class="toc-number">1.4.</span> <span class="toc-text">归并排序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F"><span class="toc-number">1.5.</span> <span class="toc-text">冒泡排序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%89%E6%8B%A9%E6%8E%92%E5%BA%8F"><span class="toc-number">1.6.</span> <span class="toc-text">选择排序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F"><span class="toc-number">1.7.</span> <span class="toc-text">插入排序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%8C%E5%B0%94%E6%8E%92%E5%BA%8F"><span class="toc-number">1.8.</span> <span class="toc-text">希尔排序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%A1%E6%95%B0%E6%8E%92%E5%BA%8F"><span class="toc-number">1.9.</span> <span class="toc-text">计数排序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%B6%E6%8E%92%E5%BA%8F"><span class="toc-number">1.10.</span> <span class="toc-text">桶排序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%95%B0%E6%8E%92%E5%BA%8F"><span class="toc-number">1.11.</span> <span class="toc-text">基数排序</span></a></li></ol></li></ol>
+        </nav>
+    </div>
+</aside>
+
+
+
+
+
+        </section>
+        <footer class="hidden lg:block fixed bottom-0 left-0 sm:w-1/12 lg:w-1/6 bg-gray-100 z-40">
+    
+    <div class="footer-social-links">
+        
+            <a target="_blank" rel="noopener" href="https://github.com/grac-gu">
+                <i class="iconfont icon-github"></i>
+            </a>
+        
+            <a href="/None">
+                <i class="iconfont icon-telegram"></i>
+            </a>
+        
+            <a href="/None">
+                <i class="iconfont icon-twitter"></i>
+            </a>
+        
+            <a href="/atom.xml">
+                <i class="iconfont icon-rss"></i>
+            </a>
+        
+    </div>
+    
+    
+</footer>
+
+        <div id="mask" class="hidden mask fixed inset-0 bg-gray-900 opacity-75 z-40"></div>
+        <div id="search-view-container" class="hidden shadow-xl"></div>
+        
+<script src="/js/dom-event.min.js"></script>
+
+<script src="//cdn.jsdelivr.net/npm/yox@1.0.0-alpha.121/dist/standard/prod/yox.min.js"></script>
+
+
+<script src="/js/search.min.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/lightgallery.js@1.1.3/dist/js/lightgallery.min.js"></script>
+    
+<script src="/js/light-gallery.min.js"></script>
+
+
+
+
+
+    </body>
+</html>

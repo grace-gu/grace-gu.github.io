@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html >
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, maximum-scale=5, viewport-fit=cover">
+    <title>Hexo</title>
+    <meta name="description" content="[leetcode]207. Course Schedule[TOC] 题目题目 知识点拓朴排序拓扑排序的规则：  在有向图中选一个没有前驱的顶点并且输出 从图中删除该顶点和所有以它为尾的弧，即删除所有与它有关的边。 重复上述两步，直至全部顶点均已输出；或者当图中不存在无前驱的顶点为止。  不能理解的话看图 BFS&amp;DFS回忆一下之前的印象笔记【[LeetCode]785. Is Grap">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/2020/02/04/algrothm/[leetcode]207.%C2%A0Course%20Schedule/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="[leetcode]207. Course Schedule[TOC] 题目题目 知识点拓朴排序拓扑排序的规则：  在有向图中选一个没有前驱的顶点并且输出 从图中删除该顶点和所有以它为尾的弧，即删除所有与它有关的边。 重复上述两步，直至全部顶点均已输出；或者当图中不存在无前驱的顶点为止。  不能理解的话看图 BFS&amp;DFS回忆一下之前的印象笔记【[LeetCode]785. Is Grap">
+<meta property="og:locale">
+<meta property="article:published_time" content="2020-02-04T05:26:23.000Z">
+<meta property="article:modified_time" content="2020-02-04T05:26:23.000Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+
+    
+    <link rel="icon" href="https://i.loli.net/2021/03/04/Y8OtTdUnM4isHxh.jpg" type="image/x-icon">
+
+    
+<link rel="stylesheet" href="/css/common.min.css">
+
+
+
+    
+    
+    
+    
+        <link href="//cdn.jsdelivr.net/npm/lightgallery.js@1.1.3/dist/css/lightgallery.min.css" rel="stylesheet">
+    
+    
+    
+<link rel="stylesheet" href="/css/iconfont.min.css">
+
+    
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+    <body>
+        <header class="header header-fixture">
+    <div class="profile-search-wrap flex sm:block">
+        
+        
+        <div class="profile sm:text-center md:px-1 lg:px-3 sm:pb-4 sm:pt-6">
+            <a id="avatar" role="link" href="https://github.com/grace-gu" class="inline-block lg:w-16 lg:h-16 w-8 h-8 m-2" target="_blank" rel="noopener" rel="noreferrer" >
+                <img src="https://i.loli.net/2021/03/04/Y8OtTdUnM4isHxh.jpg" class="rounded-full" alt="avatar">
+            </a>
+            <h2 id="name" class="hidden lg:block">Grace</h2>
+            <h3 id="title" class="hidden xl:block">coder</h3>
+            
+            <small id="location" class="hidden lg:block">
+                <i class="iconfont icon-map-icon"></i>
+                Beijing, China
+            </small>
+            
+        </div>
+        
+        
+<div class="search flex-1 flex lg:inline-block sm:hidden lg:px-4 lg:mt-2 lg:mb-4 lg:w-full">
+    <form id="search-form" class="my-auto flex-1 lg:border lg:border-solid lg:border-gray-200">
+        <div class="input-group table bg-gray-100 lg:bg-white w-full">
+            <input id="search-input" type="text" placeholder="Search" class="inline-block w-full bg-gray-100 lg:bg-white">
+            <span class="table-cell">
+                <button name="search tigger button" disabled>
+                    <i class="iconfont icon-search m-2"></i>
+                </button>
+            </span>
+        </div>
+    </form>
+        
+<script id="search-teamplate" type="text/html" data-path="/content.json">
+    <div>
+        <div class="search-header bg-gray-400">
+            <input id="actual-search-input" model="keyword" ref="input" class="inline-block w-full h-10 px-2 py-1" placeholder="Search" type="text">
+        </div>
+        <div class="search-result bg-gray-200">
+            {{#each searchPosts}}
+            <a href="/{{ path }}" class="result-item block px-2 pb-3 mb-1 pt-1 hover:bg-indigo-100">
+                <i class="iconfont icon-file"></i>
+                <h1 class="result-title inline font-medium text-lg">{{ title }}</h1>
+                <p class="result-content text-gray-600 text-sm">{{{ text }}}</p>
+            </a>
+            {{/each}}
+        </div>
+    </div>
+</script>
+
+</div>
+
+
+        <button name="menu toogle button" id="menu-toggle-btn" class="block sm:hidden p-3" role="button" aria-expanded="false">
+            <i class="iconfont icon-hamburger"></i>
+        </button>
+    </div>
+    <nav id="menu-nav" class="hidden sm:flex flex-col">
+        
+        
+            <div class="menu-item menu-home" role="menuitem">
+                <a href="/.">
+                    <i class="iconfont icon-home" aria-hidden="true"></i>
+                    <span class="menu-title">Home</span>
+                </a>
+            </div>
+        
+        
+            <div class="menu-item menu-archives" role="menuitem">
+                <a href="/archives">
+                    <i class="iconfont icon-archive" aria-hidden="true"></i>
+                    <span class="menu-title">Archives</span>
+                </a>
+            </div>
+        
+        
+            <div class="menu-item menu-categories" role="menuitem">
+                <a href="/categories">
+                    <i class="iconfont icon-folder" aria-hidden="true"></i>
+                    <span class="menu-title">Categories</span>
+                </a>
+            </div>
+        
+        
+            <div class="menu-item menu-tags" role="menuitem">
+                <a href="/tags">
+                    <i class="iconfont icon-tag" aria-hidden="true"></i>
+                    <span class="menu-title">Tags</span>
+                </a>
+            </div>
+        
+        
+            <div class="menu-item menu-repository" role="menuitem">
+                <a href="/repository">
+                    <i class="iconfont icon-project" aria-hidden="true"></i>
+                    <span class="menu-title">Repository</span>
+                </a>
+            </div>
+        
+        
+            <div class="menu-item menu-links" role="menuitem">
+                <a href="/links">
+                    <i class="iconfont icon-friend" aria-hidden="true"></i>
+                    <span class="menu-title">Links</span>
+                </a>
+            </div>
+        
+        
+            <div class="menu-item menu-about" role="menuitem">
+                <a href="/about">
+                    <i class="iconfont icon-cup" aria-hidden="true"></i>
+                    <span class="menu-title">About</span>
+                </a>
+            </div>
+        
+        
+<div class="social-links flex sm:flex-col lg:hidden mt-5">
+    
+        <span class="social-item text-center">
+            <a target="_blank" rel="noopener" href="https://github.com/grac-gu">
+                <i class="iconfont social-icon icon-github"></i>
+                <span class="menu-title hidden lg:inline">menu.github</span>
+            </a>
+        </span>
+    
+        <span class="social-item text-center">
+            <a href="/None">
+                <i class="iconfont social-icon icon-telegram"></i>
+                <span class="menu-title hidden lg:inline">menu.telegram</span>
+            </a>
+        </span>
+    
+        <span class="social-item text-center">
+            <a href="/None">
+                <i class="iconfont social-icon icon-twitter"></i>
+                <span class="menu-title hidden lg:inline">menu.twitter</span>
+            </a>
+        </span>
+    
+        <span class="social-item text-center">
+            <a href="/atom.xml">
+                <i class="iconfont social-icon icon-rss"></i>
+                <span class="menu-title hidden lg:inline">menu.rss</span>
+            </a>
+        </span>
+    
+</div>
+
+
+    </nav>
+</header>
+
+        <section class="main-section">
+            
+    <main class="flex-1 px-4 py-12 md:px-5 lg:px-8 lg:py-4 relative min-h-screen">
+    
+
+    <article class="content article article-archives article-type-list" itemscope="">
+        <header class="article-header">
+            
+
+
+            <p class="article-meta mb-3 text-xs">
+                <span class="article-date">
+    <i class="iconfont icon-calendar-check"></i>
+	<a href="/2020/02/04/algrothm/%5Bleetcode%5D207.%C2%A0Course%20Schedule/" class="article-date">
+	  <time datetime="2020-02-04T05:26:23.000Z" itemprop="datePublished">Feb 4</time>
+	</a>
+</span>
+
+                
+
+                
+
+                <span class="_partial/post-comment"><i class="icon icon-comment"></i>
+                    <a href="/2020/02/04/algrothm/%5Bleetcode%5D207.%C2%A0Course%20Schedule/#comments" class="article-comment-link">
+                        Comments
+                    </a>
+                </span>
+                
+
+            </p>
+        </header>
+        <div class="marked-body article-body">
+            <h1 id="leetcode-207-Course-Schedule"><a href="#leetcode-207-Course-Schedule" class="headerlink" title="[leetcode]207. Course Schedule"></a>[leetcode]207. Course Schedule</h1><p>[TOC]</p>
+<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p><a target="_blank" rel="noopener" href="https://leetcode.com/problems/course-schedule/description/">题目</a></p>
+<h2 id="知识点"><a href="#知识点" class="headerlink" title="知识点"></a>知识点</h2><h3 id="拓朴排序"><a href="#拓朴排序" class="headerlink" title="拓朴排序"></a>拓朴排序</h3><p>拓扑排序的规则：</p>
+<ol>
+<li>在有向图中选一个没有前驱的顶点并且输出</li>
+<li>从图中删除该顶点和所有以它为尾的弧，即删除所有与它有关的边。</li>
+<li>重复上述两步，直至全部顶点均已输出；或者当图中不存在无前驱的顶点为止。</li>
+</ol>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_37618797/article/details/81070577">不能理解的话看图</a></p>
+<h3 id="BFS-amp-DFS"><a href="#BFS-amp-DFS" class="headerlink" title="BFS&amp;DFS"></a>BFS&amp;DFS</h3><p>回忆一下之前的印象笔记【[LeetCode]785. Is Graph Bipartite?】，当时就提到了BFS和DFS。有一点点难<br>这题就更进阶了，要求你：</p>
+<ol>
+<li>建一个有向图（注意，是有向)</li>
+<li>遍历这个图，按拓扑排序的规则依次输出</li>
+<li>如果不能全部输出，那就有问题（这个有向图中存在环路）</li>
+</ol>
+<p>其中遍历的这个部分，就可以用到BFS和DSF</p>
+<h3 id="Python-队列"><a href="#Python-队列" class="headerlink" title="Python 队列"></a>Python 队列</h3><p>实现队列有两种方法</p>
+<ol>
+<li>deque</li>
+<li>list</li>
+</ol>
+<p><strong>deque</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> deque </span><br><span class="line">name=deque([<span class="string">&quot;jean&quot;</span>,<span class="string">&quot;li&quot;</span>,<span class="string">&quot;na&quot;</span>])</span><br><span class="line">name.append(<span class="string">&quot;yang&quot;</span>)</span><br><span class="line">name.append(<span class="string">&quot;chun&quot;</span>)</span><br><span class="line">print(name.popleft())    <span class="comment">#不可以带参数</span></span><br><span class="line">print(name) </span><br><span class="line"></span><br><span class="line">outputs:</span><br><span class="line">jean</span><br><span class="line">deque([<span class="string">&#x27;li&#x27;</span>, <span class="string">&#x27;nana&#x27;</span>, <span class="string">&#x27;yang&#x27;</span>, <span class="string">&#x27;chun&#x27;</span>])</span><br></pre></td></tr></table></figure>
+
+<p><strong>list</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">name = [<span class="string">&quot;jean&quot;</span>,<span class="string">&quot;li&quot;</span>,<span class="string">&quot;na&quot;</span>]</span><br><span class="line">name.append(<span class="string">&quot;yang&quot;</span>)</span><br><span class="line">name.pop(<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="Python-栈"><a href="#Python-栈" class="headerlink" title="Python 栈"></a>Python 栈</h3><p>栈就是用普通的list实现的</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">stack=[<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>] </span><br><span class="line">stack.append(<span class="number">6</span>)</span><br><span class="line">print(stack)</span><br><span class="line">print(stack.pop(<span class="number">1</span>)) <span class="comment">#可以带参数</span></span><br><span class="line">print(stack) </span><br><span class="line"></span><br><span class="line">outputs:  </span><br><span class="line">[<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>]</span><br><span class="line"><span class="number">4</span></span><br><span class="line">[<span class="number">3</span>, <span class="number">5</span>, <span class="number">6</span>]</span><br></pre></td></tr></table></figure>
+<h3 id="Python-list删除元素"><a href="#Python-list删除元素" class="headerlink" title="Python list删除元素"></a>Python list删除元素</h3><p>list删除元素有三种方法</p>
+<ol>
+<li>remove 按元素值删除</li>
+<li>pop 按索引值删除</li>
+<li>del 按索引值删除或删除变量<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>remove: 删除单个元素，删除首个符合条件的元素，按值删除</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">str</span>=[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">2</span>,<span class="number">6</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">str</span>.remove(<span class="number">2</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">str</span></span><br><span class="line">[<span class="number">1</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">2</span>, <span class="number">6</span>]</span><br><span class="line"></span><br><span class="line"><span class="number">2.</span>pop:  删除单个或多个元素，按位删除(根据索引删除)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">str</span>=[<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">str</span>.pop(<span class="number">1</span>)   <span class="comment">#pop删除时会返回被删除的元素</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">str</span></span><br><span class="line">[<span class="number">0</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>str2=[<span class="string">&#x27;abc&#x27;</span>,<span class="string">&#x27;bcd&#x27;</span>,<span class="string">&#x27;dce&#x27;</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>str2.pop(<span class="number">2</span>)</span><br><span class="line"><span class="string">&#x27;dce&#x27;</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>str2</span><br><span class="line">[<span class="string">&#x27;abc&#x27;</span>, <span class="string">&#x27;bcd&#x27;</span>]</span><br><span class="line"></span><br><span class="line"><span class="number">3.</span><span class="keyword">del</span>：它是根据索引(元素所在位置)来删除</span><br><span class="line">举例说明:</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">str</span>=[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">2</span>,<span class="number">6</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">del</span> <span class="built_in">str</span>[<span class="number">1</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">str</span></span><br><span class="line">[<span class="number">1</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">2</span>, <span class="number">6</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>str2=[<span class="string">&#x27;abc&#x27;</span>,<span class="string">&#x27;bcd&#x27;</span>,<span class="string">&#x27;dce&#x27;</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">del</span> str2[<span class="number">1</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>str2</span><br><span class="line">[<span class="string">&#x27;abc&#x27;</span>, <span class="string">&#x27;dce&#x27;</span>]</span><br><span class="line"></span><br><span class="line">除此之外，<span class="keyword">del</span>还可以删除指定范围内的值。</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">str</span>=[<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">del</span> <span class="built_in">str</span>[<span class="number">2</span>:<span class="number">4</span>]  <span class="comment">#删除从第2个元素开始，到第4个为止的元素(但是不包括尾部元素)</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">str</span></span><br><span class="line">[<span class="number">0</span>, <span class="number">1</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">del</span> 也可以删除整个数据对象(列表、集合等)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">str</span>=[<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>]</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">del</span> <span class="built_in">str</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="built_in">str</span>         <span class="comment">#删除后，找不到对象</span></span><br><span class="line"></span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File <span class="string">&quot;&lt;pyshell#27&gt;&quot;</span>, line <span class="number">1</span>, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">    <span class="built_in">str</span></span><br><span class="line">NameError: name <span class="string">&#x27;str&#x27;</span> <span class="keyword">is</span> <span class="keyword">not</span> defined</span><br><span class="line"></span><br><span class="line">注意：<span class="keyword">del</span>是删除引用(变量)而不是删除对象(数据)，对象由自动垃圾回收机制（GC）删除。</span><br><span class="line"></span><br><span class="line">补充: 删除元素的变相方法</span><br><span class="line">s1=(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>)</span><br><span class="line">s2=(<span class="number">2</span>,<span class="number">3</span>,<span class="number">5</span>)</span><br><span class="line">s3=[]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> s1:</span><br><span class="line"><span class="keyword">if</span> i <span class="keyword">not</span> <span class="keyword">in</span> s2:</span><br><span class="line">    s3.append(i)</span><br><span class="line"><span class="built_in">print</span> <span class="string">&#x27;s1-1:&#x27;</span>,s1</span><br><span class="line">s1=s3</span><br><span class="line"><span class="built_in">print</span> <span class="string">&#x27;s2:&#x27;</span>,s2</span><br><span class="line"><span class="built_in">print</span> <span class="string">&#x27;s3:&#x27;</span>,s3</span><br><span class="line"><span class="built_in">print</span> <span class="string">&#x27;s1-2:&#x27;</span>,s1</span><br></pre></td></tr></table></figure>
+<h3 id="Python-range和xrange"><a href="#Python-range和xrange" class="headerlink" title="Python range和xrange"></a>Python range和xrange</h3></li>
+</ol>
+<p><strong>range</strong><br>函数说明：range([start,] stop[, step])，根据start与stop指定的范围以及step设定的步长，生成一个序列。</p>
+<p><strong>xrange</strong><br>函数说明：用法与range完全相同，所不同的是生成的不是一个数组，而是一个生成器。</p>
+<p>结论：对大数列来讲，xrange会消耗更少的内存</p>
+<h2 id="解题"><a href="#解题" class="headerlink" title="解题"></a>解题</h2><h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><h4 id="BFS"><a href="#BFS" class="headerlink" title="BFS"></a>BFS</h4><p><strong>具体执行过程</strong><br>用一个队列存入度为0的节点，依次出队，将与出队节点相连的节点的入度减1，如果入度减为0，将其放入队列中，直到队列为空。如里最后还有入度不为0的节点的话，说明有环，否则无环。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">canFinish</span>(<span class="params">self, numCourses: <span class="built_in">int</span>, prerequisites: List[List[<span class="built_in">int</span>]]</span>) -&gt; bool:</span></span><br><span class="line">        <span class="keyword">from</span> collections <span class="keyword">import</span> defaultdict</span><br><span class="line">        </span><br><span class="line">        prerequisiteDict = defaultdict(<span class="built_in">list</span>) </span><br><span class="line">        indegree = [<span class="number">0</span> <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(numCourses)]</span><br><span class="line">        <span class="keyword">for</span> pair <span class="keyword">in</span> prerequisites:</span><br><span class="line">                indegree[pair[<span class="number">1</span>]] += <span class="number">1</span></span><br><span class="line">                prerequisiteDict[pair[<span class="number">0</span>]].append(pair[<span class="number">1</span>])</span><br><span class="line">        <span class="comment"># print(prerequisiteDict)</span></span><br><span class="line">        </span><br><span class="line">        queue = []</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(numCourses):</span><br><span class="line">            <span class="keyword">if</span> indegree[i] == <span class="number">0</span>:</span><br><span class="line">                queue.append(i)</span><br><span class="line">        <span class="comment"># print(queue)</span></span><br><span class="line">                </span><br><span class="line">        num = <span class="number">0</span> <span class="comment"># num of coures can be taken</span></span><br><span class="line">                </span><br><span class="line">        <span class="keyword">while</span> queue:</span><br><span class="line">            pos = queue.pop(<span class="number">0</span>)</span><br><span class="line">            num += <span class="number">1</span></span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> prerequisiteDict[pos]:</span><br><span class="line">                indegree[i] -= <span class="number">1</span></span><br><span class="line">                <span class="keyword">if</span> indegree[i] == <span class="number">0</span>:</span><br><span class="line">                    queue.append(i)</span><br><span class="line">                    </span><br><span class="line">        <span class="keyword">if</span> num == numCourses:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="DFS"><a href="#DFS" class="headerlink" title="DFS"></a>DFS</h4><p><a target="_blank" rel="noopener" href="https://leetcode.com/problems/course-schedule/discuss/58586/Python-20-lines-DFS-solution-sharing-with-explanation">DFS思路</a></p>
+<ol>
+<li>if node v has not been visited, then mark it as 0.</li>
+<li>if node v is being visited, then mark it as -1. If we find a vertex marked as -1 in DFS, then their is a ring.if node v has been visited, then mark it as 1. </li>
+<li>If a vertex was marked as 1, then no ring contains v or its successors.</li>
+</ol>
+<p>需要一个一维数组visit来记录访问状态，这里有三种状态，0表示还未访问过，1表示已经访问了，-1表示正在访问，如果在遍历过程中找到标记为-1的点，说明有环。</p>
+<p>大体思路是，先建立好有向图，然后从第一个门课开始，找其可构成哪门课，暂时将当前课程标记为已访问，然后对新得到的课程调用DFS递归，直到出现新的课程已经访问过了，则返回false，没有冲突的话返回true，然后把标记为已访问的课程改为未访问。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">canFinish</span>(<span class="params">self, numCourses: <span class="built_in">int</span>, prerequisites: List[List[<span class="built_in">int</span>]]</span>) -&gt; bool:</span></span><br><span class="line">        <span class="keyword">from</span> collections <span class="keyword">import</span> defaultdict</span><br><span class="line">        visited  = [<span class="number">0</span>] * numCourses</span><br><span class="line">        prerequisitesDict = defaultdict(<span class="built_in">list</span>)</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> x,y <span class="keyword">in</span> prerequisites:</span><br><span class="line">            prerequisitesDict[x].append(y)</span><br><span class="line">        </span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">DFS</span>(<span class="params">pos</span>):</span></span><br><span class="line">            <span class="keyword">if</span> visited[pos] == -<span class="number">1</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">            <span class="keyword">if</span> visited[pos] == <span class="number">1</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">            visited[pos] = -<span class="number">1</span></span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> prerequisitesDict[pos]:</span><br><span class="line">                <span class="keyword">if</span> <span class="keyword">not</span> DFS(i): <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">            visited[pos] = <span class="number">1</span></span><br><span class="line">            <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(numCourses):</span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> DFS(i): <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span>    </span><br></pre></td></tr></table></figure>
+<p>这个代码当时我有问题，查了很久，后来才发现非常愚蠢。在赋值的时候使用了<code>==</code>，打了自己两下</p>
+
+        </div>
+        
+<blockquote class="copyright">
+    <p><strong>Link to this article : </strong><a class="permalink" href="http://yoursite.com/2020/02/04/algrothm/[leetcode]207.%C2%A0Course%20Schedule/">http://yoursite.com/2020/02/04/algrothm/[leetcode]207. Course Schedule/</a></p>
+    <p><strong>This article is available under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)</a> License</strong></p>
+</blockquote>
+
+
+    </article>
+    
+    <section id="comments">
+        
+    </section>
+
+
+    
+
+</main>
+
+
+<aside style="" id="sidebar" class="aside aside-fixture">
+    <div class="toc-sidebar">
+        <nav id="toc" class="article-toc">
+            <h3 class="toc-title">Catalogue</h3>
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#leetcode-207-Course-Schedule"><span class="toc-number">1.</span> <span class="toc-text">[leetcode]207. Course Schedule</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%98%E7%9B%AE"><span class="toc-number">1.1.</span> <span class="toc-text">题目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9F%A5%E8%AF%86%E7%82%B9"><span class="toc-number">1.2.</span> <span class="toc-text">知识点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8B%93%E6%9C%B4%E6%8E%92%E5%BA%8F"><span class="toc-number">1.2.1.</span> <span class="toc-text">拓朴排序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#BFS-amp-DFS"><span class="toc-number">1.2.2.</span> <span class="toc-text">BFS&amp;DFS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Python-%E9%98%9F%E5%88%97"><span class="toc-number">1.2.3.</span> <span class="toc-text">Python 队列</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Python-%E6%A0%88"><span class="toc-number">1.2.4.</span> <span class="toc-text">Python 栈</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Python-list%E5%88%A0%E9%99%A4%E5%85%83%E7%B4%A0"><span class="toc-number">1.2.5.</span> <span class="toc-text">Python list删除元素</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Python-range%E5%92%8Cxrange"><span class="toc-number">1.2.6.</span> <span class="toc-text">Python range和xrange</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A3%E9%A2%98"><span class="toc-number">1.3.</span> <span class="toc-text">解题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%9D%E8%B7%AF"><span class="toc-number">1.3.1.</span> <span class="toc-text">思路</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#BFS"><span class="toc-number">1.3.1.1.</span> <span class="toc-text">BFS</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#DFS"><span class="toc-number">1.3.1.2.</span> <span class="toc-text">DFS</span></a></li></ol></li></ol></li></ol></li></ol>
+        </nav>
+    </div>
+</aside>
+
+
+
+
+
+        </section>
+        <footer class="hidden lg:block fixed bottom-0 left-0 sm:w-1/12 lg:w-1/6 bg-gray-100 z-40">
+    
+    <div class="footer-social-links">
+        
+            <a target="_blank" rel="noopener" href="https://github.com/grac-gu">
+                <i class="iconfont icon-github"></i>
+            </a>
+        
+            <a href="/None">
+                <i class="iconfont icon-telegram"></i>
+            </a>
+        
+            <a href="/None">
+                <i class="iconfont icon-twitter"></i>
+            </a>
+        
+            <a href="/atom.xml">
+                <i class="iconfont icon-rss"></i>
+            </a>
+        
+    </div>
+    
+    
+</footer>
+
+        <div id="mask" class="hidden mask fixed inset-0 bg-gray-900 opacity-75 z-40"></div>
+        <div id="search-view-container" class="hidden shadow-xl"></div>
+        
+<script src="/js/dom-event.min.js"></script>
+
+<script src="//cdn.jsdelivr.net/npm/yox@1.0.0-alpha.121/dist/standard/prod/yox.min.js"></script>
+
+
+<script src="/js/search.min.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/lightgallery.js@1.1.3/dist/js/lightgallery.min.js"></script>
+    
+<script src="/js/light-gallery.min.js"></script>
+
+
+
+
+
+    </body>
+</html>

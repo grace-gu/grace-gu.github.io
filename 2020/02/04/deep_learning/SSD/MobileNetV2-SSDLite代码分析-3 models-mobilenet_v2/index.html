@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html >
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, maximum-scale=5, viewport-fit=cover">
+    <title>Hexo</title>
+    <meta name="description" content="MobileNetV2-SSDLite代码分析-3 models-mobilenet_v2Github-pytorch-ssdvision&#x2F;ssdmobilenet_v2 ![](MobileNetV2-SSDLite代码分析-3 models-mobilenet_v2.assets&#x2F;958d186c.png)其中：t表示“扩张”倍数，c表示输出通道数，n表示重复次数，s表示步长stride。先说">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/2020/02/04/deep_learning/SSD/MobileNetV2-SSDLite%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90-3%20models-mobilenet_v2/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="MobileNetV2-SSDLite代码分析-3 models-mobilenet_v2Github-pytorch-ssdvision&#x2F;ssdmobilenet_v2 ![](MobileNetV2-SSDLite代码分析-3 models-mobilenet_v2.assets&#x2F;958d186c.png)其中：t表示“扩张”倍数，c表示输出通道数，n表示重复次数，s表示步长stride。先说">
+<meta property="og:locale">
+<meta property="article:published_time" content="2020-02-04T05:26:23.000Z">
+<meta property="article:modified_time" content="2020-02-04T05:26:23.000Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+
+    
+    <link rel="icon" href="https://i.loli.net/2021/03/04/Y8OtTdUnM4isHxh.jpg" type="image/x-icon">
+
+    
+<link rel="stylesheet" href="/css/common.min.css">
+
+
+
+    
+    
+    
+    
+        <link href="//cdn.jsdelivr.net/npm/lightgallery.js@1.1.3/dist/css/lightgallery.min.css" rel="stylesheet">
+    
+    
+    
+<link rel="stylesheet" href="/css/iconfont.min.css">
+
+    
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+    <body>
+        <header class="header header-fixture">
+    <div class="profile-search-wrap flex sm:block">
+        
+        
+        <div class="profile sm:text-center md:px-1 lg:px-3 sm:pb-4 sm:pt-6">
+            <a id="avatar" role="link" href="https://github.com/grace-gu" class="inline-block lg:w-16 lg:h-16 w-8 h-8 m-2" target="_blank" rel="noopener" rel="noreferrer" >
+                <img src="https://i.loli.net/2021/03/04/Y8OtTdUnM4isHxh.jpg" class="rounded-full" alt="avatar">
+            </a>
+            <h2 id="name" class="hidden lg:block">Grace</h2>
+            <h3 id="title" class="hidden xl:block">coder</h3>
+            
+            <small id="location" class="hidden lg:block">
+                <i class="iconfont icon-map-icon"></i>
+                Beijing, China
+            </small>
+            
+        </div>
+        
+        
+<div class="search flex-1 flex lg:inline-block sm:hidden lg:px-4 lg:mt-2 lg:mb-4 lg:w-full">
+    <form id="search-form" class="my-auto flex-1 lg:border lg:border-solid lg:border-gray-200">
+        <div class="input-group table bg-gray-100 lg:bg-white w-full">
+            <input id="search-input" type="text" placeholder="Search" class="inline-block w-full bg-gray-100 lg:bg-white">
+            <span class="table-cell">
+                <button name="search tigger button" disabled>
+                    <i class="iconfont icon-search m-2"></i>
+                </button>
+            </span>
+        </div>
+    </form>
+        
+<script id="search-teamplate" type="text/html" data-path="/content.json">
+    <div>
+        <div class="search-header bg-gray-400">
+            <input id="actual-search-input" model="keyword" ref="input" class="inline-block w-full h-10 px-2 py-1" placeholder="Search" type="text">
+        </div>
+        <div class="search-result bg-gray-200">
+            {{#each searchPosts}}
+            <a href="/{{ path }}" class="result-item block px-2 pb-3 mb-1 pt-1 hover:bg-indigo-100">
+                <i class="iconfont icon-file"></i>
+                <h1 class="result-title inline font-medium text-lg">{{ title }}</h1>
+                <p class="result-content text-gray-600 text-sm">{{{ text }}}</p>
+            </a>
+            {{/each}}
+        </div>
+    </div>
+</script>
+
+</div>
+
+
+        <button name="menu toogle button" id="menu-toggle-btn" class="block sm:hidden p-3" role="button" aria-expanded="false">
+            <i class="iconfont icon-hamburger"></i>
+        </button>
+    </div>
+    <nav id="menu-nav" class="hidden sm:flex flex-col">
+        
+        
+            <div class="menu-item menu-home" role="menuitem">
+                <a href="/.">
+                    <i class="iconfont icon-home" aria-hidden="true"></i>
+                    <span class="menu-title">Home</span>
+                </a>
+            </div>
+        
+        
+            <div class="menu-item menu-archives" role="menuitem">
+                <a href="/archives">
+                    <i class="iconfont icon-archive" aria-hidden="true"></i>
+                    <span class="menu-title">Archives</span>
+                </a>
+            </div>
+        
+        
+            <div class="menu-item menu-categories" role="menuitem">
+                <a href="/categories">
+                    <i class="iconfont icon-folder" aria-hidden="true"></i>
+                    <span class="menu-title">Categories</span>
+                </a>
+            </div>
+        
+        
+            <div class="menu-item menu-tags" role="menuitem">
+                <a href="/tags">
+                    <i class="iconfont icon-tag" aria-hidden="true"></i>
+                    <span class="menu-title">Tags</span>
+                </a>
+            </div>
+        
+        
+            <div class="menu-item menu-repository" role="menuitem">
+                <a href="/repository">
+                    <i class="iconfont icon-project" aria-hidden="true"></i>
+                    <span class="menu-title">Repository</span>
+                </a>
+            </div>
+        
+        
+            <div class="menu-item menu-links" role="menuitem">
+                <a href="/links">
+                    <i class="iconfont icon-friend" aria-hidden="true"></i>
+                    <span class="menu-title">Links</span>
+                </a>
+            </div>
+        
+        
+            <div class="menu-item menu-about" role="menuitem">
+                <a href="/about">
+                    <i class="iconfont icon-cup" aria-hidden="true"></i>
+                    <span class="menu-title">About</span>
+                </a>
+            </div>
+        
+        
+<div class="social-links flex sm:flex-col lg:hidden mt-5">
+    
+        <span class="social-item text-center">
+            <a target="_blank" rel="noopener" href="https://github.com/grac-gu">
+                <i class="iconfont social-icon icon-github"></i>
+                <span class="menu-title hidden lg:inline">menu.github</span>
+            </a>
+        </span>
+    
+        <span class="social-item text-center">
+            <a href="/None">
+                <i class="iconfont social-icon icon-telegram"></i>
+                <span class="menu-title hidden lg:inline">menu.telegram</span>
+            </a>
+        </span>
+    
+        <span class="social-item text-center">
+            <a href="/None">
+                <i class="iconfont social-icon icon-twitter"></i>
+                <span class="menu-title hidden lg:inline">menu.twitter</span>
+            </a>
+        </span>
+    
+        <span class="social-item text-center">
+            <a href="/atom.xml">
+                <i class="iconfont social-icon icon-rss"></i>
+                <span class="menu-title hidden lg:inline">menu.rss</span>
+            </a>
+        </span>
+    
+</div>
+
+
+    </nav>
+</header>
+
+        <section class="main-section">
+            
+    <main class="flex-1 px-4 py-12 md:px-5 lg:px-8 lg:py-4 relative min-h-screen">
+    
+
+    <article class="content article article-archives article-type-list" itemscope="">
+        <header class="article-header">
+            
+
+
+            <p class="article-meta mb-3 text-xs">
+                <span class="article-date">
+    <i class="iconfont icon-calendar-check"></i>
+	<a href="/2020/02/04/deep_learning/SSD/MobileNetV2-SSDLite%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90-3%20models-mobilenet_v2/" class="article-date">
+	  <time datetime="2020-02-04T05:26:23.000Z" itemprop="datePublished">Feb 4</time>
+	</a>
+</span>
+
+                
+
+                
+
+                <span class="_partial/post-comment"><i class="icon icon-comment"></i>
+                    <a href="/2020/02/04/deep_learning/SSD/MobileNetV2-SSDLite%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90-3%20models-mobilenet_v2/#comments" class="article-comment-link">
+                        Comments
+                    </a>
+                </span>
+                
+
+            </p>
+        </header>
+        <div class="marked-body article-body">
+            <h1 id="MobileNetV2-SSDLite代码分析-3-models-mobilenet-v2"><a href="#MobileNetV2-SSDLite代码分析-3-models-mobilenet-v2" class="headerlink" title="MobileNetV2-SSDLite代码分析-3 models-mobilenet_v2"></a>MobileNetV2-SSDLite代码分析-3 models-mobilenet_v2</h1><p><a target="_blank" rel="noopener" href="https://github.com/qfgaohao/pytorch-ssd#single-shot-multibox-detector-implementation-in-pytorch">Github-pytorch-ssd</a><br><a target="_blank" rel="noopener" href="https://github.com/qfgaohao/pytorch-ssd/tree/master/vision/ssd">vision/ssd</a><br><a target="_blank" rel="noopener" href="https://github.com/qfgaohao/pytorch-ssd/blob/master/vision/nn/mobilenet_v2.py">mobilenet_v2</a></p>
+<p>![](MobileNetV2-SSDLite代码分析-3 models-mobilenet_v2.assets/958d186c.png)<br>其中：t表示“扩张”倍数，c表示输出通道数，n表示重复次数，s表示步长stride。<br>先说两点有误之处吧：<br>第五行，也就是第7~10个bottleneck，stride=2，分辨率应该从28降低到14；如果不是分辨率出错，那就应该是stride=1；<br>文中提到共计采用19个bottleneck，但是这里只有17个。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch.nn <span class="keyword">as</span> nn</span><br><span class="line"><span class="keyword">import</span> math</span><br><span class="line"><span class="comment"># Modified from https://github.com/tonylins/pytorch-mobilenet-v2/blob/master/MobileNetV2.py.</span></span><br><span class="line"><span class="comment"># In this version, Relu6 is replaced with Relu to make it ONNX compatible.</span></span><br><span class="line"><span class="comment"># BatchNorm Layer is optional to make it easy do batch norm confusion.</span></span><br></pre></td></tr></table></figure>
+<p>&nbsp;<br>深度可分离卷积用pytorch实现比较简单，conv2d中有个参数叫groups，将它设置为通道数即可</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 普通3*3卷积</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">conv_bn</span>(<span class="params">inp, oup, stride, use_batch_norm=<span class="literal">True</span>, onnx_compatible=<span class="literal">False</span></span>):</span></span><br><span class="line">    <span class="comment"># onnx_compatible决定是使用普通relu还是relu6</span></span><br><span class="line">    <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">    普通relu， y=max(0, x), 相当于无限多个bernoulli分布，即无限多个骰子</span></span><br><span class="line"><span class="string">    relu6, y= min(max(0,x), 6), 相当于有六个bernoulli分布，即6个硬币，同时抛出正面，这样鼓励网络学习到稀疏特征。</span></span><br><span class="line"><span class="string">    网络里面每一个输出n，相当于n个bernoulli分布的叠加。</span></span><br><span class="line"><span class="string">    通过实验发现，用6，效果比较好。所以选用了6</span></span><br><span class="line"><span class="string">    &#x27;&#x27;&#x27;</span></span><br><span class="line">    ReLU = nn.ReLU <span class="keyword">if</span> onnx_compatible <span class="keyword">else</span> nn.ReLU6</span><br><span class="line">    <span class="keyword">if</span> use_batch_norm:</span><br><span class="line">        <span class="keyword">return</span> nn.Sequential(</span><br><span class="line">            nn.Conv2d(inp, oup, <span class="number">3</span>, stride, <span class="number">1</span>, bias=<span class="literal">False</span>),</span><br><span class="line">            nn.BatchNorm2d(oup),</span><br><span class="line">            ReLU(inplace=<span class="literal">True</span>)</span><br><span class="line">        )</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> nn.Sequential(</span><br><span class="line">            nn.Conv2d(inp, oup, <span class="number">3</span>, stride, <span class="number">1</span>, bias=<span class="literal">False</span>),</span><br><span class="line">            ReLU(inplace=<span class="literal">True</span>)</span><br><span class="line">        )</span><br></pre></td></tr></table></figure>
+<p>上面的代码中频繁出现了inplace=True，在此作出说明。<br>inplace=True：不创建新的对象，直接对原始对象进行修改；<br>inplace=False：对数据进行修改，创建并返回新的对象承载其修改结果。<br>这里relu指定inplace=True，则对于上层网络传递下来的tensor直接进行修改，可以少存储变量，节省运算内存。<br>&nbsp;</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 点卷积</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">conv_1x1_bn</span>(<span class="params">inp, oup, use_batch_norm=<span class="literal">True</span>, onnx_compatible=<span class="literal">False</span></span>):</span></span><br><span class="line">    ReLU = nn.ReLU <span class="keyword">if</span> onnx_compatible <span class="keyword">else</span> nn.ReLU6</span><br><span class="line">    <span class="keyword">if</span> use_batch_norm:</span><br><span class="line">        <span class="keyword">return</span> nn.Sequential(</span><br><span class="line">            nn.Conv2d(inp, oup, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, bias=<span class="literal">False</span>),</span><br><span class="line">            nn.BatchNorm2d(oup),</span><br><span class="line">            ReLU(inplace=<span class="literal">True</span>)</span><br><span class="line">        )</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> nn.Sequential(</span><br><span class="line">            nn.Conv2d(inp, oup, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, bias=<span class="literal">False</span>),</span><br><span class="line">            ReLU(inplace=<span class="literal">True</span>)</span><br><span class="line">        )</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># mobilenetv2的创新点，InvertedResidual</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">InvertedResidual</span>(<span class="params">nn.Module</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, inp, oup, stride, expand_ratio, use_batch_norm=<span class="literal">True</span>, onnx_compatible=<span class="literal">False</span></span>):</span></span><br><span class="line">        <span class="built_in">super</span>(InvertedResidual, self).__init__()</span><br><span class="line">        ReLU = nn.ReLU <span class="keyword">if</span> onnx_compatible <span class="keyword">else</span> nn.ReLU6</span><br><span class="line">        self.stride = stride</span><br><span class="line">        <span class="keyword">assert</span> stride <span class="keyword">in</span> [<span class="number">1</span>, <span class="number">2</span>]</span><br><span class="line">        </span><br><span class="line">        hidden_dim = <span class="built_in">round</span>(inp * expand_ratio)</span><br><span class="line">        self.use_res_connect = self.stride == <span class="number">1</span> <span class="keyword">and</span> inp == oup</span><br><span class="line">        <span class="keyword">if</span> expand_ratio == <span class="number">1</span>:</span><br><span class="line">            <span class="comment"># 当我不扩张时，hidden_dim就等于inp, InvertedResidual结构是: 3*3DWconv, (BN,) Relu, 1*1PWconv, (BN)</span></span><br><span class="line">            <span class="keyword">if</span> use_batch_norm:</span><br><span class="line">                self.conv = nn.Sequential(</span><br><span class="line">                    <span class="comment"># dw(深度可分离卷积)</span></span><br><span class="line">                    <span class="comment"># torch.nn.Conv2d(in_channels, out_channels, kernel_size, stride, padding, dilation, groups, bias=True)</span></span><br><span class="line">                    nn.Conv2d(hidden_dim, hidden_dim, <span class="number">3</span>, stride, <span class="number">1</span>, groups=hidden_dim, bias=<span class="literal">False</span>),</span><br><span class="line">                    nn.BatchNorm2d(hidden_dim),</span><br><span class="line">                    ReLU(inplace=<span class="literal">True</span>),</span><br><span class="line">                    <span class="comment"># pw-linear 点卷积，实现线性变换</span></span><br><span class="line">                    <span class="comment"># 点卷积不不需要padding</span></span><br><span class="line">                    nn.Conv2d(hidden_dim, oup, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, bias=<span class="literal">False</span>),</span><br><span class="line">                    nn.BatchNorm2d(oup),</span><br><span class="line">                )</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                self.conv = nn.Sequential(</span><br><span class="line">                    <span class="comment"># dw</span></span><br><span class="line">                    nn.Conv2d(hidden_dim, hidden_dim, <span class="number">3</span>, stride, <span class="number">1</span>, groups=hidden_dim, bias=<span class="literal">False</span>),</span><br><span class="line">                    ReLU(inplace=<span class="literal">True</span>),</span><br><span class="line">                    <span class="comment"># pw-linear</span></span><br><span class="line">                    nn.Conv2d(hidden_dim, oup, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, bias=<span class="literal">False</span>),</span><br><span class="line">                )</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="comment"># 当我需要扩张时，InvertedResidual结构是: 1*1PWconv, (BN,) Relu, 3*3DWconv, (BN,) Relu, 1*1PWconv, (BN)</span></span><br><span class="line">            <span class="keyword">if</span> use_batch_norm:</span><br><span class="line">                self.conv = nn.Sequential(</span><br><span class="line">                    <span class="comment"># pw(点卷积扩张)</span></span><br><span class="line">                    nn.Conv2d(inp, hidden_dim, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, bias=<span class="literal">False</span>),</span><br><span class="line">                    nn.BatchNorm2d(hidden_dim),</span><br><span class="line">                    ReLU(inplace=<span class="literal">True</span>),</span><br><span class="line">                    <span class="comment"># dw(深度可分离卷积)</span></span><br><span class="line">                    nn.Conv2d(hidden_dim, hidden_dim, <span class="number">3</span>, stride, <span class="number">1</span>, groups=hidden_dim, bias=<span class="literal">False</span>),</span><br><span class="line">                    nn.BatchNorm2d(hidden_dim),</span><br><span class="line">                    ReLU(inplace=<span class="literal">True</span>),</span><br><span class="line">                    <span class="comment"># pw-linear(点卷积压缩)</span></span><br><span class="line">                    nn.Conv2d(hidden_dim, oup, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, bias=<span class="literal">False</span>),</span><br><span class="line">                    nn.BatchNorm2d(oup),</span><br><span class="line">                )</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                self.conv = nn.Sequential(</span><br><span class="line">                    <span class="comment"># pw</span></span><br><span class="line">                    nn.Conv2d(inp, hidden_dim, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, bias=<span class="literal">False</span>),</span><br><span class="line">                    ReLU(inplace=<span class="literal">True</span>),</span><br><span class="line">                    <span class="comment"># dw</span></span><br><span class="line">                    nn.Conv2d(hidden_dim, hidden_dim, <span class="number">3</span>, stride, <span class="number">1</span>, groups=hidden_dim, bias=<span class="literal">False</span>),</span><br><span class="line">                    ReLU(inplace=<span class="literal">True</span>),</span><br><span class="line">                    <span class="comment"># pw-linear</span></span><br><span class="line">                    nn.Conv2d(hidden_dim, oup, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, bias=<span class="literal">False</span>),</span><br><span class="line">                )</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span>(<span class="params">self, x</span>):</span></span><br><span class="line">        <span class="comment"># 残差网络是执行+操作</span></span><br><span class="line">        <span class="keyword">if</span> self.use_res_connect:</span><br><span class="line">            <span class="keyword">return</span> x + self.conv(x)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> self.conv(x)</span><br></pre></td></tr></table></figure>
+<p>这里来梳理几个知识点：<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/xiaojiajia007/article/details/86008415">concat与add的区别</a><br>shortcut residual是基于layer的concat操作<br>router是add操作<br>分支操作是基于通道的concat操作</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MobileNetV2</span>(<span class="params">nn.Module</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, n_class=<span class="number">1000</span>, input_size=<span class="number">224</span>, width_mult=<span class="number">1.</span>, dropout_ratio=<span class="number">0.2</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">                use_batch_norm=<span class="literal">True</span>, onnx_compatible=<span class="literal">False</span></span>):</span></span><br><span class="line">        <span class="built_in">super</span>(MobileNetV2, self).__init__()</span><br><span class="line">        block = InvertedResidual</span><br><span class="line">        input_channel = <span class="number">32</span></span><br><span class="line">        last_channel = <span class="number">1280</span></span><br><span class="line">        <span class="comment"># t表示“扩张”倍数，c表示输出通道数，n表示重复次数，s表示步长stride。</span></span><br><span class="line">        interverted_residual_setting = [</span><br><span class="line">            <span class="comment"># t, c, n, s</span></span><br><span class="line">            [<span class="number">1</span>, <span class="number">16</span>, <span class="number">1</span>, <span class="number">1</span>],</span><br><span class="line">            [<span class="number">6</span>, <span class="number">24</span>, <span class="number">2</span>, <span class="number">2</span>],</span><br><span class="line">            [<span class="number">6</span>, <span class="number">32</span>, <span class="number">3</span>, <span class="number">2</span>],</span><br><span class="line">            [<span class="number">6</span>, <span class="number">64</span>, <span class="number">4</span>, <span class="number">2</span>],</span><br><span class="line">            [<span class="number">6</span>, <span class="number">96</span>, <span class="number">3</span>, <span class="number">1</span>],</span><br><span class="line">            [<span class="number">6</span>, <span class="number">160</span>, <span class="number">3</span>, <span class="number">2</span>],</span><br><span class="line">            [<span class="number">6</span>, <span class="number">320</span>, <span class="number">1</span>, <span class="number">1</span>],</span><br><span class="line">        ]</span><br><span class="line">        <span class="comment"># building first layer</span></span><br><span class="line">        <span class="keyword">assert</span> input_size % <span class="number">32</span> == <span class="number">0</span></span><br><span class="line">        input_channel = <span class="built_in">int</span>(input_channel * width_mult)</span><br><span class="line">        self.last_channel = <span class="built_in">int</span>(last_channel * width_mult) <span class="keyword">if</span> width_mult &gt; <span class="number">1.0</span> <span class="keyword">else</span> last_channel</span><br><span class="line">        self.features = [conv_bn(<span class="number">3</span>, input_channel, <span class="number">2</span>, onnx_compatible=onnx_compatible)]</span><br><span class="line">        <span class="comment"># building inverted residual blocks</span></span><br><span class="line">        <span class="keyword">for</span> t, c, n, s <span class="keyword">in</span> interverted_residual_setting:</span><br><span class="line">            output_channel = <span class="built_in">int</span>(c * width_mult)</span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">                <span class="keyword">if</span> i == <span class="number">0</span>:</span><br><span class="line">                    self.features.append(block(input_channel, output_channel, s,</span><br><span class="line">                                              expand_ratio=t, use_batch_norm=use_batch_norm,</span><br><span class="line">                                              onnx_compatible=onnx_compatible))</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    self.features.append(block(input_channel, output_channel, <span class="number">1</span>,</span><br><span class="line">                                              expand_ratio=t, use_batch_norm=use_batch_norm,</span><br><span class="line">                                              onnx_compatible=onnx_compatible))</span><br><span class="line">                input_channel = output_channel</span><br><span class="line">        <span class="comment"># building last several layers</span></span><br><span class="line">        self.features.append(conv_1x1_bn(input_channel, self.last_channel,</span><br><span class="line">                                        use_batch_norm=use_batch_norm, onnx_compatible=onnx_compatible))</span><br><span class="line">        <span class="comment"># make it nn.Sequential</span></span><br><span class="line">        self.features = nn.Sequential(*self.features)</span><br><span class="line">        <span class="comment"># building classifier</span></span><br><span class="line">        self.classifier = nn.Sequential(</span><br><span class="line">            nn.Dropout(dropout_ratio),</span><br><span class="line">            nn.Linear(self.last_channel, n_class),</span><br><span class="line">        )</span><br><span class="line">        self._initialize_weights()</span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span>(<span class="params">self, x</span>):</span></span><br><span class="line">        x = self.features(x)</span><br><span class="line">        x = x.mean(<span class="number">3</span>).mean(<span class="number">2</span>)</span><br><span class="line">        x = self.classifier(x)</span><br><span class="line">        <span class="keyword">return</span> x</span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_initialize_weights</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">for</span> m <span class="keyword">in</span> self.modules():</span><br><span class="line">            <span class="keyword">if</span> <span class="built_in">isinstance</span>(m, nn.Conv2d):</span><br><span class="line">                n = m.kernel_size[<span class="number">0</span>] * m.kernel_size[<span class="number">1</span>] * m.out_channels</span><br><span class="line">                m.weight.data.normal_(<span class="number">0</span>, math.sqrt(<span class="number">2.</span> / n))</span><br><span class="line">                <span class="keyword">if</span> m.bias <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">                    m.bias.data.zero_()</span><br><span class="line">            <span class="keyword">elif</span> <span class="built_in">isinstance</span>(m, nn.BatchNorm2d):</span><br><span class="line">                m.weight.data.fill_(<span class="number">1</span>)</span><br><span class="line">                m.bias.data.zero_()</span><br><span class="line">            <span class="keyword">elif</span> <span class="built_in">isinstance</span>(m, nn.Linear):</span><br><span class="line">                n = m.weight.size(<span class="number">1</span>)</span><br><span class="line">                m.weight.data.normal_(<span class="number">0</span>, <span class="number">0.01</span>)</span><br><span class="line">                m.bias.data.zero_()</span><br></pre></td></tr></table></figure>
+        </div>
+        
+<blockquote class="copyright">
+    <p><strong>Link to this article : </strong><a class="permalink" href="http://yoursite.com/2020/02/04/deep_learning/SSD/MobileNetV2-SSDLite%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90-3%20models-mobilenet_v2/">http://yoursite.com/2020/02/04/deep_learning/SSD/MobileNetV2-SSDLite代码分析-3 models-mobilenet_v2/</a></p>
+    <p><strong>This article is available under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)</a> License</strong></p>
+</blockquote>
+
+
+    </article>
+    
+    <section id="comments">
+        
+    </section>
+
+
+    
+
+</main>
+
+
+<aside style="" id="sidebar" class="aside aside-fixture">
+    <div class="toc-sidebar">
+        <nav id="toc" class="article-toc">
+            <h3 class="toc-title">Catalogue</h3>
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#MobileNetV2-SSDLite%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90-3-models-mobilenet-v2"><span class="toc-number">1.</span> <span class="toc-text">MobileNetV2-SSDLite代码分析-3 models-mobilenet_v2</span></a></li></ol>
+        </nav>
+    </div>
+</aside>
+
+
+
+
+
+        </section>
+        <footer class="hidden lg:block fixed bottom-0 left-0 sm:w-1/12 lg:w-1/6 bg-gray-100 z-40">
+    
+    <div class="footer-social-links">
+        
+            <a target="_blank" rel="noopener" href="https://github.com/grac-gu">
+                <i class="iconfont icon-github"></i>
+            </a>
+        
+            <a href="/None">
+                <i class="iconfont icon-telegram"></i>
+            </a>
+        
+            <a href="/None">
+                <i class="iconfont icon-twitter"></i>
+            </a>
+        
+            <a href="/atom.xml">
+                <i class="iconfont icon-rss"></i>
+            </a>
+        
+    </div>
+    
+    
+</footer>
+
+        <div id="mask" class="hidden mask fixed inset-0 bg-gray-900 opacity-75 z-40"></div>
+        <div id="search-view-container" class="hidden shadow-xl"></div>
+        
+<script src="/js/dom-event.min.js"></script>
+
+<script src="//cdn.jsdelivr.net/npm/yox@1.0.0-alpha.121/dist/standard/prod/yox.min.js"></script>
+
+
+<script src="/js/search.min.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/lightgallery.js@1.1.3/dist/js/lightgallery.min.js"></script>
+    
+<script src="/js/light-gallery.min.js"></script>
+
+
+
+
+
+    </body>
+</html>

@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html >
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, maximum-scale=5, viewport-fit=cover">
+    <title>Hexo</title>
+    <meta name="description" content="KCF追踪目标跟踪最全资料集锦 一种KCF的PYTHON实现+注释 目标跟踪：KCF运行流程图(matlab版本) 一图简单理解KCF干了什么 左图是刚开始我们使用红色虚线框框定了目标，然后红色实线框就是使用的padding了，其他的框就是将padding循环移位之后对齐目标得到的样本，由这些样本就可以训练出一个分类器，当分类器设计好之后，来到了下一帧图像，也就是右图，这时候我们首先在预测区域也就">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/2020/02/04/image_processing/KCF%E8%BF%BD%E8%B8%AA/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="KCF追踪目标跟踪最全资料集锦 一种KCF的PYTHON实现+注释 目标跟踪：KCF运行流程图(matlab版本) 一图简单理解KCF干了什么 左图是刚开始我们使用红色虚线框框定了目标，然后红色实线框就是使用的padding了，其他的框就是将padding循环移位之后对齐目标得到的样本，由这些样本就可以训练出一个分类器，当分类器设计好之后，来到了下一帧图像，也就是右图，这时候我们首先在预测区域也就">
+<meta property="og:locale">
+<meta property="og:image" content="http://yoursite.com/2020/02/04/image_processing/KCF%E8%BF%BD%E8%B8%AA/KCF%E8%BF%BD%E8%B8%AA.assets/2861912-088e6426641a4427.png">
+<meta property="article:published_time" content="2020-02-04T05:26:23.000Z">
+<meta property="article:modified_time" content="2020-02-04T05:26:23.000Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2020/02/04/image_processing/KCF%E8%BF%BD%E8%B8%AA/KCF%E8%BF%BD%E8%B8%AA.assets/2861912-088e6426641a4427.png">
+
+    
+    <link rel="icon" href="https://i.loli.net/2021/03/04/Y8OtTdUnM4isHxh.jpg" type="image/x-icon">
+
+    
+<link rel="stylesheet" href="/css/common.min.css">
+
+
+
+    
+    
+    
+    
+        <link href="//cdn.jsdelivr.net/npm/lightgallery.js@1.1.3/dist/css/lightgallery.min.css" rel="stylesheet">
+    
+    
+    
+<link rel="stylesheet" href="/css/iconfont.min.css">
+
+    
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+    <body>
+        <header class="header header-fixture">
+    <div class="profile-search-wrap flex sm:block">
+        
+        
+        <div class="profile sm:text-center md:px-1 lg:px-3 sm:pb-4 sm:pt-6">
+            <a id="avatar" role="link" href="https://github.com/grace-gu" class="inline-block lg:w-16 lg:h-16 w-8 h-8 m-2" target="_blank" rel="noopener" rel="noreferrer" >
+                <img src="https://i.loli.net/2021/03/04/Y8OtTdUnM4isHxh.jpg" class="rounded-full" alt="avatar">
+            </a>
+            <h2 id="name" class="hidden lg:block">Grace</h2>
+            <h3 id="title" class="hidden xl:block">coder</h3>
+            
+            <small id="location" class="hidden lg:block">
+                <i class="iconfont icon-map-icon"></i>
+                Beijing, China
+            </small>
+            
+        </div>
+        
+        
+<div class="search flex-1 flex lg:inline-block sm:hidden lg:px-4 lg:mt-2 lg:mb-4 lg:w-full">
+    <form id="search-form" class="my-auto flex-1 lg:border lg:border-solid lg:border-gray-200">
+        <div class="input-group table bg-gray-100 lg:bg-white w-full">
+            <input id="search-input" type="text" placeholder="Search" class="inline-block w-full bg-gray-100 lg:bg-white">
+            <span class="table-cell">
+                <button name="search tigger button" disabled>
+                    <i class="iconfont icon-search m-2"></i>
+                </button>
+            </span>
+        </div>
+    </form>
+        
+<script id="search-teamplate" type="text/html" data-path="/content.json">
+    <div>
+        <div class="search-header bg-gray-400">
+            <input id="actual-search-input" model="keyword" ref="input" class="inline-block w-full h-10 px-2 py-1" placeholder="Search" type="text">
+        </div>
+        <div class="search-result bg-gray-200">
+            {{#each searchPosts}}
+            <a href="/{{ path }}" class="result-item block px-2 pb-3 mb-1 pt-1 hover:bg-indigo-100">
+                <i class="iconfont icon-file"></i>
+                <h1 class="result-title inline font-medium text-lg">{{ title }}</h1>
+                <p class="result-content text-gray-600 text-sm">{{{ text }}}</p>
+            </a>
+            {{/each}}
+        </div>
+    </div>
+</script>
+
+</div>
+
+
+        <button name="menu toogle button" id="menu-toggle-btn" class="block sm:hidden p-3" role="button" aria-expanded="false">
+            <i class="iconfont icon-hamburger"></i>
+        </button>
+    </div>
+    <nav id="menu-nav" class="hidden sm:flex flex-col">
+        
+        
+            <div class="menu-item menu-home" role="menuitem">
+                <a href="/.">
+                    <i class="iconfont icon-home" aria-hidden="true"></i>
+                    <span class="menu-title">Home</span>
+                </a>
+            </div>
+        
+        
+            <div class="menu-item menu-archives" role="menuitem">
+                <a href="/archives">
+                    <i class="iconfont icon-archive" aria-hidden="true"></i>
+                    <span class="menu-title">Archives</span>
+                </a>
+            </div>
+        
+        
+            <div class="menu-item menu-categories" role="menuitem">
+                <a href="/categories">
+                    <i class="iconfont icon-folder" aria-hidden="true"></i>
+                    <span class="menu-title">Categories</span>
+                </a>
+            </div>
+        
+        
+            <div class="menu-item menu-tags" role="menuitem">
+                <a href="/tags">
+                    <i class="iconfont icon-tag" aria-hidden="true"></i>
+                    <span class="menu-title">Tags</span>
+                </a>
+            </div>
+        
+        
+            <div class="menu-item menu-repository" role="menuitem">
+                <a href="/repository">
+                    <i class="iconfont icon-project" aria-hidden="true"></i>
+                    <span class="menu-title">Repository</span>
+                </a>
+            </div>
+        
+        
+            <div class="menu-item menu-links" role="menuitem">
+                <a href="/links">
+                    <i class="iconfont icon-friend" aria-hidden="true"></i>
+                    <span class="menu-title">Links</span>
+                </a>
+            </div>
+        
+        
+            <div class="menu-item menu-about" role="menuitem">
+                <a href="/about">
+                    <i class="iconfont icon-cup" aria-hidden="true"></i>
+                    <span class="menu-title">About</span>
+                </a>
+            </div>
+        
+        
+<div class="social-links flex sm:flex-col lg:hidden mt-5">
+    
+        <span class="social-item text-center">
+            <a target="_blank" rel="noopener" href="https://github.com/grac-gu">
+                <i class="iconfont social-icon icon-github"></i>
+                <span class="menu-title hidden lg:inline">menu.github</span>
+            </a>
+        </span>
+    
+        <span class="social-item text-center">
+            <a href="/None">
+                <i class="iconfont social-icon icon-telegram"></i>
+                <span class="menu-title hidden lg:inline">menu.telegram</span>
+            </a>
+        </span>
+    
+        <span class="social-item text-center">
+            <a href="/None">
+                <i class="iconfont social-icon icon-twitter"></i>
+                <span class="menu-title hidden lg:inline">menu.twitter</span>
+            </a>
+        </span>
+    
+        <span class="social-item text-center">
+            <a href="/atom.xml">
+                <i class="iconfont social-icon icon-rss"></i>
+                <span class="menu-title hidden lg:inline">menu.rss</span>
+            </a>
+        </span>
+    
+</div>
+
+
+    </nav>
+</header>
+
+        <section class="main-section">
+            
+    <main class="flex-1 px-4 py-12 md:px-5 lg:px-8 lg:py-4 relative min-h-screen">
+    
+
+    <article class="content article article-archives article-type-list" itemscope="">
+        <header class="article-header">
+            
+
+
+            <p class="article-meta mb-3 text-xs">
+                <span class="article-date">
+    <i class="iconfont icon-calendar-check"></i>
+	<a href="/2020/02/04/image_processing/KCF%E8%BF%BD%E8%B8%AA/" class="article-date">
+	  <time datetime="2020-02-04T05:26:23.000Z" itemprop="datePublished">Feb 4</time>
+	</a>
+</span>
+
+                
+
+                
+
+                <span class="_partial/post-comment"><i class="icon icon-comment"></i>
+                    <a href="/2020/02/04/image_processing/KCF%E8%BF%BD%E8%B8%AA/#comments" class="article-comment-link">
+                        Comments
+                    </a>
+                </span>
+                
+
+            </p>
+        </header>
+        <div class="marked-body article-body">
+            <h1 id="KCF追踪"><a href="#KCF追踪" class="headerlink" title="KCF追踪"></a>KCF追踪</h1><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzUxNjcxMjQxNg==&mid=2247487692&idx=1&sn=2d6ff2b31cfd949af991170fcf872c04&chksm=f9a26243ced5eb55868c7376408e80aae0510d2c0e5614c385ce8cdf72b952d17c62b269aecb&scene=21#wechat_redirect">目标跟踪最全资料集锦</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/mingzhiqing/article/details/81286267">一种KCF的PYTHON实现+注释</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/JasonSunJian/article/details/71489097">目标跟踪：KCF运行流程图(matlab版本)</a></p>
+<h2 id="一图简单理解KCF干了什么"><a href="#一图简单理解KCF干了什么" class="headerlink" title="一图简单理解KCF干了什么"></a>一图简单理解KCF干了什么</h2><p><img src="KCF%E8%BF%BD%E8%B8%AA.assets/2861912-088e6426641a4427.png" alt="一图理解KCF"></p>
+<p>左图是刚开始我们使用红色虚线框框定了目标，然后红色实线框就是使用的padding了，其他的框就是将padding循环移位之后对齐目标得到的样本，由这些样本就可以训练出一个分类器，当分类器设计好之后，来到了下一帧图像，也就是右图，这时候我们首先在预测区域也就是红色实线框区域采样，然后对该采样进行循环移位，对齐目标后就像图中显示的那个样子了，（这是为了理解，实际中不用对齐），就是周围那些框框啦，使用分类器对这些框框计算响应，显然这时候白色框响应最大，因为他和之前一帧红色框一样，那我们通过白色框的相对移位就能推测目标的位移了。</p>
+<p>然后继续，再训练再检测。</p>
+<h2 id="探究KCF的原理"><a href="#探究KCF的原理" class="headerlink" title="探究KCF的原理"></a>探究KCF的原理</h2><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/26685032">核化相关滤波器高速跟踪：KCF(2015PAMI)</a> 把原理讲得还蛮通俗易懂的，后面关于代码的地方更是大赞！超级赞！<br>看完这个原理，还有一些地方不是很清楚，有些参数的含义，以及哪里识别HOG特征</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/YiXiaoZhou/p/5925019.html">KCF目标跟踪方法分析与总结</a> 有一个章节专门讲HOG特征是怎么融入<br><strong>待做：研究HOG特征是怎样应用的</strong></p>
+<p>在KCF中这样使用HOG特征：<br>将一张图像分为<code>m*n</code>个cell，每个cell用HOG提取32维的特征，即<code>3*nOrients+5</code>，其中nOrients是梯度方向的个数，每个方向提取了3个特征，2个是对方向bin敏感的，1个是不敏感的，另外4个特征是关于表观纹理的特征还有一个是零，表示阶段特征，具体参见<a target="_blank" rel="noopener" href="http://www.cs.berkeley.edu/~rbg/latent/index.html">fhog</a>。提取了31个特征(最后一个0不考虑)之后，不是串联起来，而是将每个cell的特征并起来，那么一幅图像得到的结果就是一个立体块，那么fhog提取结果就是<code>m*n*31</code></p>
+<h2 id="KCF代码探究"><a href="#KCF代码探究" class="headerlink" title="KCF代码探究"></a>KCF代码探究</h2><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/mingzhiqing/article/details/81286267">一种KCF的PYTHON实现+注释</a> 感觉这个代码逻辑还蛮清楚的<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_28306361/article/details/78336941">KCF代码分析-C++</a> 不是很想看C++的代码<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/bitopyx/article/details/81948875">KCF代码阅读笔记（matlab版）</a><br><a target="_blank" rel="noopener" href="https://www.2cto.com/kf/201707/655288.html">KCF跟踪算法代码摘要</a> 给出了matlab代码中的几个重要函数<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/jacke121/article/details/54315050">KCF跟踪源码-带注释</a> C++版本的</p>
+<h2 id="KCF的缺点"><a href="#KCF的缺点" class="headerlink" title="KCF的缺点"></a>KCF的缺点</h2><ol>
+<li><p>依赖循环矩阵，对于多尺度的目标跟踪效果并不理想。当然可以通过设置多个size，在每个size上进行KCF运算，但这样的话很难确定应预先设置多少size，什么样的size，而且对size的遍历必将影响算法的速度。KCF最大的优势就是速度。</p>
+</li>
+<li><p>初始化矩阵不能自适应改变，其实这个问题和上一个缺点类似，这里强调的是非刚体运动，比如跳水运动员，刚开始选定区域肯定是个瘦长的矩形框，但当运动员开始屈体的时候显然这个预选定框就很大误差了。</p>
+</li>
+<li><p>难处理高速运动的目标</p>
+</li>
+<li><p>难处理低帧率中目标，这个和3类似，都是说相邻帧间目标位移过大。</p>
+</li>
+<li><p>虽然算法中对模型系数$\alpha$进行线性插值，但是对于目标一旦被遮挡若干帧之后，可能模型就再也回不去了,因为模型已经完全被遮挡物污染掉了。</p>
+<h2 id="KCF改进方案"><a href="#KCF改进方案" class="headerlink" title="KCF改进方案"></a>KCF改进方案</h2><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/denghecsdn/article/details/78418748">目标跟踪算法——KCF 进阶</a></p>
+</li>
+</ol>
+
+        </div>
+        
+<blockquote class="copyright">
+    <p><strong>Link to this article : </strong><a class="permalink" href="http://yoursite.com/2020/02/04/image_processing/KCF%E8%BF%BD%E8%B8%AA/">http://yoursite.com/2020/02/04/image_processing/KCF追踪/</a></p>
+    <p><strong>This article is available under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)</a> License</strong></p>
+</blockquote>
+
+
+    </article>
+    
+    <section id="comments">
+        
+    </section>
+
+
+    
+
+</main>
+
+
+<aside style="" id="sidebar" class="aside aside-fixture">
+    <div class="toc-sidebar">
+        <nav id="toc" class="article-toc">
+            <h3 class="toc-title">Catalogue</h3>
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#KCF%E8%BF%BD%E8%B8%AA"><span class="toc-number">1.</span> <span class="toc-text">KCF追踪</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E5%9B%BE%E7%AE%80%E5%8D%95%E7%90%86%E8%A7%A3KCF%E5%B9%B2%E4%BA%86%E4%BB%80%E4%B9%88"><span class="toc-number">1.1.</span> <span class="toc-text">一图简单理解KCF干了什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A2%E7%A9%B6KCF%E7%9A%84%E5%8E%9F%E7%90%86"><span class="toc-number">1.2.</span> <span class="toc-text">探究KCF的原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#KCF%E4%BB%A3%E7%A0%81%E6%8E%A2%E7%A9%B6"><span class="toc-number">1.3.</span> <span class="toc-text">KCF代码探究</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#KCF%E7%9A%84%E7%BC%BA%E7%82%B9"><span class="toc-number">1.4.</span> <span class="toc-text">KCF的缺点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#KCF%E6%94%B9%E8%BF%9B%E6%96%B9%E6%A1%88"><span class="toc-number">1.5.</span> <span class="toc-text">KCF改进方案</span></a></li></ol></li></ol>
+        </nav>
+    </div>
+</aside>
+
+
+
+
+
+        </section>
+        <footer class="hidden lg:block fixed bottom-0 left-0 sm:w-1/12 lg:w-1/6 bg-gray-100 z-40">
+    
+    <div class="footer-social-links">
+        
+            <a target="_blank" rel="noopener" href="https://github.com/grac-gu">
+                <i class="iconfont icon-github"></i>
+            </a>
+        
+            <a href="/None">
+                <i class="iconfont icon-telegram"></i>
+            </a>
+        
+            <a href="/None">
+                <i class="iconfont icon-twitter"></i>
+            </a>
+        
+            <a href="/atom.xml">
+                <i class="iconfont icon-rss"></i>
+            </a>
+        
+    </div>
+    
+    
+</footer>
+
+        <div id="mask" class="hidden mask fixed inset-0 bg-gray-900 opacity-75 z-40"></div>
+        <div id="search-view-container" class="hidden shadow-xl"></div>
+        
+<script src="/js/dom-event.min.js"></script>
+
+<script src="//cdn.jsdelivr.net/npm/yox@1.0.0-alpha.121/dist/standard/prod/yox.min.js"></script>
+
+
+<script src="/js/search.min.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/lightgallery.js@1.1.3/dist/js/lightgallery.min.js"></script>
+    
+<script src="/js/light-gallery.min.js"></script>
+
+
+
+
+
+    </body>
+</html>

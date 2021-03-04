@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html >
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, maximum-scale=5, viewport-fit=cover">
+    <title>Hexo</title>
+    <meta name="description" content="软件硬件网站心头好&amp;使用记录[TOC] 下载网址网站-系统总裁下一些装机工具，比如WinPE、驱动程序、封闭程序等 网站-下载之家直接就能点到链接下东西 网站-潮下载基础工具类压缩软件-bandizipbandizip在windows上天下第一 压缩软件-eZipmac，想用还没用过 压缩软件-The UnArchivermac，能解压，不能压缩，不能预览，免费，效果一般 NTFS-Tux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/2020/02/04/environment/%E8%BD%AF%E4%BB%B6%E5%BF%83%E5%A4%B4%E5%A5%BD/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="软件硬件网站心头好&amp;使用记录[TOC] 下载网址网站-系统总裁下一些装机工具，比如WinPE、驱动程序、封闭程序等 网站-下载之家直接就能点到链接下东西 网站-潮下载基础工具类压缩软件-bandizipbandizip在windows上天下第一 压缩软件-eZipmac，想用还没用过 压缩软件-The UnArchivermac，能解压，不能压缩，不能预览，免费，效果一般 NTFS-Tux">
+<meta property="og:locale">
+<meta property="article:published_time" content="2020-02-04T05:26:23.000Z">
+<meta property="article:modified_time" content="2020-02-04T05:26:23.000Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+
+    
+    <link rel="icon" href="https://i.loli.net/2021/03/04/Y8OtTdUnM4isHxh.jpg" type="image/x-icon">
+
+    
+<link rel="stylesheet" href="/css/common.min.css">
+
+
+
+    
+    
+    
+    
+        <link href="//cdn.jsdelivr.net/npm/lightgallery.js@1.1.3/dist/css/lightgallery.min.css" rel="stylesheet">
+    
+    
+    
+<link rel="stylesheet" href="/css/iconfont.min.css">
+
+    
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+    <body>
+        <header class="header header-fixture">
+    <div class="profile-search-wrap flex sm:block">
+        
+        
+        <div class="profile sm:text-center md:px-1 lg:px-3 sm:pb-4 sm:pt-6">
+            <a id="avatar" role="link" href="https://github.com/grace-gu" class="inline-block lg:w-16 lg:h-16 w-8 h-8 m-2" target="_blank" rel="noopener" rel="noreferrer" >
+                <img src="https://i.loli.net/2021/03/04/Y8OtTdUnM4isHxh.jpg" class="rounded-full" alt="avatar">
+            </a>
+            <h2 id="name" class="hidden lg:block">Grace</h2>
+            <h3 id="title" class="hidden xl:block">coder</h3>
+            
+            <small id="location" class="hidden lg:block">
+                <i class="iconfont icon-map-icon"></i>
+                Beijing, China
+            </small>
+            
+        </div>
+        
+        
+<div class="search flex-1 flex lg:inline-block sm:hidden lg:px-4 lg:mt-2 lg:mb-4 lg:w-full">
+    <form id="search-form" class="my-auto flex-1 lg:border lg:border-solid lg:border-gray-200">
+        <div class="input-group table bg-gray-100 lg:bg-white w-full">
+            <input id="search-input" type="text" placeholder="Search" class="inline-block w-full bg-gray-100 lg:bg-white">
+            <span class="table-cell">
+                <button name="search tigger button" disabled>
+                    <i class="iconfont icon-search m-2"></i>
+                </button>
+            </span>
+        </div>
+    </form>
+        
+<script id="search-teamplate" type="text/html" data-path="/content.json">
+    <div>
+        <div class="search-header bg-gray-400">
+            <input id="actual-search-input" model="keyword" ref="input" class="inline-block w-full h-10 px-2 py-1" placeholder="Search" type="text">
+        </div>
+        <div class="search-result bg-gray-200">
+            {{#each searchPosts}}
+            <a href="/{{ path }}" class="result-item block px-2 pb-3 mb-1 pt-1 hover:bg-indigo-100">
+                <i class="iconfont icon-file"></i>
+                <h1 class="result-title inline font-medium text-lg">{{ title }}</h1>
+                <p class="result-content text-gray-600 text-sm">{{{ text }}}</p>
+            </a>
+            {{/each}}
+        </div>
+    </div>
+</script>
+
+</div>
+
+
+        <button name="menu toogle button" id="menu-toggle-btn" class="block sm:hidden p-3" role="button" aria-expanded="false">
+            <i class="iconfont icon-hamburger"></i>
+        </button>
+    </div>
+    <nav id="menu-nav" class="hidden sm:flex flex-col">
+        
+        
+            <div class="menu-item menu-home" role="menuitem">
+                <a href="/.">
+                    <i class="iconfont icon-home" aria-hidden="true"></i>
+                    <span class="menu-title">Home</span>
+                </a>
+            </div>
+        
+        
+            <div class="menu-item menu-archives" role="menuitem">
+                <a href="/archives">
+                    <i class="iconfont icon-archive" aria-hidden="true"></i>
+                    <span class="menu-title">Archives</span>
+                </a>
+            </div>
+        
+        
+            <div class="menu-item menu-categories" role="menuitem">
+                <a href="/categories">
+                    <i class="iconfont icon-folder" aria-hidden="true"></i>
+                    <span class="menu-title">Categories</span>
+                </a>
+            </div>
+        
+        
+            <div class="menu-item menu-tags" role="menuitem">
+                <a href="/tags">
+                    <i class="iconfont icon-tag" aria-hidden="true"></i>
+                    <span class="menu-title">Tags</span>
+                </a>
+            </div>
+        
+        
+            <div class="menu-item menu-repository" role="menuitem">
+                <a href="/repository">
+                    <i class="iconfont icon-project" aria-hidden="true"></i>
+                    <span class="menu-title">Repository</span>
+                </a>
+            </div>
+        
+        
+            <div class="menu-item menu-links" role="menuitem">
+                <a href="/links">
+                    <i class="iconfont icon-friend" aria-hidden="true"></i>
+                    <span class="menu-title">Links</span>
+                </a>
+            </div>
+        
+        
+            <div class="menu-item menu-about" role="menuitem">
+                <a href="/about">
+                    <i class="iconfont icon-cup" aria-hidden="true"></i>
+                    <span class="menu-title">About</span>
+                </a>
+            </div>
+        
+        
+<div class="social-links flex sm:flex-col lg:hidden mt-5">
+    
+        <span class="social-item text-center">
+            <a target="_blank" rel="noopener" href="https://github.com/grac-gu">
+                <i class="iconfont social-icon icon-github"></i>
+                <span class="menu-title hidden lg:inline">menu.github</span>
+            </a>
+        </span>
+    
+        <span class="social-item text-center">
+            <a href="/None">
+                <i class="iconfont social-icon icon-telegram"></i>
+                <span class="menu-title hidden lg:inline">menu.telegram</span>
+            </a>
+        </span>
+    
+        <span class="social-item text-center">
+            <a href="/None">
+                <i class="iconfont social-icon icon-twitter"></i>
+                <span class="menu-title hidden lg:inline">menu.twitter</span>
+            </a>
+        </span>
+    
+        <span class="social-item text-center">
+            <a href="/atom.xml">
+                <i class="iconfont social-icon icon-rss"></i>
+                <span class="menu-title hidden lg:inline">menu.rss</span>
+            </a>
+        </span>
+    
+</div>
+
+
+    </nav>
+</header>
+
+        <section class="main-section">
+            
+    <main class="flex-1 px-4 py-12 md:px-5 lg:px-8 lg:py-4 relative min-h-screen">
+    
+
+    <article class="content article article-archives article-type-list" itemscope="">
+        <header class="article-header">
+            
+
+
+            <p class="article-meta mb-3 text-xs">
+                <span class="article-date">
+    <i class="iconfont icon-calendar-check"></i>
+	<a href="/2020/02/04/environment/%E8%BD%AF%E4%BB%B6%E5%BF%83%E5%A4%B4%E5%A5%BD/" class="article-date">
+	  <time datetime="2020-02-04T05:26:23.000Z" itemprop="datePublished">Feb 4</time>
+	</a>
+</span>
+
+                
+
+                
+
+                <span class="_partial/post-comment"><i class="icon icon-comment"></i>
+                    <a href="/2020/02/04/environment/%E8%BD%AF%E4%BB%B6%E5%BF%83%E5%A4%B4%E5%A5%BD/#comments" class="article-comment-link">
+                        Comments
+                    </a>
+                </span>
+                
+
+            </p>
+        </header>
+        <div class="marked-body article-body">
+            <h1 id="软件硬件网站心头好-amp-使用记录"><a href="#软件硬件网站心头好-amp-使用记录" class="headerlink" title="软件硬件网站心头好&amp;使用记录"></a>软件硬件网站心头好&amp;使用记录</h1><p>[TOC]</p>
+<h2 id="下载网址"><a href="#下载网址" class="headerlink" title="下载网址"></a>下载网址</h2><h3 id="网站-系统总裁"><a href="#网站-系统总裁" class="headerlink" title="网站-系统总裁"></a>网站-<a target="_blank" rel="noopener" href="https://www.sysceo.com/">系统总裁</a></h3><p>下一些装机工具，比如WinPE、驱动程序、封闭程序等</p>
+<h3 id="网站-下载之家"><a href="#网站-下载之家" class="headerlink" title="网站-下载之家"></a>网站-<a href="">下载之家</a></h3><p>直接就能点到链接下东西</p>
+<h3 id="网站-潮下载"><a href="#网站-潮下载" class="headerlink" title="网站-潮下载"></a>网站-<a target="_blank" rel="noopener" href="http://www.chaoxz.com/">潮下载</a></h3><h2 id="基础工具类"><a href="#基础工具类" class="headerlink" title="基础工具类"></a>基础工具类</h2><h3 id="压缩软件-bandizip"><a href="#压缩软件-bandizip" class="headerlink" title="压缩软件-bandizip"></a>压缩软件-bandizip</h3><p>bandizip在windows上天下第一</p>
+<h3 id="压缩软件-eZip"><a href="#压缩软件-eZip" class="headerlink" title="压缩软件-eZip"></a>压缩软件-eZip</h3><p>mac，想用还没用过</p>
+<h3 id="压缩软件-The-UnArchiver"><a href="#压缩软件-The-UnArchiver" class="headerlink" title="压缩软件-The UnArchiver"></a>压缩软件-The UnArchiver</h3><p>mac，能解压，不能压缩，不能预览，免费，效果一般</p>
+<h3 id="NTFS-Tuxera-NTFS"><a href="#NTFS-Tuxera-NTFS" class="headerlink" title="NTFS-Tuxera NTFS"></a>NTFS-Tuxera NTFS</h3><p>mac上读U盘的必备工具</p>
+<h2 id="系统工具类"><a href="#系统工具类" class="headerlink" title="系统工具类"></a>系统工具类</h2><h3 id="WinPE制作-WePE"><a href="#WinPE制作-WePE" class="headerlink" title="WinPE制作-WePE"></a>WinPE制作-<a target="_blank" rel="noopener" href="http://www.wepe.com.cn/">WePE</a></h3><p>Windows上可以给U盘装WinPE的轻量极简工具</p>
+<h3 id="U盘启动工具制作-DiskMaker"><a href="#U盘启动工具制作-DiskMaker" class="headerlink" title="U盘启动工具制作-DiskMaker"></a>U盘启动工具制作-DiskMaker</h3><p>专门用于Mac的U盘启动工具</p>
+<h3 id="驱动软件-驱动总裁"><a href="#驱动软件-驱动总裁" class="headerlink" title="驱动软件-驱动总裁"></a>驱动软件-驱动总裁</h3><p>离线安装所有驱动</p>
+<h3 id="文件搜索工具-Everything"><a href="#文件搜索工具-Everything" class="headerlink" title="文件搜索工具-Everything"></a>文件搜索工具-Everything</h3><p>Windows上的本地文件搜索神器</p>
+<h3 id="文件搜索工具-Listary"><a href="#文件搜索工具-Listary" class="headerlink" title="文件搜索工具-Listary"></a>文件搜索工具-Listary</h3><p>Windows上的本地文件搜索神器</p>
+<h3 id="清理优化-Dism"><a href="#清理优化-Dism" class="headerlink" title="清理优化-Dism++"></a>清理优化-Dism++</h3><p>Windows。可以找到C盘的大文件</p>
+<h3 id="杀毒-火绒安全"><a href="#杀毒-火绒安全" class="headerlink" title="杀毒-火绒安全"></a>杀毒-火绒安全</h3><p>Windows</p>
+<h3 id="清理注册表-CCleaner"><a href="#清理注册表-CCleaner" class="headerlink" title="清理注册表-CCleaner"></a>清理注册表-CCleaner</h3><p>Windows</p>
+<h3 id="换字体-字由"><a href="#换字体-字由" class="headerlink" title="换字体-字由"></a>换字体-字由</h3><p>Windows，不用安装字体</p>
+<h2 id="学习类"><a href="#学习类" class="headerlink" title="学习类"></a>学习类</h2><h3 id="笔记-GitNote"><a href="#笔记-GitNote" class="headerlink" title="笔记-GitNote"></a>笔记-GitNote</h3><p>一个很有潜力的软件，全平台。用的是笔记+git。但目前bug比较多</p>
+<h3 id="Markdown笔记-Typora"><a href="#Markdown笔记-Typora" class="headerlink" title="Markdown笔记-Typora"></a>Markdown笔记-Typora</h3><h3 id="数学公式-Mathpix"><a href="#数学公式-Mathpix" class="headerlink" title="数学公式-Mathpix"></a>数学公式-Mathpix</h3><h2 id="实用工具类"><a href="#实用工具类" class="headerlink" title="实用工具类"></a>实用工具类</h2><h3 id="Microsoft-Office"><a href="#Microsoft-Office" class="headerlink" title="Microsoft Office"></a>Microsoft Office</h3><p>必选</p>
+<h3 id="PDF-PDF-Expert"><a href="#PDF-PDF-Expert" class="headerlink" title="PDF-PDF Expert"></a>PDF-PDF Expert</h3><p>pdf工具，轻量，收费</p>
+<h3 id="PDF-SumatraPDF-pdf-x-change-reader（更喜欢这个）"><a href="#PDF-SumatraPDF-pdf-x-change-reader（更喜欢这个）" class="headerlink" title="PDF-SumatraPDF/pdf x-change reader（更喜欢这个）"></a>PDF-SumatraPDF/pdf x-change reader（更喜欢这个）</h3><h3 id="云盘-百度云盘"><a href="#云盘-百度云盘" class="headerlink" title="云盘-百度云盘"></a>云盘-百度云盘</h3><h3 id="笔记-印象笔记"><a href="#笔记-印象笔记" class="headerlink" title="笔记-印象笔记"></a>笔记-印象笔记</h3><h3 id="图片查看-HoneyView"><a href="#图片查看-HoneyView" class="headerlink" title="图片查看-HoneyView"></a>图片查看-HoneyView</h3><p>Windows，简洁无广告</p>
+<h3 id="远程控制-TeamViewer"><a href="#远程控制-TeamViewer" class="headerlink" title="远程控制-TeamViewer"></a>远程控制-TeamViewer</h3><p>好用，非商用可免费，全平台</p>
+<h3 id="ssh远程控制-MobaXterm"><a href="#ssh远程控制-MobaXterm" class="headerlink" title="ssh远程控制-MobaXterm"></a>ssh远程控制-MobaXterm</h3><h3 id="清单工具-TickTick-滴答清单"><a href="#清单工具-TickTick-滴答清单" class="headerlink" title="清单工具-TickTick(滴答清单)"></a>清单工具-TickTick(滴答清单)</h3><p>好用，免费版足够使用，全平台</p>
+<h3 id="虚拟机-VMware"><a href="#虚拟机-VMware" class="headerlink" title="虚拟机-VMware"></a>虚拟机-VMware</h3><h3 id="虚拟机-Parallels"><a href="#虚拟机-Parallels" class="headerlink" title="虚拟机-Parallels"></a>虚拟机-Parallels</h3><p>Mac和Windows可用，效果比较好，收费</p>
+<h3 id="下载工具-qBittorrent"><a href="#下载工具-qBittorrent" class="headerlink" title="下载工具-qBittorrent"></a>下载工具-qBittorrent</h3><p>磁力下载工具，说是比迅雷好用</p>
+<h3 id="下载工具-Thunder-迅雷"><a href="#下载工具-Thunder-迅雷" class="headerlink" title="下载工具-Thunder(迅雷)"></a>下载工具-Thunder(迅雷)</h3><p>没得选，通用</p>
+<h3 id="下载工具-PanDownload"><a href="#下载工具-PanDownload" class="headerlink" title="下载工具-PanDownload"></a>下载工具-PanDownload</h3><p>可下载百度网盘的内容，适度使用，容易封号</p>
+<p>用过Motrix，体验一般</p>
+<h3 id="视频播放-爱奇艺本地万能播放器"><a href="#视频播放-爱奇艺本地万能播放器" class="headerlink" title="视频播放-爱奇艺本地万能播放器"></a>视频播放-爱奇艺本地万能播放器</h3><p>windows，确实啥都能放，品质不错。就是每次播放都会弹出一个框提示你比较烦</p>
+<h3 id="视频播放-Potplayer"><a href="#视频播放-Potplayer" class="headerlink" title="视频播放-Potplayer"></a>视频播放-Potplayer</h3><p>Windows<br>很简洁的视频播放器，启动速度快、解码能力强、耗内存低、无广告、不流氓，最大的特点是倍速播放也不会变音</p>
+<h3 id="视频播放-IINA"><a href="#视频播放-IINA" class="headerlink" title="视频播放-IINA"></a>视频播放-IINA</h3><p>Mac，没得说的，小巧实用，免费，github上开源</p>
+<h3 id="超高清屏幕录制工具-Bandicam"><a href="#超高清屏幕录制工具-Bandicam" class="headerlink" title="超高清屏幕录制工具-Bandicam"></a>超高清屏幕录制工具-Bandicam</h3><p>Windows<br>号称世界三大视频录制神器之一，支持H.264预制高清，可以录制4K的高画质144FPS视频。录制的时候还可以进行截图，添加水印图片，鼠标点击效果等操作！</p>
+<p>（免费版好像只能录制十分钟）</p>
+<h2 id="学术研究类"><a href="#学术研究类" class="headerlink" title="学术研究类"></a>学术研究类</h2><h3 id="文献管理-EndNote"><a href="#文献管理-EndNote" class="headerlink" title="文献管理-EndNote"></a>文献管理-EndNote</h3><p>Mac和Windows可用，收费</p>
+<h3 id="公式编辑-MathType"><a href="#公式编辑-MathType" class="headerlink" title="公式编辑-MathType"></a>公式编辑-MathType</h3><p>Mac和Windows可用，收费<br>之前我一直觉得MathType不行，后来发现居然有Latex编辑方式，立马觉得很OK</p>
+<h3 id="公式识别-MathPix"><a href="#公式识别-MathPix" class="headerlink" title="公式识别-MathPix"></a>公式识别-MathPix</h3><p>能识别手写公式或图像类型的公式，超棒<br>全平台</p>
+<h2 id="休闲娱乐类"><a href="#休闲娱乐类" class="headerlink" title="休闲娱乐类"></a>休闲娱乐类</h2><h3 id="音乐-网易云音乐"><a href="#音乐-网易云音乐" class="headerlink" title="音乐-网易云音乐"></a>音乐-网易云音乐</h3><p>版权不足，很多歌没有，心动模式不错，和B站联系紧密</p>
+<h2 id="开发编程类"><a href="#开发编程类" class="headerlink" title="开发编程类"></a>开发编程类</h2><h3 id="Git图形界面-Fork"><a href="#Git图形界面-Fork" class="headerlink" title="Git图形界面-Fork"></a>Git图形界面-Fork</h3><p>windows和mac</p>
+<h3 id="全能-VScode"><a href="#全能-VScode" class="headerlink" title="全能-VScode"></a>全能-VScode</h3><p>全能选手，就算当个记事本都很强。就是老是提醒更新，收费</p>
+<p>原来喜欢sublime，现在觉得VSCode比sublime强出几条街</p>
+<h3 id="Xcode"><a href="#Xcode" class="headerlink" title="Xcode"></a>Xcode</h3><p>Mac上的，虽然Xcode不是很好用，但装了Xcode其它很多小东西不用安装了比较方便</p>
+<h3 id="C-CLion"><a href="#C-CLion" class="headerlink" title="C++-CLion"></a>C++-CLion</h3><p>Mac+Windows，在Windows上比Codeblocks强很多。Codeblocks太容易崩了</p>
+<h3 id="Python-PyCharm"><a href="#Python-PyCharm" class="headerlink" title="Python-PyCharm"></a>Python-PyCharm</h3><p>PyCharm的话有时会出现无法运行的情况，本质是编译器设置的问题。<br>需要把编译器设置一下。这里设置我老出错的一个点是设置system interpreter，而不是conda/虚拟环境等的inerpreter</p>
+<h3 id="Python-Jupyter-Lab"><a href="#Python-Jupyter-Lab" class="headerlink" title="Python-Jupyter Lab"></a>Python-Jupyter Lab</h3><h3 id="Java-IDEA"><a href="#Java-IDEA" class="headerlink" title="Java-IDEA"></a>Java-IDEA</h3><h3 id="Web-webStorm"><a href="#Web-webStorm" class="headerlink" title="Web-webStorm"></a>Web-webStorm</h3><h3 id="Git-fork"><a href="#Git-fork" class="headerlink" title="Git-fork"></a>Git-fork</h3>
+        </div>
+        
+<blockquote class="copyright">
+    <p><strong>Link to this article : </strong><a class="permalink" href="http://yoursite.com/2020/02/04/environment/%E8%BD%AF%E4%BB%B6%E5%BF%83%E5%A4%B4%E5%A5%BD/">http://yoursite.com/2020/02/04/environment/软件心头好/</a></p>
+    <p><strong>This article is available under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)</a> License</strong></p>
+</blockquote>
+
+
+    </article>
+    
+    <section id="comments">
+        
+    </section>
+
+
+    
+
+</main>
+
+
+<aside style="" id="sidebar" class="aside aside-fixture">
+    <div class="toc-sidebar">
+        <nav id="toc" class="article-toc">
+            <h3 class="toc-title">Catalogue</h3>
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%BD%AF%E4%BB%B6%E7%A1%AC%E4%BB%B6%E7%BD%91%E7%AB%99%E5%BF%83%E5%A4%B4%E5%A5%BD-amp-%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95"><span class="toc-number">1.</span> <span class="toc-text">软件硬件网站心头好&amp;使用记录</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BD%E7%BD%91%E5%9D%80"><span class="toc-number">1.1.</span> <span class="toc-text">下载网址</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BD%91%E7%AB%99-%E7%B3%BB%E7%BB%9F%E6%80%BB%E8%A3%81"><span class="toc-number">1.1.1.</span> <span class="toc-text">网站-系统总裁</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BD%91%E7%AB%99-%E4%B8%8B%E8%BD%BD%E4%B9%8B%E5%AE%B6"><span class="toc-number">1.1.2.</span> <span class="toc-text">网站-下载之家</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BD%91%E7%AB%99-%E6%BD%AE%E4%B8%8B%E8%BD%BD"><span class="toc-number">1.1.3.</span> <span class="toc-text">网站-潮下载</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E5%B7%A5%E5%85%B7%E7%B1%BB"><span class="toc-number">1.2.</span> <span class="toc-text">基础工具类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%8B%E7%BC%A9%E8%BD%AF%E4%BB%B6-bandizip"><span class="toc-number">1.2.1.</span> <span class="toc-text">压缩软件-bandizip</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%8B%E7%BC%A9%E8%BD%AF%E4%BB%B6-eZip"><span class="toc-number">1.2.2.</span> <span class="toc-text">压缩软件-eZip</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%8B%E7%BC%A9%E8%BD%AF%E4%BB%B6-The-UnArchiver"><span class="toc-number">1.2.3.</span> <span class="toc-text">压缩软件-The UnArchiver</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NTFS-Tuxera-NTFS"><span class="toc-number">1.2.4.</span> <span class="toc-text">NTFS-Tuxera NTFS</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E5%B7%A5%E5%85%B7%E7%B1%BB"><span class="toc-number">1.3.</span> <span class="toc-text">系统工具类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#WinPE%E5%88%B6%E4%BD%9C-WePE"><span class="toc-number">1.3.1.</span> <span class="toc-text">WinPE制作-WePE</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#U%E7%9B%98%E5%90%AF%E5%8A%A8%E5%B7%A5%E5%85%B7%E5%88%B6%E4%BD%9C-DiskMaker"><span class="toc-number">1.3.2.</span> <span class="toc-text">U盘启动工具制作-DiskMaker</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A9%B1%E5%8A%A8%E8%BD%AF%E4%BB%B6-%E9%A9%B1%E5%8A%A8%E6%80%BB%E8%A3%81"><span class="toc-number">1.3.3.</span> <span class="toc-text">驱动软件-驱动总裁</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E6%90%9C%E7%B4%A2%E5%B7%A5%E5%85%B7-Everything"><span class="toc-number">1.3.4.</span> <span class="toc-text">文件搜索工具-Everything</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E6%90%9C%E7%B4%A2%E5%B7%A5%E5%85%B7-Listary"><span class="toc-number">1.3.5.</span> <span class="toc-text">文件搜索工具-Listary</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B8%85%E7%90%86%E4%BC%98%E5%8C%96-Dism"><span class="toc-number">1.3.6.</span> <span class="toc-text">清理优化-Dism++</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9D%80%E6%AF%92-%E7%81%AB%E7%BB%92%E5%AE%89%E5%85%A8"><span class="toc-number">1.3.7.</span> <span class="toc-text">杀毒-火绒安全</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B8%85%E7%90%86%E6%B3%A8%E5%86%8C%E8%A1%A8-CCleaner"><span class="toc-number">1.3.8.</span> <span class="toc-text">清理注册表-CCleaner</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8D%A2%E5%AD%97%E4%BD%93-%E5%AD%97%E7%94%B1"><span class="toc-number">1.3.9.</span> <span class="toc-text">换字体-字由</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%A6%E4%B9%A0%E7%B1%BB"><span class="toc-number">1.4.</span> <span class="toc-text">学习类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%94%E8%AE%B0-GitNote"><span class="toc-number">1.4.1.</span> <span class="toc-text">笔记-GitNote</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Markdown%E7%AC%94%E8%AE%B0-Typora"><span class="toc-number">1.4.2.</span> <span class="toc-text">Markdown笔记-Typora</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E5%AD%A6%E5%85%AC%E5%BC%8F-Mathpix"><span class="toc-number">1.4.3.</span> <span class="toc-text">数学公式-Mathpix</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7%E7%B1%BB"><span class="toc-number">1.5.</span> <span class="toc-text">实用工具类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Microsoft-Office"><span class="toc-number">1.5.1.</span> <span class="toc-text">Microsoft Office</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PDF-PDF-Expert"><span class="toc-number">1.5.2.</span> <span class="toc-text">PDF-PDF Expert</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PDF-SumatraPDF-pdf-x-change-reader%EF%BC%88%E6%9B%B4%E5%96%9C%E6%AC%A2%E8%BF%99%E4%B8%AA%EF%BC%89"><span class="toc-number">1.5.3.</span> <span class="toc-text">PDF-SumatraPDF&#x2F;pdf x-change reader（更喜欢这个）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%91%E7%9B%98-%E7%99%BE%E5%BA%A6%E4%BA%91%E7%9B%98"><span class="toc-number">1.5.4.</span> <span class="toc-text">云盘-百度云盘</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%94%E8%AE%B0-%E5%8D%B0%E8%B1%A1%E7%AC%94%E8%AE%B0"><span class="toc-number">1.5.5.</span> <span class="toc-text">笔记-印象笔记</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%BE%E7%89%87%E6%9F%A5%E7%9C%8B-HoneyView"><span class="toc-number">1.5.6.</span> <span class="toc-text">图片查看-HoneyView</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9C%E7%A8%8B%E6%8E%A7%E5%88%B6-TeamViewer"><span class="toc-number">1.5.7.</span> <span class="toc-text">远程控制-TeamViewer</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ssh%E8%BF%9C%E7%A8%8B%E6%8E%A7%E5%88%B6-MobaXterm"><span class="toc-number">1.5.8.</span> <span class="toc-text">ssh远程控制-MobaXterm</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B8%85%E5%8D%95%E5%B7%A5%E5%85%B7-TickTick-%E6%BB%B4%E7%AD%94%E6%B8%85%E5%8D%95"><span class="toc-number">1.5.9.</span> <span class="toc-text">清单工具-TickTick(滴答清单)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E6%9C%BA-VMware"><span class="toc-number">1.5.10.</span> <span class="toc-text">虚拟机-VMware</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E6%9C%BA-Parallels"><span class="toc-number">1.5.11.</span> <span class="toc-text">虚拟机-Parallels</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BD%E5%B7%A5%E5%85%B7-qBittorrent"><span class="toc-number">1.5.12.</span> <span class="toc-text">下载工具-qBittorrent</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BD%E5%B7%A5%E5%85%B7-Thunder-%E8%BF%85%E9%9B%B7"><span class="toc-number">1.5.13.</span> <span class="toc-text">下载工具-Thunder(迅雷)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BD%E5%B7%A5%E5%85%B7-PanDownload"><span class="toc-number">1.5.14.</span> <span class="toc-text">下载工具-PanDownload</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%86%E9%A2%91%E6%92%AD%E6%94%BE-%E7%88%B1%E5%A5%87%E8%89%BA%E6%9C%AC%E5%9C%B0%E4%B8%87%E8%83%BD%E6%92%AD%E6%94%BE%E5%99%A8"><span class="toc-number">1.5.15.</span> <span class="toc-text">视频播放-爱奇艺本地万能播放器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%86%E9%A2%91%E6%92%AD%E6%94%BE-Potplayer"><span class="toc-number">1.5.16.</span> <span class="toc-text">视频播放-Potplayer</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%86%E9%A2%91%E6%92%AD%E6%94%BE-IINA"><span class="toc-number">1.5.17.</span> <span class="toc-text">视频播放-IINA</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B6%85%E9%AB%98%E6%B8%85%E5%B1%8F%E5%B9%95%E5%BD%95%E5%88%B6%E5%B7%A5%E5%85%B7-Bandicam"><span class="toc-number">1.5.18.</span> <span class="toc-text">超高清屏幕录制工具-Bandicam</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%A6%E6%9C%AF%E7%A0%94%E7%A9%B6%E7%B1%BB"><span class="toc-number">1.6.</span> <span class="toc-text">学术研究类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E7%8C%AE%E7%AE%A1%E7%90%86-EndNote"><span class="toc-number">1.6.1.</span> <span class="toc-text">文献管理-EndNote</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%AC%E5%BC%8F%E7%BC%96%E8%BE%91-MathType"><span class="toc-number">1.6.2.</span> <span class="toc-text">公式编辑-MathType</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%AC%E5%BC%8F%E8%AF%86%E5%88%AB-MathPix"><span class="toc-number">1.6.3.</span> <span class="toc-text">公式识别-MathPix</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%91%E9%97%B2%E5%A8%B1%E4%B9%90%E7%B1%BB"><span class="toc-number">1.7.</span> <span class="toc-text">休闲娱乐类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9F%B3%E4%B9%90-%E7%BD%91%E6%98%93%E4%BA%91%E9%9F%B3%E4%B9%90"><span class="toc-number">1.7.1.</span> <span class="toc-text">音乐-网易云音乐</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%80%E5%8F%91%E7%BC%96%E7%A8%8B%E7%B1%BB"><span class="toc-number">1.8.</span> <span class="toc-text">开发编程类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Git%E5%9B%BE%E5%BD%A2%E7%95%8C%E9%9D%A2-Fork"><span class="toc-number">1.8.1.</span> <span class="toc-text">Git图形界面-Fork</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%A8%E8%83%BD-VScode"><span class="toc-number">1.8.2.</span> <span class="toc-text">全能-VScode</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Xcode"><span class="toc-number">1.8.3.</span> <span class="toc-text">Xcode</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#C-CLion"><span class="toc-number">1.8.4.</span> <span class="toc-text">C++-CLion</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Python-PyCharm"><span class="toc-number">1.8.5.</span> <span class="toc-text">Python-PyCharm</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Python-Jupyter-Lab"><span class="toc-number">1.8.6.</span> <span class="toc-text">Python-Jupyter Lab</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Java-IDEA"><span class="toc-number">1.8.7.</span> <span class="toc-text">Java-IDEA</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Web-webStorm"><span class="toc-number">1.8.8.</span> <span class="toc-text">Web-webStorm</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Git-fork"><span class="toc-number">1.8.9.</span> <span class="toc-text">Git-fork</span></a></li></ol></li></ol></li></ol>
+        </nav>
+    </div>
+</aside>
+
+
+
+
+
+        </section>
+        <footer class="hidden lg:block fixed bottom-0 left-0 sm:w-1/12 lg:w-1/6 bg-gray-100 z-40">
+    
+    <div class="footer-social-links">
+        
+            <a target="_blank" rel="noopener" href="https://github.com/grac-gu">
+                <i class="iconfont icon-github"></i>
+            </a>
+        
+            <a href="/None">
+                <i class="iconfont icon-telegram"></i>
+            </a>
+        
+            <a href="/None">
+                <i class="iconfont icon-twitter"></i>
+            </a>
+        
+            <a href="/atom.xml">
+                <i class="iconfont icon-rss"></i>
+            </a>
+        
+    </div>
+    
+    
+</footer>
+
+        <div id="mask" class="hidden mask fixed inset-0 bg-gray-900 opacity-75 z-40"></div>
+        <div id="search-view-container" class="hidden shadow-xl"></div>
+        
+<script src="/js/dom-event.min.js"></script>
+
+<script src="//cdn.jsdelivr.net/npm/yox@1.0.0-alpha.121/dist/standard/prod/yox.min.js"></script>
+
+
+<script src="/js/search.min.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/lightgallery.js@1.1.3/dist/js/lightgallery.min.js"></script>
+    
+<script src="/js/light-gallery.min.js"></script>
+
+
+
+
+
+    </body>
+</html>

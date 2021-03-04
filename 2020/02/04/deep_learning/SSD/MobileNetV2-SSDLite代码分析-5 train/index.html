@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html >
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, maximum-scale=5, viewport-fit=cover">
+    <title>Hexo</title>
+    <meta name="description" content="MobileNetV2-SSDLite代码分析-5 train[TOC] Github库地址：pytorch-ssd&#x2F;train_ssd.py 创建网络1234create_net &#x3D; lambda num: create_mobilenetv2_ssd_lite(num, width_mult &#x3D; args.mb2_width_mult) #这个写法有点意思哈。相当于create_net是一个能">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/2020/02/04/deep_learning/SSD/MobileNetV2-SSDLite%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90-5%20train/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="MobileNetV2-SSDLite代码分析-5 train[TOC] Github库地址：pytorch-ssd&#x2F;train_ssd.py 创建网络1234create_net &#x3D; lambda num: create_mobilenetv2_ssd_lite(num, width_mult &#x3D; args.mb2_width_mult) #这个写法有点意思哈。相当于create_net是一个能">
+<meta property="og:locale">
+<meta property="article:published_time" content="2020-02-04T05:26:23.000Z">
+<meta property="article:modified_time" content="2020-02-04T05:26:23.000Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+
+    
+    <link rel="icon" href="https://i.loli.net/2021/03/04/Y8OtTdUnM4isHxh.jpg" type="image/x-icon">
+
+    
+<link rel="stylesheet" href="/css/common.min.css">
+
+
+
+    
+    
+    
+    
+        <link href="//cdn.jsdelivr.net/npm/lightgallery.js@1.1.3/dist/css/lightgallery.min.css" rel="stylesheet">
+    
+    
+    
+<link rel="stylesheet" href="/css/iconfont.min.css">
+
+    
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+    <body>
+        <header class="header header-fixture">
+    <div class="profile-search-wrap flex sm:block">
+        
+        
+        <div class="profile sm:text-center md:px-1 lg:px-3 sm:pb-4 sm:pt-6">
+            <a id="avatar" role="link" href="https://github.com/grace-gu" class="inline-block lg:w-16 lg:h-16 w-8 h-8 m-2" target="_blank" rel="noopener" rel="noreferrer" >
+                <img src="https://i.loli.net/2021/03/04/Y8OtTdUnM4isHxh.jpg" class="rounded-full" alt="avatar">
+            </a>
+            <h2 id="name" class="hidden lg:block">Grace</h2>
+            <h3 id="title" class="hidden xl:block">coder</h3>
+            
+            <small id="location" class="hidden lg:block">
+                <i class="iconfont icon-map-icon"></i>
+                Beijing, China
+            </small>
+            
+        </div>
+        
+        
+<div class="search flex-1 flex lg:inline-block sm:hidden lg:px-4 lg:mt-2 lg:mb-4 lg:w-full">
+    <form id="search-form" class="my-auto flex-1 lg:border lg:border-solid lg:border-gray-200">
+        <div class="input-group table bg-gray-100 lg:bg-white w-full">
+            <input id="search-input" type="text" placeholder="Search" class="inline-block w-full bg-gray-100 lg:bg-white">
+            <span class="table-cell">
+                <button name="search tigger button" disabled>
+                    <i class="iconfont icon-search m-2"></i>
+                </button>
+            </span>
+        </div>
+    </form>
+        
+<script id="search-teamplate" type="text/html" data-path="/content.json">
+    <div>
+        <div class="search-header bg-gray-400">
+            <input id="actual-search-input" model="keyword" ref="input" class="inline-block w-full h-10 px-2 py-1" placeholder="Search" type="text">
+        </div>
+        <div class="search-result bg-gray-200">
+            {{#each searchPosts}}
+            <a href="/{{ path }}" class="result-item block px-2 pb-3 mb-1 pt-1 hover:bg-indigo-100">
+                <i class="iconfont icon-file"></i>
+                <h1 class="result-title inline font-medium text-lg">{{ title }}</h1>
+                <p class="result-content text-gray-600 text-sm">{{{ text }}}</p>
+            </a>
+            {{/each}}
+        </div>
+    </div>
+</script>
+
+</div>
+
+
+        <button name="menu toogle button" id="menu-toggle-btn" class="block sm:hidden p-3" role="button" aria-expanded="false">
+            <i class="iconfont icon-hamburger"></i>
+        </button>
+    </div>
+    <nav id="menu-nav" class="hidden sm:flex flex-col">
+        
+        
+            <div class="menu-item menu-home" role="menuitem">
+                <a href="/.">
+                    <i class="iconfont icon-home" aria-hidden="true"></i>
+                    <span class="menu-title">Home</span>
+                </a>
+            </div>
+        
+        
+            <div class="menu-item menu-archives" role="menuitem">
+                <a href="/archives">
+                    <i class="iconfont icon-archive" aria-hidden="true"></i>
+                    <span class="menu-title">Archives</span>
+                </a>
+            </div>
+        
+        
+            <div class="menu-item menu-categories" role="menuitem">
+                <a href="/categories">
+                    <i class="iconfont icon-folder" aria-hidden="true"></i>
+                    <span class="menu-title">Categories</span>
+                </a>
+            </div>
+        
+        
+            <div class="menu-item menu-tags" role="menuitem">
+                <a href="/tags">
+                    <i class="iconfont icon-tag" aria-hidden="true"></i>
+                    <span class="menu-title">Tags</span>
+                </a>
+            </div>
+        
+        
+            <div class="menu-item menu-repository" role="menuitem">
+                <a href="/repository">
+                    <i class="iconfont icon-project" aria-hidden="true"></i>
+                    <span class="menu-title">Repository</span>
+                </a>
+            </div>
+        
+        
+            <div class="menu-item menu-links" role="menuitem">
+                <a href="/links">
+                    <i class="iconfont icon-friend" aria-hidden="true"></i>
+                    <span class="menu-title">Links</span>
+                </a>
+            </div>
+        
+        
+            <div class="menu-item menu-about" role="menuitem">
+                <a href="/about">
+                    <i class="iconfont icon-cup" aria-hidden="true"></i>
+                    <span class="menu-title">About</span>
+                </a>
+            </div>
+        
+        
+<div class="social-links flex sm:flex-col lg:hidden mt-5">
+    
+        <span class="social-item text-center">
+            <a target="_blank" rel="noopener" href="https://github.com/grac-gu">
+                <i class="iconfont social-icon icon-github"></i>
+                <span class="menu-title hidden lg:inline">menu.github</span>
+            </a>
+        </span>
+    
+        <span class="social-item text-center">
+            <a href="/None">
+                <i class="iconfont social-icon icon-telegram"></i>
+                <span class="menu-title hidden lg:inline">menu.telegram</span>
+            </a>
+        </span>
+    
+        <span class="social-item text-center">
+            <a href="/None">
+                <i class="iconfont social-icon icon-twitter"></i>
+                <span class="menu-title hidden lg:inline">menu.twitter</span>
+            </a>
+        </span>
+    
+        <span class="social-item text-center">
+            <a href="/atom.xml">
+                <i class="iconfont social-icon icon-rss"></i>
+                <span class="menu-title hidden lg:inline">menu.rss</span>
+            </a>
+        </span>
+    
+</div>
+
+
+    </nav>
+</header>
+
+        <section class="main-section">
+            
+    <main class="flex-1 px-4 py-12 md:px-5 lg:px-8 lg:py-4 relative min-h-screen">
+    
+
+    <article class="content article article-archives article-type-list" itemscope="">
+        <header class="article-header">
+            
+
+
+            <p class="article-meta mb-3 text-xs">
+                <span class="article-date">
+    <i class="iconfont icon-calendar-check"></i>
+	<a href="/2020/02/04/deep_learning/SSD/MobileNetV2-SSDLite%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90-5%20train/" class="article-date">
+	  <time datetime="2020-02-04T05:26:23.000Z" itemprop="datePublished">Feb 4</time>
+	</a>
+</span>
+
+                
+
+                
+
+                <span class="_partial/post-comment"><i class="icon icon-comment"></i>
+                    <a href="/2020/02/04/deep_learning/SSD/MobileNetV2-SSDLite%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90-5%20train/#comments" class="article-comment-link">
+                        Comments
+                    </a>
+                </span>
+                
+
+            </p>
+        </header>
+        <div class="marked-body article-body">
+            <h1 id="MobileNetV2-SSDLite代码分析-5-train"><a href="#MobileNetV2-SSDLite代码分析-5-train" class="headerlink" title="MobileNetV2-SSDLite代码分析-5 train"></a>MobileNetV2-SSDLite代码分析-5 train</h1><p>[TOC]</p>
+<p>Github库地址：<a target="_blank" rel="noopener" href="https://github.com/qfgaohao/pytorch-ssd/blob/master/train_ssd.py">pytorch-ssd/train_ssd.py</a></p>
+<h2 id="创建网络"><a href="#创建网络" class="headerlink" title="创建网络"></a>创建网络</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">create_net = <span class="keyword">lambda</span> num: create_mobilenetv2_ssd_lite(num, width_mult = args.mb2_width_mult) <span class="comment">#这个写法有点意思哈。相当于create_net是一个能接受参数的函数！基于create_mobilenetv2_ssd_lite的函数，这个写法第一次见还纠结了一下，看完觉得很棒</span></span><br><span class="line">config = mobilenetv1_ssd_config</span><br><span class="line"></span><br><span class="line">net = create_net(num_classes)</span><br></pre></td></tr></table></figure>
+
+<h2 id="设定transform"><a href="#设定transform" class="headerlink" title="设定transform"></a>设定transform</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">train_transform = TrainAugmentation(config.image_size, config.image_mean, config.image_std) <span class="comment">#测试图像做的变换</span></span><br><span class="line">target_transform = MatchPrior(config.priors, config.center_variance,</span><br><span class="line">config.size_variance, <span class="number">0.5</span>) <span class="comment">#对anchor做的变换（分配到具体网格中）</span></span><br><span class="line">test_transform = TestTransform(config.image_size, config.image_mean, config.image_std) <span class="comment">#对测试图像做的变换</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="获得数据集"><a href="#获得数据集" class="headerlink" title="获得数据集"></a>获得数据集</h2><p>这个部分我有问题，可能要有等后续的跑代码才能知道结果</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">dataset = VOCDataset(dataset_path, transform=train_transform,</span><br><span class="line">                                 target_transform=target_transform)</span><br><span class="line">datasets.append(dataset)</span><br><span class="line">train_dataset = ConcatDataset(datasets) <span class="comment"># 因为可能有多个数据集，作者写了一个拼接</span></span><br><span class="line">train_loader = DataLoader(train_dataset, args.batch_size,</span><br><span class="line">                              num_workers=args.num_workers,</span><br><span class="line">                              shuffle=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="设置freeze"><a href="#设置freeze" class="headerlink" title="设置freeze"></a>设置freeze</h2><p>作者的逻辑很棒。它将mobilenet+SSD各个部分拆开来，使得后续的处理也方便了很多。比如这里想要freeze，直接设置net.base_net即可</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">freeze_net_layers(net.base_net)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">freeze_net_layers</span>(<span class="params">net</span>):</span></span><br><span class="line">    <span class="keyword">for</span> param <span class="keyword">in</span> net.parameters():</span><br><span class="line">        param.requires_grad = <span class="literal">False</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="网络初始化"><a href="#网络初始化" class="headerlink" title="网络初始化"></a>网络初始化</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> args.resume:</span><br><span class="line">    net.load(args.resume)</span><br><span class="line"><span class="keyword">elif</span> args.base_net:</span><br><span class="line">    net.init_from_base_net(args.base_net)</span><br><span class="line"><span class="keyword">elif</span> args.pretrained_ssd:</span><br><span class="line">    net.init_from_pretrained_ssd(args.pretrained_ssd)</span><br></pre></td></tr></table></figure>
+
+<p>可选择是继续上一次的模型，还是仅训练base_net还是加载预训练好的模型</p>
+<h2 id="损失和优化函数"><a href="#损失和优化函数" class="headerlink" title="损失和优化函数"></a>损失和优化函数</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">criterion = MultiboxLoss(config.priors, iou_threshold=<span class="number">0.5</span>, neg_pos_ratio=<span class="number">3</span>,</span><br><span class="line">                             center_variance=<span class="number">0.1</span>, size_variance=<span class="number">0.2</span>, device=DEVICE)</span><br><span class="line">optimizer = torch.optim.SGD(params, lr=args.lr, momentum=args.momentum,</span><br><span class="line">                                weight_decay=args.weight_decay)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>MultiboxLoss是写好的多用检测的损失函数。它包括使用cross entroy计算出的分类loss和用smooth L1计算出来的location loss</p>
+</li>
+<li><p>优化函数：这是一个使用momentum的min_batch gradient descent。也就是请注意，虽然它名义上说是SGD，但其实就是个MBGD</p>
+<p>这个优化函数还有一个细节，即如何调整学习率</p>
+<p>不需要调整学习率的通用流程如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">criterion = nn.MSELoss()</span><br><span class="line">optimizer = optim.SGD(model.parameters(), lr=<span class="number">1e-4</span>)</span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1000</span>):</span><br><span class="line">    <span class="keyword">for</span> step, (inputs, targets) <span class="keyword">in</span> <span class="built_in">enumerate</span>(loader):</span><br><span class="line">        <span class="comment"># 前向传播</span></span><br><span class="line">        out = model(inputs)</span><br><span class="line">        loss = criterion(out, target)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 反向传播</span></span><br><span class="line">        optimizer.zero_grad()</span><br><span class="line">        loss.backward()</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 调整参数</span></span><br><span class="line">        optimizer.step()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p>如果想要调整学习率，通过会定义一种学习率调整的策略scheduler，其通用流程如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">scheduler = XXXLR(optimizer,...) <span class="comment">#设定一种学习率调整的策略</span></span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">100</span>):</span><br><span class="line">    scheduler.step() </span><br><span class="line">    train(...) <span class="comment"># optimizer.zero_grad() optimizer.step()仍然需要</span></span><br><span class="line">    validate(...)</span><br></pre></td></tr></table></figure>
+
+
+
+<p>这块的代码具体如下。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> args.scheduler == <span class="string">&#x27;multi-step&#x27;</span>:</span><br><span class="line">    milestones = [<span class="built_in">int</span>(v.strip()) <span class="keyword">for</span> v <span class="keyword">in</span> args.milestones.split(<span class="string">&quot;,&quot;</span>)]</span><br><span class="line">    scheduler = MultiStepLR(optimizer, milestones=milestones,gamma=<span class="number">0.1</span>, last_epoch=last_epoch)</span><br><span class="line"><span class="keyword">elif</span> args.scheduler == <span class="string">&#x27;cosine&#x27;</span>:</span><br><span class="line">    scheduler = CosineAnnealingLR(optimizer, args.t_max, last_epoch=last_epoch)</span><br></pre></td></tr></table></figure>
+
+
+
+<p>对学习率改变的策略做一个总结， <a target="_blank" rel="noopener" href="https://blog.csdn.net/happyday_d/article/details/85267561">参考</a>。</p>
+<ul>
+<li><p>torch.optim.lr_scheduler.LambdaLR(optimizer, lr_lambda, last_epoch=-1)</p>
+<p>将每个参数组的学习率设置为给定函数的初始值,当last_epoch=-1时,设置初始的lr作为lr;</p>
+<p>optimizer:封装好的优化器</p>
+<p>lr_lambda(<em>function</em> <em>or</em> list):一个计算每个epoch的学习率的函数或者一个list;</p>
+<p>last_epoch:最后一个epoch的索引</p>
+</li>
+<li><p>torch.optim.lr_scheduler.StepLR(optimizer, step_size, gamma=0.1, last_epoch=-1)</p>
+<p>当epoch每过step_size时,学习率都变为初始学习率的gamma倍</p>
+</li>
+<li><p>orch.optim.lr_scheduler.MultiStepLR(optimizer, milestones, gamma=0.1, last_epoch=-1)</p>
+<p>当训练epoch达到milestones值时,初始学习率乘以gamma得到新的学习率;</p>
+<p>milestones为一个数组，如 [50,70]. gamma为倍数。如果learning rate开始为0.01 ，则当epoch为50时变为0.001，epoch 为70 时变为0.0001。</p>
+</li>
+<li><p>torch.optim.lr_scheduler.ExponentialLR(optimizer, gamma, last_epoch=-1)</p>
+<p>每个epoch学习率都变为初始学习率的gamma倍</p>
+</li>
+<li><p>torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max, eta_min=0, last_epoch=-1)</p>
+<p>利用cos曲线降低学习率,该方法来源<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1608.03983.pdf">SGDR</a></p>
+</li>
+<li><p>CLASS torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode=’min’, factor=0.1, patience=10, verbose=False, threshold=0.0001, threshold_mode=’rel’, cooldown=0, min_lr=0, eps=1e-08)</p>
+<p>当参考的评价指标停止改进时,降低学习率,factor为每次下降的比例,训练过程中,当指标连续patience次数还没有改进时,降低学习率</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="训练网络做迭代"><a href="#训练网络做迭代" class="headerlink" title="训练网络做迭代"></a>训练网络做迭代</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> <span class="built_in">range</span>(last_epoch + <span class="number">1</span>, args.num_epochs):</span><br><span class="line">    scheduler.step()</span><br><span class="line">    <span class="comment"># 训练</span></span><br><span class="line">    train(train_loader, net, criterion, optimizer,</span><br><span class="line">          device=DEVICE, debug_steps=args.debug_steps, epoch=epoch)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> epoch % args.validation_epochs == <span class="number">0</span> <span class="keyword">or</span> epoch == args.num_epochs - <span class="number">1</span>:</span><br><span class="line">        <span class="comment"># 验证</span></span><br><span class="line">        val_loss, val_regression_loss, val_classification_loss = test(val_loader, net, criterion, DEVICE)</span><br><span class="line">        model_path = os.path.join(args.checkpoint_folder, <span class="string">f&quot;<span class="subst">&#123;args.net&#125;</span>-Epoch-<span class="subst">&#123;epoch&#125;</span>-Loss-<span class="subst">&#123;val_loss&#125;</span>.pth&quot;</span>)</span><br><span class="line">        net.save(model_path)</span><br><span class="line">        logging.info(<span class="string">f&quot;Saved model <span class="subst">&#123;model_path&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="训练过程"><a href="#训练过程" class="headerlink" title="训练过程"></a>训练过程</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">train</span>(<span class="params">loader, net, criterion, optimizer, device, debug_steps=<span class="number">100</span>, epoch=-<span class="number">1</span></span>):</span></span><br><span class="line">    net.train(<span class="literal">True</span>) <span class="comment"># 还可以写成net.train()</span></span><br><span class="line">    running_loss = <span class="number">0.0</span></span><br><span class="line">    running_regression_loss = <span class="number">0.0</span></span><br><span class="line">    running_classification_loss = <span class="number">0.0</span></span><br><span class="line">    <span class="keyword">for</span> i, data <span class="keyword">in</span> <span class="built_in">enumerate</span>(loader):</span><br><span class="line">        images, boxes, labels = data</span><br><span class="line">        images = images.to(device)</span><br><span class="line">        boxes = boxes.to(device)</span><br><span class="line">        labels = labels.to(device)</span><br><span class="line"></span><br><span class="line">        optimizer.zero_grad() <span class="comment"># 虽然用了scheduler，但还是要将optimizer初始化</span></span><br><span class="line">        confidence, locations = net(images)</span><br><span class="line">        regression_loss, classification_loss = criterion(confidence, locations, labels, boxes)  <span class="comment"># TODO CHANGE BOXES</span></span><br><span class="line">        loss = regression_loss + classification_loss</span><br><span class="line">        loss.backward()</span><br><span class="line">        optimizer.step()</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 这一块儿没看懂，好像是为了调试用的，需要测试</span></span><br><span class="line">        running_loss += loss.item()</span><br><span class="line">        running_regression_loss += regression_loss.item()</span><br><span class="line">        running_classification_loss += classification_loss.item()</span><br><span class="line">        <span class="keyword">if</span> i <span class="keyword">and</span> i % debug_steps == <span class="number">0</span>:</span><br><span class="line">            avg_loss = running_loss / debug_steps</span><br><span class="line">            avg_reg_loss = running_regression_loss / debug_steps</span><br><span class="line">            avg_clf_loss = running_classification_loss / debug_steps</span><br><span class="line">            running_loss = <span class="number">0.0</span></span><br><span class="line">            running_regression_loss = <span class="number">0.0</span></span><br><span class="line">            running_classification_loss = <span class="number">0.0</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="测试过程"><a href="#测试过程" class="headerlink" title="测试过程"></a>测试过程</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test</span>(<span class="params">loader, net, criterion, device</span>):</span></span><br><span class="line">    net.<span class="built_in">eval</span>()</span><br><span class="line">    running_loss = <span class="number">0.0</span></span><br><span class="line">    running_regression_loss = <span class="number">0.0</span></span><br><span class="line">    running_classification_loss = <span class="number">0.0</span></span><br><span class="line">    num = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> _, data <span class="keyword">in</span> <span class="built_in">enumerate</span>(loader):</span><br><span class="line">        images, boxes, labels = data</span><br><span class="line">        images = images.to(device)</span><br><span class="line">        boxes = boxes.to(device)</span><br><span class="line">        labels = labels.to(device)</span><br><span class="line">        num += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">with</span> torch.no_grad():</span><br><span class="line">            confidence, locations = net(images)</span><br><span class="line">            regression_loss, classification_loss = criterion(confidence, locations, labels, boxes)</span><br><span class="line">            loss = regression_loss + classification_loss</span><br><span class="line"></span><br><span class="line">        running_loss += loss.item()</span><br><span class="line">        running_regression_loss += regression_loss.item()</span><br><span class="line">        running_classification_loss += classification_loss.item()</span><br><span class="line">    <span class="keyword">return</span> running_loss / num, running_regression_loss / num, running_classification_loss / num</span><br></pre></td></tr></table></figure>
+
+
+        </div>
+        
+<blockquote class="copyright">
+    <p><strong>Link to this article : </strong><a class="permalink" href="http://yoursite.com/2020/02/04/deep_learning/SSD/MobileNetV2-SSDLite%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90-5%20train/">http://yoursite.com/2020/02/04/deep_learning/SSD/MobileNetV2-SSDLite代码分析-5 train/</a></p>
+    <p><strong>This article is available under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener noreferrer">Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)</a> License</strong></p>
+</blockquote>
+
+
+    </article>
+    
+    <section id="comments">
+        
+    </section>
+
+
+    
+
+</main>
+
+
+<aside style="" id="sidebar" class="aside aside-fixture">
+    <div class="toc-sidebar">
+        <nav id="toc" class="article-toc">
+            <h3 class="toc-title">Catalogue</h3>
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#MobileNetV2-SSDLite%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90-5-train"><span class="toc-number">1.</span> <span class="toc-text">MobileNetV2-SSDLite代码分析-5 train</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E7%BD%91%E7%BB%9C"><span class="toc-number">1.1.</span> <span class="toc-text">创建网络</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%BE%E5%AE%9Atransform"><span class="toc-number">1.2.</span> <span class="toc-text">设定transform</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8E%B7%E5%BE%97%E6%95%B0%E6%8D%AE%E9%9B%86"><span class="toc-number">1.3.</span> <span class="toc-text">获得数据集</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%BE%E7%BD%AEfreeze"><span class="toc-number">1.4.</span> <span class="toc-text">设置freeze</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-number">1.5.</span> <span class="toc-text">网络初始化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8D%9F%E5%A4%B1%E5%92%8C%E4%BC%98%E5%8C%96%E5%87%BD%E6%95%B0"><span class="toc-number">1.6.</span> <span class="toc-text">损失和优化函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%AD%E7%BB%83%E7%BD%91%E7%BB%9C%E5%81%9A%E8%BF%AD%E4%BB%A3"><span class="toc-number">1.7.</span> <span class="toc-text">训练网络做迭代</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%AD%E7%BB%83%E8%BF%87%E7%A8%8B"><span class="toc-number">1.8.</span> <span class="toc-text">训练过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E8%BF%87%E7%A8%8B"><span class="toc-number">1.9.</span> <span class="toc-text">测试过程</span></a></li></ol></li></ol>
+        </nav>
+    </div>
+</aside>
+
+
+
+
+
+        </section>
+        <footer class="hidden lg:block fixed bottom-0 left-0 sm:w-1/12 lg:w-1/6 bg-gray-100 z-40">
+    
+    <div class="footer-social-links">
+        
+            <a target="_blank" rel="noopener" href="https://github.com/grac-gu">
+                <i class="iconfont icon-github"></i>
+            </a>
+        
+            <a href="/None">
+                <i class="iconfont icon-telegram"></i>
+            </a>
+        
+            <a href="/None">
+                <i class="iconfont icon-twitter"></i>
+            </a>
+        
+            <a href="/atom.xml">
+                <i class="iconfont icon-rss"></i>
+            </a>
+        
+    </div>
+    
+    
+</footer>
+
+        <div id="mask" class="hidden mask fixed inset-0 bg-gray-900 opacity-75 z-40"></div>
+        <div id="search-view-container" class="hidden shadow-xl"></div>
+        
+<script src="/js/dom-event.min.js"></script>
+
+<script src="//cdn.jsdelivr.net/npm/yox@1.0.0-alpha.121/dist/standard/prod/yox.min.js"></script>
+
+
+<script src="/js/search.min.js"></script>
+
+
+
+    <script src="//cdn.jsdelivr.net/npm/lightgallery.js@1.1.3/dist/js/lightgallery.min.js"></script>
+    
+<script src="/js/light-gallery.min.js"></script>
+
+
+
+
+
+    </body>
+</html>
